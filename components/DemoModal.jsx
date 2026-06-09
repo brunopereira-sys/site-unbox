@@ -84,8 +84,7 @@ function DemoModal() {
       localStorage.setItem("unbox_demo_leads", JSON.stringify(prev));
     } catch (_) {}
 
-    // 2) Envia pra planilha (Google Apps Script). no-cors: não lemos a resposta,
-    //    mas a linha é gravada na planilha.
+    // 2) Envia pra planilha (Google Apps Script)
     const hook = LEADS.sheetWebhook || "";
     if (hook) {
       try {
@@ -97,6 +96,15 @@ function DemoModal() {
         });
       } catch (_) {}
     }
+
+    // 3) Envia pro Pipedrive via API route (server-side)
+    try {
+      await fetch("/api/demo-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(lead),
+      });
+    } catch (_) {}
 
     setSaving(false);
     setSent(true);
