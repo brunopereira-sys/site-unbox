@@ -11,62 +11,57 @@ export default async function handler(req, res) {
 
   const base = 'https://api.pipedrive.com/v1';
   const h = { 'Content-Type': 'application/json' };
+  const q = `api_token=${apiToken}`;
 
   try {
-    // 1. Find or create label "site"
-    const labelsRes = await fetch(`${base}/leadLabels?api_token=${apiToken}`);
-    const labelsJson = await labelsRes.json();
-    let labelId = labelsJson.data?.find((l) => l.name.toLowerCase() === 'site')?.id;
-
-    if (!labelId) {
-      const newLabelRes = await fetch(`${base}/leadLabels?api_token=${apiToken}`, {
-        method: 'POST', headers: h,
-        body: JSON.stringify({ name: 'site', color: 'green' }),
-      });
-      labelId = (await newLabelRes.json()).data?.id;
-    }
+    // 1. Find pipeline stage "Leads Site"
+    const stagesRes = await fetch(`${base}/stages?${q}`);
+    const stagesJson = await stagesRes.json();
+    const stage = stagesJson.data?.find(
+      (s) => s.name.toLowerCase().includes('leads site')
+    );
 
     // 2. Create person
     const personPayload = { name: nome };
     if (whatsapp) personPayload.phone = [{ value: whatsapp, primary: true }];
     if (email)    personPayload.email = [{ value: email,    primary: true }];
 
-    const personRes = await fetch(`${base}/persons?api_token=${apiToken}`, {
+    const personRes = await fetch(`${base}/persons?${q}`, {
       method: 'POST', headers: h,
       body: JSON.stringify(personPayload),
     });
     const personId = (await personRes.json()).data?.id;
 
-    // 3. Create lead
-    const leadPayload = {
+    // 3. Create deal in "Leads Site" stage
+    const dealPayload = {
       title: `${nome} — Demo Unbox`,
-      ...(personId  ? { person_id:  personId  } : {}),
-      ...(labelId   ? { label_ids:  [labelId] } : {}),
+      ...(personId    ? { person_id:  personId         } : {}),
+      ...(stage?.id   ? { stage_id:   stage.id         } : {}),
+      ...(stage?.pipeline_id ? { pipeline_id: stage.pipeline_id } : {}),
     };
-    const leadRes = await fetch(`${base}/leads?api_token=${apiToken}`, {
+    const dealRes = await fetch(`${base}/deals?${q}`, {
       method: 'POST', headers: h,
-      body: JSON.stringify(leadPayload),
+      body: JSON.stringify(dealPayload),
     });
-    const leadId = (await leadRes.json()).data?.id;
+    const dealId = (await dealRes.json()).data?.id;
 
-    // 4. Add note with full context
-    if (leadId) {
+    // 4. Add pinned note with full context
+    if (dealId) {
       const lines = [
         loja        && `🏪 Loja: ${loja}`,
         faturamento && `💰 Faturamento: ${faturamento}`,
         origem      && `🔗 Origem: ${origem}`,
       ].filter(Boolean).join('<br>');
 
-      await fetch(`${base}/notes?api_token=${apiToken}`, {
+      await fetch(`${base}/notes?${q}`, {
         method: 'POST', headers: h,
-        body: JSON.stringify({ content: lines, lead_id: leadId, pinned_to_lead_flag: 1 }),
+        body: JSON.stringify({ content: lines, deal_id: dealId, pinned_to_deal_flag: 1 }),
       });
     }
 
-    res.status(200).json({ ok: true });
+    res.status(200).json({ ok: true, dealId });
   } catch (err) {
     console.error('Pipedrive error:', err);
-    // Não bloqueia o usuário se o Pipedrive falhar
     res.status(200).json({ ok: true, warning: 'pipedrive_failed' });
   }
 }
