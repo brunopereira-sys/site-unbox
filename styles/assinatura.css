@@ -139,6 +139,8 @@
   .as-proof-cell:first-child { border-top: 0; }
   .sa-grid { grid-template-columns: 1fr; gap: 40px; }
   .cu-grid { grid-template-columns: 1fr; gap: 40px; }
+  .sa-copy .feat-highlights { flex-wrap: wrap; }
+  .sa-copy .feat-highlight { white-space: normal; }
 }
 @media (max-width: 480px) {
   .sa-rows { grid-template-columns: 1fr; }
