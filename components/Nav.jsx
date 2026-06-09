@@ -2,6 +2,7 @@ import React from 'react';
 import { URLS, R } from '../lib/config';
 
 const NAV_LINKS = [
+  { label: "Home", href: "/" },
   { label: "Recursos", href: "/recursos" },
   { label: "Turbo Checkout", href: "/checkout" },
   { label: "Assinatura", href: "/assinatura" },
@@ -37,7 +38,7 @@ function Nav() {
   return (
     <header className="nav-wrap">
       <nav className={"nav-pill" + (scrolled ? " is-scrolled" : "")}>
-        <a href={navHref("#top")} className="nav-brand" aria-label="Unbox">
+        <a href="/" className="nav-brand" aria-label="Unbox">
           <img src={R["logo-navbar"]} alt="Unbox" />
         </a>
 
