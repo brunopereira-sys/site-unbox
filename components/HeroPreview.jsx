@@ -31,12 +31,12 @@ const BUBBLES = [
   { type: "wordmark", name: "Badia", logo: R["logo-badia"], x: 27, y: 13, speed: 0.18 },
   { type: "photo", img: R["hero-bhava"], x: 50, y: 13, w: 188, h: 128, front: true, speed: 0 },
   { type: "wordmark", name: "Wish", logo: R["logo-wish"], x: 73, y: 13, speed: -0.18 },
-  { type: "photo", img: R["dicapri-foto"], x: 11, y: 35, w: 188, h: 128, speed: 0 },
-  { type: "wordmark", name: "Pudim beauty", logo: R["logo-pudim"], x: 12, y: 52, speed: 0.16 },
-  { type: "photo", img: R["hero-popai"], x: 11, y: 69, w: 188, h: 128, speed: 0 },
-  { type: "photo", img: R["OLEA"], x: 89, y: 35, w: 188, h: 128, front: true, speed: 0 },
-  { type: "wordmark", name: "Sunrize", logo: R["logo-sunrize"], x: 88, y: 52, speed: -0.16 },
-  { type: "photo", img: R["hero-pudim"], x: 89, y: 70, w: 188, h: 128, front: true, speed: 0 },
+  { type: "photo", img: R["dicapri-foto"], x: 11, y: 31, w: 188, h: 128, speed: 0 },
+  { type: "wordmark", name: "Pudim beauty", logo: R["logo-pudim"], x: 12, y: 47, speed: 0.16 },
+  { type: "photo", img: R["hero-popai"], x: 11, y: 63, w: 188, h: 128, speed: 0 },
+  { type: "photo", img: R["OLEA"], x: 89, y: 31, w: 188, h: 128, front: true, speed: 0 },
+  { type: "wordmark", name: "Sunrize", logo: R["logo-sunrize"], x: 88, y: 47, speed: -0.16 },
+  { type: "photo", img: R["hero-pudim"], x: 89, y: 63, w: 188, h: 128, front: true, speed: 0 },
   { type: "message", label: "E-commerce de alta conversão", title: "E-commerce de alta conversão", icon: "cart", x: 11, y: 90, w: 210, h: 88, speed: 0 },
   { type: "message", label: "Checkout TURBO", title: "Checkout TURBO", icon: "zap", x: 30.5, y: 90, w: 210, h: 88, speed: 0 },
   { type: "message", label: "Assinatura nativa", title: "Venda por Assinatura", icon: "repeat", x: 50, y: 90, w: 210, h: 88, speed: 0 },
@@ -178,7 +178,7 @@ function HeroPreview() {
 
   React.useEffect(() => {
     try {
-      const saved = JSON.parse(localStorage.getItem("hpPos_v1") || "null");
+      const saved = JSON.parse(localStorage.getItem("hpPos_v2") || "null");
       if (Array.isArray(saved) && saved.length === BUBBLES.length) {
         setPos(saved);
       }
@@ -199,7 +199,7 @@ function HeroPreview() {
   const onTileUp = React.useCallback(() => {
     window.removeEventListener("pointermove", onTileMove);
     window.removeEventListener("pointerup", onTileUp);
-    setPos((prev) => { try { localStorage.setItem("hpPos_v1", JSON.stringify(prev)); } catch (e) {} return prev; });
+    setPos((prev) => { try { localStorage.setItem("hpPos_v2", JSON.stringify(prev)); } catch (e) {} return prev; });
     setTimeout(() => { dragRef.current = null; }, 0);
   }, [onTileMove]);
 
@@ -213,7 +213,7 @@ function HeroPreview() {
   }, [onTileMove, onTileUp]);
 
   const resetPos = React.useCallback(() => {
-    try { localStorage.removeItem("hpPos_v1"); } catch (e) {}
+    try { localStorage.removeItem("hpPos_v2"); } catch (e) {}
     setPos(BUBBLES.map((b) => ({ x: b.x, y: b.y })));
   }, []);
 

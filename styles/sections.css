@@ -44,6 +44,8 @@
 .nav-sheet-link--sub { font-size: 18px; font-weight: 500; color: var(--ub-text-mute); padding: 10px 4px 10px 20px; border-bottom: 1px solid var(--ub-border); }
 .nav-sheet-cta { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
 .nav-sheet-cta .btn { width: 100%; justify-content: center; }
+.nav-sheet-close { align-self: flex-end; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 0; background: rgba(255,255,255,0.08); border-radius: 50%; color: #fff; cursor: pointer; margin-bottom: 8px; transition: background 140ms ease; }
+.nav-sheet-close:hover { background: rgba(255,255,255,0.16); }
 
 /* ============ HERO ============ */
 .hero { padding: 184px 0 96px; position: relative; overflow: hidden; }
@@ -339,7 +341,7 @@
 .hp-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 20; text-align: center; width: min(600px, 84%); }
 .hp-h2 { font-size: clamp(28px, 3vw, 38px); font-weight: 900; letter-spacing: -0.035em; line-height: 1.07; color: #fff; margin: 0; text-wrap: balance; }
 .hp-h2-accent { background: linear-gradient(100deg, var(--ub-roxo) 0%, var(--ub-roxo-claro) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.hp-sub { font-size: 16px; line-height: 1.55; color: var(--ub-text-mute); margin: 18px auto 22px; max-width: 400px; }
+.hp-sub { font-size: 16px; line-height: 1.55; color: var(--ub-text-mute); margin: 18px auto 22px; max-width: 520px; }
 .hp-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
 .hp-bubble { position: absolute; z-index: 2; will-change: transform; transform: translate(-50%, -50%); }

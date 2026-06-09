@@ -138,6 +138,7 @@
   .as-proof-cell { border-left: 0; border-top: 1px solid rgba(255,255,255,0.14); }
   .as-proof-cell:first-child { border-top: 0; }
   .sa-grid { grid-template-columns: 1fr; gap: 40px; }
+  .cu-grid { grid-template-columns: 1fr; gap: 40px; }
 }
 @media (max-width: 480px) {
   .sa-rows { grid-template-columns: 1fr; }

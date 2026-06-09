@@ -79,6 +79,13 @@ function Nav() {
       {/* Mobile sheet */}
       <div className={"nav-sheet" + (open ? " is-open" : "")}>
         <div className="nav-sheet-inner">
+          <button
+            className="nav-sheet-close"
+            aria-label="Fechar menu"
+            onClick={() => setOpen(false)}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+          </button>
           {NAV_LINKS.map((l) => (
             <React.Fragment key={l.label}>
               <a href={navHref(l.href)} className="nav-sheet-link" onClick={() => setOpen(false)}>{l.label}</a>
