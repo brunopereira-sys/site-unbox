@@ -60,7 +60,7 @@ function EcoMini() {
   return (
     <div className="hp-eco-grid">
       {HP_ECO.map((e) => e.core ? (
-        <div className="eco-tile eco-core" key="core"><img src={R["logo-navbar"]} alt="Unbox" /></div>
+        <div className="eco-tile eco-core" key="core"><img src={R["simbolo-unbox"]} alt="Unbox" /></div>
       ) : (
         <div className="eco-tile" key={e.t}>
           <span className="icon-chip"><HPIcon name={e.icon} /></span>

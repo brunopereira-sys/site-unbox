@@ -439,11 +439,11 @@
 .hp-modal-media { background-size: cover; background-position: center; min-height: 380px; }
 .hp-modal-media--art { display: flex; align-items: center; justify-content: center; padding: 30px; background: radial-gradient(120% 100% at 30% 0%, rgba(124,58,237,0.22), transparent 60%), var(--ub-surface-2); border-right: 1px solid var(--ub-border); }
 .hp-eco-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
-.hp-eco-grid .eco-tile { background: var(--ub-surface-3); border: 1px solid var(--ub-border); border-radius: var(--ub-r-md); padding: 13px 12px; display: flex; flex-direction: column; gap: 9px; min-height: 96px; }
+.hp-eco-grid .eco-tile { background: var(--ub-surface-3); border: 1px solid var(--ub-border); border-radius: var(--ub-r-md); padding: 14px 12px; display: flex; flex-direction: column; gap: 9px; aspect-ratio: 1; }
 .hp-eco-grid .eco-tile .icon-chip { width: 34px; height: 34px; }
 .hp-eco-grid .eco-tile-label { font-size: 12px; font-weight: 600; color: var(--ub-text); line-height: 1.25; margin-top: auto; }
 .hp-eco-grid .eco-core { background: linear-gradient(150deg, var(--ub-roxo) 0%, var(--ub-roxo-escuro) 100%); border-color: rgba(201,155,255,0.5); box-shadow: var(--ub-shadow-glow); align-items: center; justify-content: center; }
-.hp-eco-grid .eco-core img { height: 30px; width: auto; }
+.hp-eco-grid .eco-core img { width: 52px; height: 52px; object-fit: contain; }
 /* ── Arte do popup Checkout TURBO ── */
 .hp-ck-art { position: relative; width: 100%; height: 100%; min-height: 380px; display: flex; align-items: center; justify-content: center; }
 .hp-ck-shot { width: 60%; max-width: 220px; border-radius: 16px; overflow: hidden; border: 1px solid var(--ub-border-strong); box-shadow: var(--ub-shadow-lg); background: #fff; }
@@ -575,7 +575,7 @@
 .hpm-panel-media { height: 172px; background-size: cover; background-position: top center; }
 .hpm-panel-media--art { height: auto; display: flex; align-items: center; justify-content: center; padding: 22px; background: radial-gradient(120% 100% at 30% 0%, rgba(124,58,237,0.22), transparent 60%), var(--ub-surface-2); border-bottom: 1px solid var(--ub-border); }
 .hpm-panel-media--art .hp-eco-grid { max-width: 320px; gap: 10px; }
-.hpm-panel-media--art .hp-eco-grid .eco-tile { min-height: 120px; padding: 16px 12px; gap: 10px; }
+.hpm-panel-media--art .hp-eco-grid .eco-tile { padding: 16px 12px; gap: 10px; }
 .hpm-panel-body { padding: 18px; }
 .hpm-panel-title { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; color: #fff; margin: 0 0 8px; }
 .hpm-panel-text { font-size: 14px; line-height: 1.55; color: var(--ub-text-mute); margin: 0 0 14px; }
