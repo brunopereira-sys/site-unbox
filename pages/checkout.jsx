@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import '../styles/checkout.css';
 import Nav from '../components/Nav';
 import DemoModal from '../components/DemoModal';
 import { FinalCTA, Footer, WhatsAppFloater } from '../components/Closing';

@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import '../styles/features.css';
 import FeaturesPage from '../components/FeaturesPage';
 
 export default function RecursosPage() {

@@ -1,6 +1,11 @@
 import React from 'react';
 import '../styles/site.css';
 import '../styles/sections.css';
+import '../styles/features.css';
+import '../styles/checkout.css';
+import '../styles/assinatura.css';
+import '../styles/credito.css';
+import '../styles/industrias.css';
 
 export default function App({ Component, pageProps }) {
   React.useEffect(() => {

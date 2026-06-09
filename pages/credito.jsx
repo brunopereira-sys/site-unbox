@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import '../styles/credito.css';
 import CreditoPage from '../components/CreditoPage';
 
 export default function CreditoPageRoute() {

@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import '../styles/industrias.css';
 import IndustriasPage from '../components/IndustriasPage';
 
 export default function IndustriasPageRoute() {

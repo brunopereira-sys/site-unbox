@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import '../styles/assinatura.css';
 import AssinaturaPage from '../components/AssinaturaPage';
 
 export default function AssinaturaPageRoute() {
