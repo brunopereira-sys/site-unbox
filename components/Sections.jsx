@@ -206,7 +206,7 @@ function Subscription() {
       <div className="container subscription-grid">
         <div className="subscription-visual reveal">
           <div className="subscription-glow"></div>
-          <img src={R["assinatura"]} alt="Lojas de assinatura na Unbox" className="subscription-img" loading="lazy" />
+          <img src={R["feat-assinatura-sq"]} alt="Lojas de assinatura na Unbox" className="subscription-img" loading="lazy" />
         </div>
         <div className="subscription-copy">
           <h2 className="h2 reveal" style={{ transitionDelay: "60ms" }}>
