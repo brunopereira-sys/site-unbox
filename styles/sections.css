@@ -438,7 +438,7 @@
 .hp-modal-card { position: relative; width: min(880px, 94vw); max-height: 88vh; display: grid; grid-template-columns: 1fr 1fr; background: var(--ub-surface-1); border: 1px solid var(--ub-border-strong); border-radius: var(--ub-r-lg); overflow: hidden; box-shadow: var(--ub-shadow-lg); animation: pop-in 260ms var(--ease-out); }
 .hp-modal-media { background-size: cover; background-position: center; min-height: 380px; }
 .hp-modal-media--art { display: flex; align-items: center; justify-content: center; padding: 30px; background: radial-gradient(120% 100% at 30% 0%, rgba(124,58,237,0.22), transparent 60%), var(--ub-surface-2); border-right: 1px solid var(--ub-border); }
-.hp-eco-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
+.hp-eco-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; }
 .hp-eco-grid .eco-tile { background: var(--ub-surface-3); border: 1px solid var(--ub-border); border-radius: var(--ub-r-md); padding: 14px 12px; display: flex; flex-direction: column; gap: 9px; aspect-ratio: 1; }
 .hp-eco-grid .eco-tile .icon-chip { width: 34px; height: 34px; }
 .hp-eco-grid .eco-tile-label { font-size: 12px; font-weight: 600; color: var(--ub-text); line-height: 1.25; margin-top: auto; }
