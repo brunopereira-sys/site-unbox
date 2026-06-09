@@ -58,7 +58,7 @@ export default function HomePage() {
         <DadosDashboard />
         <Recursos />
         <Problema />
-        <ProvaSocial />
+        {/* <ProvaSocial /> */}
         <Projeto10x />
         <Migracao />
         <FAQ />
