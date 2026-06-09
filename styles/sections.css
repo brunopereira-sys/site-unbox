@@ -574,7 +574,8 @@
 .hpm-panel { margin-top: 12px; border-radius: 18px; overflow: hidden; background: var(--ub-surface-1); border: 1px solid var(--ub-border); animation: pillarIn 360ms var(--ease-out) both; }
 .hpm-panel-media { height: 172px; background-size: cover; background-position: top center; }
 .hpm-panel-media--art { height: auto; display: flex; align-items: center; justify-content: center; padding: 22px; background: radial-gradient(120% 100% at 30% 0%, rgba(124,58,237,0.22), transparent 60%), var(--ub-surface-2); border-bottom: 1px solid var(--ub-border); }
-.hpm-panel-media--art .hp-eco-grid { max-width: 320px; }
+.hpm-panel-media--art .hp-eco-grid { max-width: 320px; gap: 10px; }
+.hpm-panel-media--art .hp-eco-grid .eco-tile { min-height: 120px; padding: 16px 12px; gap: 10px; }
 .hpm-panel-body { padding: 18px; }
 .hpm-panel-title { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; color: #fff; margin: 0 0 8px; }
 .hpm-panel-text { font-size: 14px; line-height: 1.55; color: var(--ub-text-mute); margin: 0 0 14px; }
