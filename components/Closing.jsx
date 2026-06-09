@@ -110,7 +110,7 @@ function WhatsAppFloater() {
   };
   return (
     <a href={URLS.whatsapp} onClick={onClick} target="_blank" rel="noreferrer" aria-label="Fale no WhatsApp" className="wa-floater wa-floater--left">
-      <img src="/img/whatsapp-floater.png" alt="WhatsApp" width="56" height="56" />
+      <img src="/img/whatsapp-floater.png" alt="WhatsApp" />
     </a>
   );
 }

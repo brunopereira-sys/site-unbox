@@ -947,8 +947,8 @@
 /* ============ WHATSAPP ============ */
 .wa-floater { position: fixed; bottom: 24px; right: 24px; z-index: 75; width: 56px; height: 56px; border-radius: 50%; background: #25D366; display: grid; place-items: center; box-shadow: 0 10px 30px rgba(37,211,102,0.45); transition: transform 200ms var(--ease-out); }
 .wa-floater:hover { transform: scale(1.07); }
-.wa-floater--left { right: auto; left: 24px; background: transparent; box-shadow: none; }
-.wa-floater--left img { width: 56px; height: 56px; display: block; }
+.wa-floater--left { right: auto; left: 24px; width: auto; height: auto; border-radius: 0; background: transparent; box-shadow: none; padding: 0; }
+.wa-floater--left img { width: 200px; height: auto; display: block; }
 
 /* ============ RESPONSIVE ============ */
 @media (max-width: 1000px) {
