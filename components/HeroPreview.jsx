@@ -160,12 +160,9 @@ const MOB_TABS = [
 ];
 const MOB_LOGOS = [
   { logo: R["logo-wish"], name: "Wish" },
-  { name: "diCapri" },
   { logo: R["logo-pudim"], name: "Pudim beauty" },
-  { name: "Noway" },
   { logo: R["logo-sunrize"], name: "Sunrize" },
-  { name: "Badia" },
-  { name: "Glow" },
+  { logo: R["logo-badia"], name: "Badia" },
 ];
 
 function HeroPreview() {
