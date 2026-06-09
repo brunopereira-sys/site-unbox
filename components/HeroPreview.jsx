@@ -37,11 +37,11 @@ const BUBBLES = [
   { type: "photo", img: R["OLEA"], x: 89, y: 31, w: 188, h: 128, front: true, speed: 0 },
   { type: "wordmark", name: "Sunrize", logo: R["logo-sunrize"], x: 88, y: 47, speed: -0.16 },
   { type: "photo", img: R["hero-pudim"], x: 89, y: 63, w: 188, h: 128, front: true, speed: 0 },
-  { type: "message", label: "E-commerce de alta conversão", title: "E-commerce de alta conversão", icon: "cart", x: 11, y: 90, w: 210, h: 88, speed: 0 },
-  { type: "message", label: "Checkout TURBO", title: "Checkout TURBO", icon: "zap", x: 30.5, y: 90, w: 210, h: 88, speed: 0 },
-  { type: "message", label: "Assinatura nativa", title: "Venda por Assinatura", icon: "repeat", x: 50, y: 90, w: 210, h: 88, speed: 0 },
-  { type: "message", label: "Venda com Afiliados", title: "Venda com Afiliados", icon: "users", x: 69.5, y: 90, w: 210, h: 88, speed: 0 },
-  { type: "message", label: "UnboxPay + Crédito", title: "UnboxPay + Crédito", icon: "wallet", x: 89, y: 90, w: 210, h: 88, speed: 0 },
+  { type: "message", label: "E-commerce de alta conversão", title: "E-commerce de alta conversão", icon: "cart", x: 11, y: 84, w: 210, h: 88, speed: 0 },
+  { type: "message", label: "Checkout TURBO", title: "Checkout TURBO", icon: "zap", x: 30.5, y: 84, w: 210, h: 88, speed: 0 },
+  { type: "message", label: "Assinatura nativa", title: "Venda por Assinatura", icon: "repeat", x: 50, y: 84, w: 210, h: 88, speed: 0 },
+  { type: "message", label: "Venda com Afiliados", title: "Venda com Afiliados", icon: "users", x: 69.5, y: 84, w: 210, h: 88, speed: 0 },
+  { type: "message", label: "UnboxPay + Crédito", title: "UnboxPay + Crédito", icon: "wallet", x: 89, y: 84, w: 210, h: 88, speed: 0 },
 ];
 
 const HP_ECO = [
@@ -178,7 +178,7 @@ function HeroPreview() {
 
   React.useEffect(() => {
     try {
-      const saved = JSON.parse(localStorage.getItem("hpPos_v2") || "null");
+      const saved = JSON.parse(localStorage.getItem("hpPos_v3") || "null");
       if (Array.isArray(saved) && saved.length === BUBBLES.length) {
         setPos(saved);
       }
@@ -199,7 +199,7 @@ function HeroPreview() {
   const onTileUp = React.useCallback(() => {
     window.removeEventListener("pointermove", onTileMove);
     window.removeEventListener("pointerup", onTileUp);
-    setPos((prev) => { try { localStorage.setItem("hpPos_v2", JSON.stringify(prev)); } catch (e) {} return prev; });
+    setPos((prev) => { try { localStorage.setItem("hpPos_v3", JSON.stringify(prev)); } catch (e) {} return prev; });
     setTimeout(() => { dragRef.current = null; }, 0);
   }, [onTileMove]);
 
@@ -213,7 +213,7 @@ function HeroPreview() {
   }, [onTileMove, onTileUp]);
 
   const resetPos = React.useCallback(() => {
-    try { localStorage.removeItem("hpPos_v2"); } catch (e) {}
+    try { localStorage.removeItem("hpPos_v3"); } catch (e) {}
     setPos(BUBBLES.map((b) => ({ x: b.x, y: b.y })));
   }, []);
 

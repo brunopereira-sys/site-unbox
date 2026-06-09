@@ -326,7 +326,7 @@
 .prova-tool { font-size: 12px; font-weight: 600; color: var(--ub-roxo-claro); background: rgba(123,47,190,0.14); border: 1px solid rgba(123,47,190,0.32); border-radius: var(--ub-r-pill); padding: 4px 11px; }
 
 /* ============ HERO PREVIEW (bubbles + parallax) ============ */
-.hero-preview { position: relative; overflow: hidden; min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; padding: 96px 0 24px; background: radial-gradient(ellipse 90% 60% at 50% 30%, rgba(150,72,222,0.5), transparent 64%), linear-gradient(165deg, #340D66 0%, #45178C 48%, #280A50 100%); }
+.hero-preview { position: relative; overflow: hidden; min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; padding: 96px 0 72px; background: radial-gradient(ellipse 90% 60% at 50% 30%, rgba(150,72,222,0.5), transparent 64%), linear-gradient(165deg, #340D66 0%, #45178C 48%, #280A50 100%); }
 .hero-preview .hp-h2-accent { background: linear-gradient(100deg, #D9BBFF 0%, #F2E7FF 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .hero-preview .hp-sub { color: rgba(255,255,255,0.78); }
 .hero-preview .btn--secondary { border-color: rgba(255,255,255,0.42); color: #fff; }
