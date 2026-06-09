@@ -1,11 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
 import Nav from '../components/Nav';
-import Hero from '../components/Hero';
 import HeroPreview from '../components/HeroPreview';
 import DemoModal from '../components/DemoModal';
 import { Metrics, FinalCTA, Footer, WhatsAppFloater } from '../components/Closing';
-import { Showcase, Platform, Growth, Subscription, Checkout } from '../components/Sections';
+import { Showcase, Platform, Subscription, Checkout } from '../components/Sections';
 import DadosDashboard from '../components/DashboardSection';
 import Recursos from '../components/Recursos';
 import { Problema, Ecossistema, ProvaSocial, Projeto10x, Migracao, FAQ } from '../components/Narrative';
@@ -49,22 +48,20 @@ export default function HomePage() {
       </Head>
       <Nav />
       <main>
-        <Hero />
         <HeroPreview />
-        <Problema />
-        <Ecossistema />
+        <Metrics />
         <Showcase />
+        <Ecossistema />
         <Platform />
-        <ProvaSocial />
-        <Growth />
-        <Projeto10x />
         <Subscription />
         <Checkout />
         <DadosDashboard />
         <Recursos />
+        <Problema />
+        <ProvaSocial />
+        <Projeto10x />
         <Migracao />
         <FAQ />
-        <Metrics />
         <FinalCTA />
       </main>
       <Footer />
