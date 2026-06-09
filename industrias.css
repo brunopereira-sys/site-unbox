@@ -1,0 +1,90 @@
+/* ============================================================
+   industrias.css — Landing "Para Indústrias" (Crédito UnboxPay).
+   Recriação fiel do layout da referência (Credfly /industrias),
+   adaptada ao design system Unbox: tema ESCURO + ROXO no lugar do azul,
+   verde-turbo no lugar do verde de aprovação.
+   Depende de credito.css (reaproveita .crd-* e tokens --ub-*).
+   ============================================================ */
+
+:root {
+  --ind-green: var(--ub-verde-turbo);
+  --ind-green-tint: rgba(0,229,160,0.14);
+}
+
+/* ---------- HERO ---------- */
+.ind-hero { padding: 168px 0 72px; }
+.ind-hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+.ind-hero h1 { font-family: var(--ub-font-sans); font-size: clamp(38px, 5.2vw, 64px); font-weight: 900; letter-spacing: -0.045em; line-height: 1.02; color: #fff; margin: 0; }
+.ind-hero-sub { font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6; color: var(--ub-text-mute); max-width: 48ch; margin: 24px 0 0; }
+.ind-hero-cta { margin-top: 32px; }
+
+/* fluxo vertical (3 cards empilhados) do hero */
+.ind-stack { background: var(--ub-surface-1); border: 1px solid var(--ub-border); border-radius: var(--ub-r-xl); padding: 30px; box-shadow: var(--ub-shadow-lg); }
+.ind-stack-node { display: flex; align-items: center; gap: 16px; background: var(--ub-surface-2); border: 1px solid var(--ub-border); border-radius: 18px; padding: 18px; }
+.ind-stack-node.is-brand { background: var(--ub-roxo); border-color: transparent; box-shadow: 0 16px 40px rgba(123,47,190,0.4); }
+.ind-stack-ico { width: 54px; height: 54px; border-radius: 14px; background: rgba(123,47,190,0.16); display: grid; place-items: center; color: var(--ub-roxo-claro); flex: 0 0 auto; }
+.ind-stack-node.is-brand .ind-stack-ico { background: rgba(255,255,255,0.14); color: #fff; }
+.ind-stack-node .nm { font-size: 16px; font-weight: 700; color: #fff; margin: 0; }
+.ind-stack-node .ds { font-size: 13px; color: var(--ub-text-mute); margin: 2px 0 0; }
+.ind-stack-node.is-brand .ds { color: rgba(255,255,255,0.78); }
+.ind-stack-tag { margin-left: auto; background: var(--ind-green-tint); color: var(--ind-green); font-size: 12px; font-weight: 700; padding: 5px 11px; border-radius: 999px; flex: 0 0 auto; }
+.ind-stack-conn { display: flex; justify-content: center; padding: 8px 0; }
+.ind-stack-conn span { width: 6px; height: 6px; border-radius: 50%; background: var(--ub-roxo); margin: 0 0 4px; animation: ind-bounce 1s ease-in-out infinite; }
+.ind-stack-conn span:nth-child(2) { background: rgba(123,47,190,0.7); animation-delay: 0.15s; }
+.ind-stack-conn span:nth-child(3) { background: rgba(123,47,190,0.4); animation-delay: 0.3s; }
+.ind-stack-conn { flex-direction: column; align-items: center; }
+@keyframes ind-bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+@media (prefers-reduced-motion: reduce) { .ind-stack-conn span { animation: none; } }
+
+/* ---------- Categorias ---------- */
+.ind-cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; max-width: 1000px; margin: 0 auto; }
+.ind-cat { background: var(--ub-surface-2); border: 1px solid var(--ub-border); border-radius: var(--ub-r-lg); padding: 28px 22px; text-align: center; transition: border-color 280ms ease, box-shadow 280ms ease, transform 280ms ease; }
+.ind-cat:hover { border-color: rgba(123,47,190,0.4); box-shadow: var(--ub-shadow-md); transform: translateY(-3px); }
+.ind-cat-ico { width: 58px; height: 58px; border-radius: 16px; background: var(--cf-tint); display: grid; place-items: center; margin: 0 auto 16px; color: var(--ub-roxo-claro); }
+.ind-cat h3 { font-size: 16px; font-weight: 700; color: #fff; margin: 0; line-height: 1.3; }
+
+/* ---------- Fluxo horizontal (4 nós) ---------- */
+.ind-flowbox { max-width: 920px; margin: 0 auto; background: var(--ub-surface-2); border: 1px solid var(--ub-border); border-radius: var(--ub-r-xl); padding: 40px 32px; box-shadow: var(--ub-shadow-md); }
+.ind-flow4 { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.ind-flow4::before { content: ""; position: absolute; top: 38px; left: 12.5%; right: 12.5%; height: 2px; background: rgba(123,47,190,0.4); z-index: 0; }
+.ind-flow4-node { position: relative; z-index: 1; text-align: center; }
+.ind-flow4-ico { width: 76px; height: 76px; border-radius: 20px; background: rgba(123,47,190,0.14); display: grid; place-items: center; margin: 0 auto 14px; color: var(--ub-roxo-claro); }
+.ind-flow4-node.is-brand .ind-flow4-ico { background: var(--ub-roxo); color: #fff; box-shadow: 0 12px 30px rgba(123,47,190,0.4); }
+.ind-flow4-node .nm { font-size: 14px; font-weight: 700; color: #fff; margin: 0; }
+.ind-flow4-node .tag { font-size: 12px; color: var(--ub-roxo-claro); margin: 6px 0 0; }
+.ind-chips { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 36px; }
+.ind-chip { display: inline-flex; align-items: center; gap: 8px; background: var(--ind-green-tint); color: var(--ind-green); border: 1px solid rgba(0,229,160,0.3); font-size: 14px; font-weight: 600; padding: 9px 16px; border-radius: 999px; }
+.ind-chip svg { flex: 0 0 auto; }
+
+/* ---------- Caixa protegido (check grid) ---------- */
+.ind-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 720px; margin: 0 auto; }
+.ind-check { display: flex; align-items: center; gap: 14px; background: var(--ub-surface-2); border: 1px solid var(--ub-border); border-radius: 14px; padding: 18px 20px; }
+.ind-check-dot { width: 26px; height: 26px; border-radius: 50%; background: var(--ub-roxo); display: grid; place-items: center; color: #fff; flex: 0 0 auto; }
+.ind-check p { font-size: 14.5px; font-weight: 500; color: #fff; margin: 0; line-height: 1.45; }
+
+/* ---------- O que muda (3 role cards) ---------- */
+.ind-roles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto; }
+.ind-role { background: var(--ub-surface-2); border: 1px solid var(--ub-border); border-radius: var(--ub-r-lg); padding: 30px; transition: border-color 280ms ease, box-shadow 280ms ease; }
+.ind-role:hover { border-color: rgba(123,47,190,0.4); box-shadow: var(--ub-shadow-md); }
+.ind-role-ico { width: 56px; height: 56px; border-radius: 16px; background: rgba(123,47,190,0.14); display: grid; place-items: center; margin-bottom: 20px; color: var(--ub-roxo-claro); }
+.ind-role h3 { font-size: 21px; font-weight: 700; color: #fff; margin: 0 0 18px; }
+.ind-role ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 13px; }
+.ind-role li { display: flex; align-items: center; gap: 11px; }
+.ind-role-tick { width: 22px; height: 22px; border-radius: 50%; background: var(--ind-green-tint); display: grid; place-items: center; color: var(--ind-green); flex: 0 0 auto; }
+.ind-role li p { font-size: 14.5px; color: var(--ub-text-mute); margin: 0; }
+
+/* ---------- responsivo ---------- */
+@media (max-width: 980px) {
+  .ind-hero-grid { grid-template-columns: 1fr; gap: 44px; }
+  .ind-cats { grid-template-columns: 1fr 1fr; }
+  .ind-roles { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .ind-flow4 { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
+  .ind-flow4::before { display: none; }
+  .ind-checks { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .ind-cats { grid-template-columns: 1fr; }
+  .ind-flowbox { padding: 28px 18px; }
+}

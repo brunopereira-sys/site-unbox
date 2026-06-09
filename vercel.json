@@ -1,0 +1,47 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/", "destination": "/Unbox - Home.html" },
+    { "source": "/recursos", "destination": "/Unbox - Features.html" },
+    { "source": "/checkout", "destination": "/Unbox - Checkout.html" },
+    { "source": "/assinatura", "destination": "/Unbox - Assinatura.html" },
+    { "source": "/afiliados", "destination": "/Unbox - Creators.html" },
+    { "source": "/credito", "destination": "/Unbox - Credito.html" },
+    { "source": "/industrias", "destination": "/Unbox - Industrias.html" }
+  ],
+  "redirects": [
+    { "source": "/Unbox - Home.html", "destination": "/", "permanent": true },
+    { "source": "/Unbox - Features.html", "destination": "/recursos", "permanent": true },
+    { "source": "/Unbox - Checkout.html", "destination": "/checkout", "permanent": true },
+    { "source": "/Unbox - Assinatura.html", "destination": "/assinatura", "permanent": true },
+    { "source": "/Unbox - Creators.html", "destination": "/afiliados", "permanent": true },
+    { "source": "/Unbox - Credito.html", "destination": "/credito", "permanent": true },
+    { "source": "/Unbox - Industrias.html", "destination": "/industrias", "permanent": true },
+
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/planos", "destination": "/", "permanent": true },
+    { "source": "/planos.html", "destination": "/", "permanent": true },
+    { "source": "/features", "destination": "/recursos", "permanent": true },
+    { "source": "/features.html", "destination": "/recursos", "permanent": true },
+    { "source": "/recursos.html", "destination": "/recursos", "permanent": true },
+    { "source": "/unbox-pay", "destination": "/credito", "permanent": true },
+    { "source": "/unbox-pay.html", "destination": "/credito", "permanent": true },
+    { "source": "/growth", "destination": "/", "permanent": true },
+    { "source": "/growth.html", "destination": "/", "permanent": true },
+    { "source": "/blog", "destination": "/", "permanent": true },
+    { "source": "/blog.html", "destination": "/", "permanent": true },
+    { "source": "/carreiras", "destination": "/", "permanent": true },
+    { "source": "/carreiras.html", "destination": "/", "permanent": true },
+    { "source": "/links", "destination": "/", "permanent": true },
+    { "source": "/links.html", "destination": "/", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/img/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=2592000" }
+      ]
+    }
+  ]
+}

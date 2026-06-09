@@ -1,0 +1,151 @@
+/* ───────────────────────────────────────────────────────────
+   Novo Site Unbox — base CSS
+   Dark-first, alinhado ao Unbox Design System (tokens.css)
+   ─────────────────────────────────────────────────────────── */
+
+:root {
+  /* Brand */
+  --ub-roxo:        #7B2FBE;
+  --ub-roxo-escuro: #4A0E8F;
+  --ub-roxo-claro:  #C99BFF;
+  --ub-preto:       #0D0D0D;
+  --ub-branco:      #FFFFFF;
+  --ub-verde-turbo: #00E5A0;
+  --ub-ouro:        #FFD700;
+
+  /* Surfaces (dark) */
+  --ub-bg:          #0D0D0D;
+  --ub-surface-1:   #161616;
+  --ub-surface-2:   #1F1F1F;
+  --ub-surface-3:   #2A2A2A;
+  --ub-border:      rgba(255,255,255,0.08);
+  --ub-border-strong: rgba(255,255,255,0.18);
+
+  /* Text on dark */
+  --ub-text:        #FFFFFF;
+  --ub-text-mute:   rgba(255,255,255,0.68);
+  --ub-text-faint:  rgba(255,255,255,0.42);
+
+  /* Radius */
+  --ub-r-sm: 8px;
+  --ub-r-md: 12px;
+  --ub-r-lg: 20px;
+  --ub-r-xl: 28px;
+  --ub-r-pill: 999px;
+
+  /* Shadow */
+  --ub-shadow-md:   0 8px 24px rgba(0,0,0,0.5);
+  --ub-shadow-lg:   0 24px 64px rgba(0,0,0,0.6);
+  --ub-shadow-glow: 0 0 0 1px rgba(123,47,190,0.5), 0 16px 48px rgba(123,47,190,0.35);
+
+  /* Type */
+  --ub-font-sans:    'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ub-font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Tunable via Tweaks */
+  --accent: #9D4EDD;
+  --aura: rgba(123,47,190,0.55);
+  --section-pad: 112px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--ub-bg);
+  color: var(--ub-text);
+  font-family: var(--ub-font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+::selection { background: rgba(123,47,190,0.45); color: #fff; }
+
+/* ── Layout helpers ── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+.section { padding: var(--section-pad) 0; position: relative; }
+
+/* ── Eyebrow / labels ── */
+.eyebrow {
+  font-family: var(--ub-font-mono);
+  font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ub-roxo-claro); margin: 0 0 16px;
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--accent); }
+
+/* ── Headings ── */
+.h1 { font-size: clamp(40px, 6vw, 76px); font-weight: 900; letter-spacing: -0.045em; line-height: 0.96; color: #fff; margin: 0; }
+.h2 { font-size: clamp(30px, 4vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.04; color: #fff; margin: 0; }
+.h3 { font-size: 21px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; color: #fff; margin: 0; }
+em.accent, .accent-em { font-style: italic; color: var(--accent); font-weight: inherit; }
+.lede { font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6; color: var(--ub-text-mute); margin: 0; }
+
+/* ── Buttons ── */
+.btn {
+  font-family: var(--ub-font-sans); font-size: 15px; font-weight: 600;
+  padding: 14px 26px; border-radius: var(--ub-r-pill); border: 0; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+  transition: transform 120ms ease, box-shadow 200ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+.btn:active { transform: scale(0.98); }
+.btn--primary { background: var(--accent); color: #fff; box-shadow: var(--ub-shadow-glow); }
+.btn--primary:hover { background: #6921A8; box-shadow: 0 0 0 1px rgba(123,47,190,0.65), 0 20px 56px rgba(123,47,190,0.5); }
+.btn--secondary { background: transparent; color: #fff; border: 1px solid var(--ub-border-strong); }
+.btn--secondary:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.34); }
+.btn--ghost { background: transparent; color: var(--ub-text-mute); padding: 14px 10px; }
+.btn--ghost:hover { color: #fff; }
+.btn--white { background: #fff; color: var(--ub-preto); }
+.btn--white:hover { background: #ECECEC; }
+.btn--sm { font-size: 13px; padding: 10px 18px; }
+
+/* ── Badges ── */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 6px 12px; border-radius: var(--ub-r-pill); white-space: nowrap;
+}
+.badge--turbo { background: var(--ub-verde-turbo); color: var(--ub-preto); }
+.badge--novo { background: var(--ub-verde-turbo); color: var(--ub-preto); }
+.badge--nativo { background: rgba(123,47,190,0.18); color: var(--ub-roxo-claro); border: 1px solid rgba(123,47,190,0.45); }
+.badge--integrado { background: transparent; color: #fff; border: 1px solid var(--ub-border-strong); }
+
+/* ── Cards ── */
+.card {
+  background: linear-gradient(180deg, rgba(123,47,190,0.10), transparent 58%), var(--ub-surface-2);
+  border: 1px solid var(--ub-border);
+  border-radius: var(--ub-r-lg);
+  box-shadow: var(--ub-shadow-md);
+}
+
+/* ── Reveal on scroll ── (default visible; only hidden when JS is active) */
+.reveal { opacity: 1; transform: none; }
+html.js .reveal { opacity: 0; transform: translateY(22px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
+html.js .reveal.in { opacity: 1; transform: none; }
+
+/* ── Feature icon chip ── */
+.icon-chip {
+  width: 46px; height: 46px; border-radius: var(--ub-r-md);
+  display: grid; place-items: center; flex-shrink: 0;
+  background: rgba(123,47,190,0.14); border: 1px solid rgba(123,47,190,0.34);
+  color: var(--ub-roxo-claro);
+}
+
+/* ── Divider mono meta ── */
+.meta { font-family: var(--ub-font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ub-text-faint); }
+
+@media (max-width: 860px) {
+  :root { --section-pad: 72px; }
+  .container { padding: 0 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js .reveal { transition: none; opacity: 1; transform: none; }
+  .hp-photo .hp-bubble-inner, .hp-card-wrap .hp-bubble-inner { animation: none; }
+  * { scroll-behavior: auto; }
+}
