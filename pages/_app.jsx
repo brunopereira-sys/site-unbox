@@ -6,6 +6,8 @@ import '../styles/checkout.css';
 import '../styles/assinatura.css';
 import '../styles/credito.css';
 import '../styles/industrias.css';
+import '../styles/blog.css';
+import '../styles/carreiras.css';
 
 export default function App({ Component, pageProps }) {
   React.useEffect(() => {

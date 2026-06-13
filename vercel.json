@@ -29,10 +29,8 @@
     { "source": "/unbox-pay.html", "destination": "/credito", "permanent": true },
     { "source": "/growth", "destination": "/", "permanent": true },
     { "source": "/growth.html", "destination": "/", "permanent": true },
-    { "source": "/blog", "destination": "/", "permanent": true },
-    { "source": "/blog.html", "destination": "/", "permanent": true },
-    { "source": "/carreiras", "destination": "/", "permanent": true },
-    { "source": "/carreiras.html", "destination": "/", "permanent": true },
+    { "source": "/blog.html", "destination": "/blog", "permanent": true },
+    { "source": "/carreiras.html", "destination": "/carreiras", "permanent": true },
     { "source": "/links", "destination": "/", "permanent": true },
     { "source": "/links.html", "destination": "/", "permanent": true }
   ],
