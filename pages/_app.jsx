@@ -8,6 +8,7 @@ import '../styles/credito.css';
 import '../styles/industrias.css';
 import '../styles/blog.css';
 import '../styles/carreiras.css';
+import '../styles/verticais.css';
 
 export default function App({ Component, pageProps }) {
   React.useEffect(() => {
