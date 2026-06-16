@@ -71,10 +71,42 @@
 .vp-x svg { color: var(--ub-text-faint); }
 .vp-ok svg { color: var(--ub-verde-turbo); }
 
+/* ---------- ESPECIALIZAÇÃO: 2 cards grandes ---------- */
+.vp-spec { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.vp-spec-card { background: var(--ub-surface-1); border: 1px solid var(--ub-border); border-radius: var(--ub-r-xl); padding: 32px; }
+.vp-spec-ico { width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; background: rgba(123,47,190,.16); color: var(--ub-roxo-claro); margin-bottom: 18px; }
+.vp-spec-card h3 { font-size: 22px; margin: 0 0 10px; color: var(--ub-text); }
+.vp-spec-card p { color: var(--ub-text-mute); margin: 0; line-height: 1.6; }
+
+/* ---------- MECANISMO: ecossistema (volume → vantagem) ---------- */
+.vp-mech { max-width: 880px; margin: 0 auto; background: linear-gradient(180deg, var(--ub-surface-1), var(--ub-surface-2)); border: 1px solid var(--ub-border); border-radius: var(--ub-r-xl); padding: 36px; box-shadow: var(--ub-shadow-md); }
+.vp-mech-body { color: var(--ub-text-mute); text-align: center; max-width: 660px; margin: 0 auto 28px; line-height: 1.6; }
+.vp-mech-compare { display: flex; align-items: center; justify-content: center; gap: 26px; flex-wrap: wrap; }
+.vp-mech-box { text-align: center; }
+.vp-mech-box .v { font-family: var(--ub-font-mono); font-size: 34px; font-weight: 800; color: var(--ub-text); line-height: 1; }
+.vp-mech-box.is-hi .v { color: var(--ub-roxo-claro); }
+.vp-mech-box .l { color: var(--ub-text-mute); font-size: 14px; margin-top: 8px; max-width: 200px; }
+.vp-mech-arrow { color: var(--ub-verde-turbo); flex: none; }
+.vp-mech-note { text-align: center; color: var(--ub-text-mute); margin: 26px auto 0; max-width: 640px; }
+.vp-mech-note strong { color: var(--ub-roxo-claro); font-weight: 700; }
+
+/* ---------- INTEGRAÇÕES: 3 grupos de chips ---------- */
+.vp-integra { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.vp-integra-card { background: var(--ub-surface-1); border: 1px solid var(--ub-border); border-radius: var(--ub-r-lg); padding: 26px; }
+.vp-integra-card h3 { font-size: 16px; color: var(--ub-text); margin: 0 0 16px; display: flex; align-items: center; gap: 10px; }
+.vp-integra-card h3 svg { color: var(--ub-roxo-claro); flex: none; }
+.vp-integra-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.vp-integra-chip { padding: 7px 12px; border-radius: var(--ub-r-pill); background: var(--ub-surface-2); border: 1px solid var(--ub-border); color: var(--ub-text-mute); font-size: 13px; }
+
+.vp-hero-alt { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; color: var(--ub-text-mute); font-weight: 600; text-decoration: none; }
+.vp-hero-alt:hover { color: var(--ub-text); }
+
 @media (max-width: 760px) {
   .vp-familiar-grid { grid-template-columns: 1fr; }
   .vp-stats { grid-template-columns: 1fr; }
   .vp-compare-row { grid-template-columns: 1fr 72px 72px; }
   .vp-compare-row > div { padding: 14px 12px; }
   .vp-c-label { font-size: 14px; }
+  .vp-spec { grid-template-columns: 1fr; }
+  .vp-integra { grid-template-columns: 1fr; }
 }

@@ -9,8 +9,8 @@ const arrow = (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
 );
 const iCheck = <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 4.5 4.5L19 7" /></svg>;
-const iBigCheck = <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 4.5 4.5L19 7" /></svg>;
-const iX = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>;
+const iArrowR = <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>;
+const iDown = <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M19 12l-7 7-7-7" /></svg>;
 
 // Destaca **trechos** com <em class="accent-em"> sem dangerouslySetInnerHTML.
 function Emph({ text }) {
@@ -18,21 +18,12 @@ function Emph({ text }) {
   return <React.Fragment>{parts.map((p, i) => (i % 2 === 1 ? <em className="accent-em" key={i}>{p}</em> : <React.Fragment key={i}>{p}</React.Fragment>))}</React.Fragment>;
 }
 
-function Head({ eyebrow, title, lede, center }) {
+function Head({ eyebrow, title, lede }) {
   return (
-    <div className={"crd-head reveal" + (center ? "" : "")}>
+    <div className="crd-head reveal">
       {eyebrow ? <span className="crd-eyebrow">{eyebrow}</span> : null}
       <h2 className="crd-h2"><Emph text={title} /></h2>
       {lede ? <p className="crd-lede">{lede}</p> : null}
-    </div>
-  );
-}
-
-function CtaRow({ primaryLabel }) {
-  return (
-    <div className="car-hero-ctas reveal" style={{ transitionDelay: "180ms" }}>
-      <a href={URLS.demo} className="btn btn--primary">{primaryLabel || "Agendar demo"} {arrow}</a>
-      <a href={URLS.whatsapp} target="_blank" rel="noreferrer" className="btn btn--secondary">Falar no WhatsApp</a>
     </div>
   );
 }
@@ -51,7 +42,13 @@ function VertHero({ hero }) {
               {hero.chips.map((c) => <span className="vp-chip" key={c}>{iCheck}{c}</span>)}
             </div>
           ) : null}
-          <CtaRow primaryLabel={hero.cta} />
+          <div className="car-hero-ctas reveal" style={{ transitionDelay: "180ms" }}>
+            <a href={URLS.demo} className="btn btn--primary">{hero.cta || "Agendar demo"} {arrow}</a>
+            <a href={URLS.whatsapp} target="_blank" rel="noreferrer" className="btn btn--secondary">Falar no WhatsApp</a>
+          </div>
+          <div className="reveal" style={{ transitionDelay: "210ms" }}>
+            <a href="#como-funciona" className="vp-hero-alt">ou veja como funciona {iDown}</a>
+          </div>
         </div>
         {hero.problema ? (
           <div className="vp-prob reveal" style={{ transitionDelay: "220ms" }}>
@@ -87,67 +84,78 @@ function VertFamiliar({ familiar }) {
   );
 }
 
-function VertConta({ conta }) {
+function VertEspecializacao({ especializacao }) {
   return (
     <section className="crd-section">
       <div className="container">
-        <Head eyebrow={conta.eyebrow} title={conta.title} lede={conta.sub} />
-        <div className="vp-conta reveal">
-          {conta.rows.map((r) => (
-            <div className="vp-conta-row" key={r.label}>
-              <span className="vp-conta-label">{r.label}</span>
-              <span className="vp-conta-val">{r.value}</span>
+        <Head title={especializacao.title} lede={especializacao.lede} />
+        <div className="vp-spec">
+          {especializacao.items.map((c, i) => (
+            <div className="vp-spec-card reveal" key={c.t} style={{ transitionDelay: i * 70 + "ms" }}>
+              <span className="vp-spec-ico"><FIcon name={c.icon} size={26} /></span>
+              <h3>{c.t}</h3>
+              <p>{c.d}</p>
             </div>
           ))}
         </div>
-        {conta.total ? (
-          <div className="vp-conta-total reveal">
-            <span className="lbl">{conta.total.label}</span>
-            <span className="val">{conta.total.value}</span>
+      </div>
+    </section>
+  );
+}
+
+function VertPassos({ passos }) {
+  return (
+    <section className="crd-section crd-alt" id="como-funciona">
+      <div className="container">
+        <Head eyebrow={passos.eyebrow} title={passos.title} lede={passos.sub} />
+        <div className="crd-grid4" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
+          {passos.steps.map((s, i) => (
+            <div className="crd-step reveal" key={s.t} style={{ transitionDelay: i * 70 + "ms" }}>
+              <span className="crd-step-num">{i + 1}</span>
+              <div className="crd-step-ico"><FIcon name={s.icon} /></div>
+              <h3>{s.t}</h3>
+              <p>{s.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function VertMecanismo({ mecanismo }) {
+  const m = mecanismo;
+  return (
+    <section className="crd-section">
+      <div className="container">
+        <Head eyebrow={m.eyebrow} title={m.title} />
+        <div className="vp-mech reveal">
+          {m.body ? <p className="vp-mech-body"><Emph text={m.body} /></p> : null}
+          <div className="vp-mech-compare">
+            <div className="vp-mech-box">
+              <div className="v">{m.from.value}</div>
+              <div className="l">{m.from.label}</div>
+            </div>
+            <span className="vp-mech-arrow">{iArrowR}</span>
+            <div className="vp-mech-box is-hi">
+              <div className="v">{m.to.value}</div>
+              <div className="l">{m.to.label}</div>
+            </div>
           </div>
-        ) : null}
-        {conta.note ? <p className="vp-conta-note reveal"><Emph text={conta.note} /></p> : null}
-      </div>
-    </section>
-  );
-}
-
-function VertSolucao({ solucao }) {
-  return (
-    <section className="crd-section crd-alt">
-      <div className="container">
-        <Head eyebrow={solucao.eyebrow} title={solucao.title} lede={solucao.lede} />
-        <FeatGrid items={solucao.items} four />
-      </div>
-    </section>
-  );
-}
-
-function VertCategorias({ categorias }) {
-  return (
-    <section className="crd-section">
-      <div className="container">
-        <Head eyebrow={categorias.eyebrow} title={categorias.title} lede={categorias.lede} />
-        <div className="ind-cats">
-          {categorias.items.map((c, i) => (
-            <div className="ind-cat reveal" key={c.name} style={{ transitionDelay: i * 60 + "ms" }}>
-              <div className="ind-cat-ico"><FIcon name={c.icon} /></div>
-              <h3>{c.name}</h3>
-            </div>
-          ))}
+          {m.note ? <p className="vp-mech-note"><Emph text={m.note} /></p> : null}
         </div>
       </div>
     </section>
   );
 }
 
-function VertProva({ prova }) {
+function VertMetrics({ metrics }) {
   return (
     <section className="crd-section crd-alt">
       <div className="container">
-        <Head eyebrow={prova.eyebrow} title={prova.title} lede={prova.lede} />
+        <Head eyebrow={metrics.eyebrow} title={metrics.title} lede={metrics.lede} />
         <div className="vp-stats">
-          {prova.stats.map((s, i) => (
+          {metrics.items.map((s, i) => (
             <div className="vp-stat reveal" key={s.label} style={{ transitionDelay: i * 70 + "ms" }}>
               <div className="vp-stat-num">{s.num}<span className="u">{s.unit}</span></div>
               <div className="vp-stat-lbl">{s.label}</div>
@@ -160,25 +168,32 @@ function VertProva({ prova }) {
   );
 }
 
-function VertComparativo({ comparativo }) {
+function VertIntegracoes({ integracoes }) {
   return (
     <section className="crd-section">
       <div className="container">
-        <Head title={comparativo.title} lede={comparativo.sub} />
-        <div className="vp-compare reveal">
-          <div className="vp-compare-row vp-compare-head">
-            <div className="vp-c-label">{comparativo.caption || "Recurso"}</div>
-            <div className="vp-c-a">{comparativo.colA}</div>
-            <div className="vp-c-b">{comparativo.colB}</div>
-          </div>
-          {comparativo.rows.map((r) => (
-            <div className="vp-compare-row" key={r.label}>
-              <div className="vp-c-label">{r.label}</div>
-              <div className={"vp-c-a " + (r.a ? "vp-ok" : "vp-x")}>{r.a ? iBigCheck : iX}</div>
-              <div className={"vp-c-b " + (r.b ? "vp-ok" : "vp-x")}>{r.b ? iBigCheck : iX}</div>
+        <Head eyebrow={integracoes.eyebrow} title={integracoes.title} lede={integracoes.lede} />
+        <div className="vp-integra">
+          {integracoes.groups.map((g, i) => (
+            <div className="vp-integra-card reveal" key={g.title} style={{ transitionDelay: i * 70 + "ms" }}>
+              <h3><FIcon name={g.icon} size={18} />{g.title}</h3>
+              <div className="vp-integra-chips">
+                {g.items.map((it) => <span className="vp-integra-chip" key={it}>{it}</span>)}
+              </div>
             </div>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function VertCapacidades({ capacidades }) {
+  return (
+    <section className="crd-section crd-alt">
+      <div className="container">
+        <Head eyebrow={capacidades.eyebrow} title={capacidades.title} lede={capacidades.lede} />
+        <FeatGrid items={capacidades.items} four />
       </div>
     </section>
   );
@@ -195,7 +210,7 @@ function VertCTA({ cta }) {
             {cta.sub ? <p className="final-banner-sub">{cta.sub}</p> : null}
           </div>
           <div className="final-banner-btns">
-            <a href={URLS.demo} className="btn btn--primary">Agendar demo →</a>
+            <a href={URLS.demo} className="btn btn--primary">{cta.button || "Agendar demo"} →</a>
             <a href={URLS.whatsapp} target="_blank" rel="noreferrer" className="btn btn--secondary">Chamar no Whats</a>
           </div>
         </div>
@@ -213,11 +228,12 @@ export default function VerticalPage({ data }) {
       <main>
         <VertHero hero={data.hero} />
         {data.familiar ? <VertFamiliar familiar={data.familiar} /> : null}
-        {data.conta ? <VertConta conta={data.conta} /> : null}
-        {data.solucao ? <VertSolucao solucao={data.solucao} /> : null}
-        {data.categorias ? <VertCategorias categorias={data.categorias} /> : null}
-        {data.prova ? <VertProva prova={data.prova} /> : null}
-        {data.comparativo ? <VertComparativo comparativo={data.comparativo} /> : null}
+        {data.especializacao ? <VertEspecializacao especializacao={data.especializacao} /> : null}
+        {data.passos ? <VertPassos passos={data.passos} /> : null}
+        {data.mecanismo ? <VertMecanismo mecanismo={data.mecanismo} /> : null}
+        {data.metrics ? <VertMetrics metrics={data.metrics} /> : null}
+        {data.integracoes ? <VertIntegracoes integracoes={data.integracoes} /> : null}
+        {data.capacidades ? <VertCapacidades capacidades={data.capacidades} /> : null}
         {data.cta ? <VertCTA cta={data.cta} /> : null}
       </main>
       <Footer />
