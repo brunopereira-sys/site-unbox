@@ -37,6 +37,7 @@ function Nav() {
 
   return (
     <header className="nav-wrap">
+      <svg aria-hidden="true" width="0" height="0" style={{ position: "absolute" }}><defs><linearGradient id="ubIconGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#39FF14" /><stop offset="55%" stopColor="#18C7E6" /><stop offset="100%" stopColor="#8F28F6" /></linearGradient></defs></svg>
       <nav className={"nav-pill" + (scrolled ? " is-scrolled" : "")}>
         <a href="/" className="nav-brand" aria-label="Unbox">
           <img src={R["logo-navbar"]} alt="Unbox" />

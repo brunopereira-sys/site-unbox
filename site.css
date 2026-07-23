@@ -47,7 +47,7 @@
 
   /* Tunable via Tweaks */
   --accent: #8F28F6;
-  --aura: rgba(143,40,246,0.55);
+  --aura: rgba(143,40,246,0.18);
   --section-pad: 112px;
 }
 
@@ -84,7 +84,7 @@ img { display: block; max-width: 100%; }
 .h1 { font-size: clamp(40px, 6vw, 76px); font-weight: 900; letter-spacing: -0.045em; line-height: 0.96; color: #fff; margin: 0; }
 .h2 { font-size: clamp(30px, 4vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.04; color: #fff; margin: 0; }
 .h3 { font-size: 21px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; color: #fff; margin: 0; }
-em.accent, .accent-em { font-style: italic; color: var(--accent); font-weight: inherit; }
+em.accent, .accent-em { font-style: italic; color: #C99BFF; font-weight: inherit; background: linear-gradient(135deg, #fff 35%, #C99BFF); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lede { font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6; color: var(--ub-text-mute); margin: 0; }
 
 /* ── Buttons ── */
@@ -95,8 +95,8 @@ em.accent, .accent-em { font-style: italic; color: var(--accent); font-weight: i
   transition: transform 120ms ease, box-shadow 200ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease;
 }
 .btn:active { transform: scale(0.98); }
-.btn--primary { background: var(--accent); color: #fff; box-shadow: var(--ub-shadow-glow); }
-.btn--primary:hover { background: #6921A8; box-shadow: 0 0 0 1px rgba(143,40,246,0.65), 0 20px 56px rgba(143,40,246,0.5); }
+.btn--primary { background: var(--accent); color: #fff; box-shadow: 0 0 0 1px rgba(143,40,246,0.5), 0 0 26px rgba(143,40,246,0.35), 0 16px 48px rgba(143,40,246,0.25); }
+.btn--primary:hover { background: #A24BFF; box-shadow: 0 0 0 1px rgba(162,75,255,0.7), 0 0 34px rgba(143,40,246,0.5), 0 20px 56px rgba(143,40,246,0.35); }
 .btn--secondary { background: transparent; color: #fff; border: 1px solid var(--ub-border-strong); }
 .btn--secondary:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.34); }
 .btn--ghost { background: transparent; color: var(--ub-text-mute); padding: 14px 10px; }
