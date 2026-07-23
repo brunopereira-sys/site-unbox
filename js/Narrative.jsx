@@ -45,9 +45,9 @@ window.Problema = Problema;
 /* ================= ECOSSISTEMA, 4 pilares (explorador interativo) ================= */
 const PILLARS = [
   {
-    n: "01", name: "AI First", icon: "sparkle", soon: true,
+    n: "01", name: "AI First", icon: "sparkle", logo: true, soon: true,
     tagline: "A fundação de AI do e-commerce",
-    desc: "Crie a loja a partir de uma ideia, foto ou Figma e deixe a AI operar o dia a dia — com checkout real desde o primeiro dia.",
+    desc: "Crie a loja a partir de uma ideia, foto ou Figma e deixe a AI operar o dia a dia, com checkout real desde o primeiro dia.",
     metric: "Coming soon", metricLbl: "acesso em lotes", href: "/#ecossistema",
     features: [
       { icon: "sparkle", t: "Loja gerada por AI", d: "De um prompt, foto ou Figma para uma loja real, com checkout." },
@@ -131,7 +131,7 @@ function Ecossistema() {
                 className={"pillar-tab" + (active === i ? " is-active" : "")}
                 onClick={() => setActive(i)}
                 onMouseEnter={() => setActive(i)}>
-                <span className="pillar-tab-ico"><window.Icon name={pl.icon} size={20} /></span>
+                <span className={"pillar-tab-ico" + (pl.logo ? " pillar-tab-ico--logo" : "")}>{pl.logo ? <img src={window.__resources["simbolo-unbox"]} alt="Unbox" /> : <window.Icon name={pl.icon} size={20} />}</span>
                 <span className="pillar-tab-label">
                   <span className="pillar-tab-num">{pl.n}</span>
                   <span className="pillar-tab-name">{pl.name}{pl.soon && <span className="pillar-soon">Coming soon</span>}</span>

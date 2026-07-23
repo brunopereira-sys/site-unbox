@@ -1013,3 +1013,6 @@
 
 .pillar-soon { display: inline-block; vertical-align: 2px; margin-left: 8px; font-family: var(--ub-font-mono); font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ub-verde-turbo); border: 1px solid rgba(57,255,20,0.35); background: rgba(57,255,20,0.08); border-radius: 999px; padding: 3px 8px; }
 .pillar-metric--soon strong { font-size: 22px; color: var(--ub-verde-turbo); }
+
+.pillar-tab-ico--logo img { width: 26px; height: 26px; object-fit: contain; display: block; }
+.pillar-tab.is-active .pillar-tab-ico--logo { background: rgba(34,36,42,0.6); border-color: rgba(143,40,246,0.6); }
