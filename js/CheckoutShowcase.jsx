@@ -56,18 +56,18 @@ function OrderBumpArt() {
 }
 
 /* ---------- Marca (checkout customizado) ---------- */
-const BR_SWATCHES = ["#7B2FBE", "#1f9d5b", "#e23d4b", "#2f6fd6", "#e08a1e"];
+const BR_SWATCHES = ["#8B00FD", "#1f9d5b", "#e23d4b", "#2f6fd6", "#e08a1e"];
 function BrandArt() {
   return (
     <div className="cko-art">
       <div className="br-preview">
         <div className="br-bar">
-          <span className="br-logo" style={{ color: "#7B2FBE" }}>SUA MARCA</span>
+          <span className="br-logo" style={{ color: "#8B00FD" }}>SUA MARCA</span>
           <span className="br-secure">{csIco.lock} Pagamento seguro</span>
         </div>
         <span className="br-field"></span>
         <span className="br-field"></span>
-        <span className="br-cta" style={{ background: "#7B2FBE" }}>Finalizar compra</span>
+        <span className="br-cta" style={{ background: "#8B00FD" }}>Finalizar compra</span>
         <div className="br-swatches">
           {BR_SWATCHES.map((c, i) => (
             <span key={c} className={"br-sw" + (i === 0 ? " is-active" : "")} style={{ background: c }}></span>

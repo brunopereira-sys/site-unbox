@@ -29,7 +29,7 @@ function Hero({ variant = "split" }) {
             {["Migração assistida gratuita", "Suporte humano via WhatsApp"].map((t) => (
               <li className="hero-trust-item" key={t}>
                 <span className="hero-trust-check">
-                  <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.6 2.6L9 1" stroke="#00E5A0" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.6 2.6L9 1" stroke="#07E84B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </span>
                 {t}
               </li>

@@ -5,19 +5,19 @@
 
 :root {
   /* Brand */
-  --ub-roxo:        #7B2FBE;
-  --ub-roxo-escuro: #4A0E8F;
+  --ub-roxo:        #8B00FD;
+  --ub-roxo-escuro: #4600C7;
   --ub-roxo-claro:  #C99BFF;
-  --ub-preto:       #0D0D0D;
+  --ub-preto:       #1A1B20;
   --ub-branco:      #FFFFFF;
-  --ub-verde-turbo: #00E5A0;
+  --ub-verde-turbo: #07E84B;
   --ub-ouro:        #FFD700;
 
   /* Surfaces (dark) */
-  --ub-bg:          #0D0D0D;
-  --ub-surface-1:   #161616;
-  --ub-surface-2:   #1F1F1F;
-  --ub-surface-3:   #2A2A2A;
+  --ub-bg:          #1A1B20;
+  --ub-surface-1:   #22242A;
+  --ub-surface-2:   #2A2C33;
+  --ub-surface-3:   #343740;
   --ub-border:      rgba(255,255,255,0.08);
   --ub-border-strong: rgba(255,255,255,0.18);
 
@@ -36,18 +36,18 @@
   /* Shadow */
   --ub-shadow-md:   0 8px 24px rgba(0,0,0,0.5);
   --ub-shadow-lg:   0 24px 64px rgba(0,0,0,0.6);
-  --ub-shadow-glow: 0 0 0 1px rgba(123,47,190,0.5), 0 16px 48px rgba(123,47,190,0.35);
+  --ub-shadow-glow: 0 0 0 1px rgba(139,0,253,0.5), 0 16px 48px rgba(139,0,253,0.35);
 
   /* Type */
-  --ub-font-sans:    'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ub-font-sans:    'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --ub-font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* Motion */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Tunable via Tweaks */
-  --accent: #9D4EDD;
-  --aura: rgba(123,47,190,0.55);
+  --accent: #A64DFF;
+  --aura: rgba(139,0,253,0.55);
   --section-pad: 112px;
 }
 
@@ -65,7 +65,7 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
-::selection { background: rgba(123,47,190,0.45); color: #fff; }
+::selection { background: rgba(139,0,253,0.45); color: #fff; }
 
 /* ── Layout helpers ── */
 .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
@@ -96,7 +96,7 @@ em.accent, .accent-em { font-style: italic; color: var(--accent); font-weight: i
 }
 .btn:active { transform: scale(0.98); }
 .btn--primary { background: var(--accent); color: #fff; box-shadow: var(--ub-shadow-glow); }
-.btn--primary:hover { background: #6921A8; box-shadow: 0 0 0 1px rgba(123,47,190,0.65), 0 20px 56px rgba(123,47,190,0.5); }
+.btn--primary:hover { background: #6921A8; box-shadow: 0 0 0 1px rgba(139,0,253,0.65), 0 20px 56px rgba(139,0,253,0.5); }
 .btn--secondary { background: transparent; color: #fff; border: 1px solid var(--ub-border-strong); }
 .btn--secondary:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.34); }
 .btn--ghost { background: transparent; color: var(--ub-text-mute); padding: 14px 10px; }
@@ -113,12 +113,12 @@ em.accent, .accent-em { font-style: italic; color: var(--accent); font-weight: i
 }
 .badge--turbo { background: var(--ub-verde-turbo); color: var(--ub-preto); }
 .badge--novo { background: var(--ub-verde-turbo); color: var(--ub-preto); }
-.badge--nativo { background: rgba(123,47,190,0.18); color: var(--ub-roxo-claro); border: 1px solid rgba(123,47,190,0.45); }
+.badge--nativo { background: rgba(139,0,253,0.18); color: var(--ub-roxo-claro); border: 1px solid rgba(139,0,253,0.45); }
 .badge--integrado { background: transparent; color: #fff; border: 1px solid var(--ub-border-strong); }
 
 /* ── Cards ── */
 .card {
-  background: linear-gradient(180deg, rgba(123,47,190,0.10), transparent 58%), var(--ub-surface-2);
+  background: linear-gradient(180deg, rgba(139,0,253,0.10), transparent 58%), var(--ub-surface-2);
   border: 1px solid var(--ub-border);
   border-radius: var(--ub-r-lg);
   box-shadow: var(--ub-shadow-md);
@@ -133,7 +133,7 @@ html.js .reveal.in { opacity: 1; transform: none; }
 .icon-chip {
   width: 46px; height: 46px; border-radius: var(--ub-r-md);
   display: grid; place-items: center; flex-shrink: 0;
-  background: rgba(123,47,190,0.14); border: 1px solid rgba(123,47,190,0.34);
+  background: rgba(139,0,253,0.14); border: 1px solid rgba(139,0,253,0.34);
   color: var(--ub-roxo-claro);
 }
 
