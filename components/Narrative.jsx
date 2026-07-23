@@ -43,7 +43,19 @@ function Problema() {
 
 const PILLARS = [
   {
-    n: "01", name: "Plataforma de E-commerce", icon: "layout",
+    n: "01", name: "AI First", icon: "sparkle", logo: true, soon: true,
+    tagline: "A fundação de AI do e-commerce",
+    desc: "Crie a loja a partir de uma ideia, foto ou Figma e deixe a AI operar o dia a dia, com checkout real desde o primeiro dia.",
+    metric: "Coming soon", metricLbl: "acesso em lotes", href: "/#ecossistema",
+    features: [
+      { icon: "sparkle", t: "Loja gerada por AI", d: "De um prompt, foto ou Figma para uma loja real, com checkout." },
+      { icon: "bolt", t: "MCP nativo da Unbox", d: "Sua AI conectada à loja: catálogo, campanhas e operação." },
+      { icon: "tag", t: "Campanhas e promoções por AI", d: "Criadas, testadas e otimizadas de forma autônoma." },
+      { icon: "chart", t: "Insights e decisões por AI", d: "A AI lê seus dados e sugere o próximo passo do crescimento." },
+    ],
+  },
+  {
+    n: "02", name: "Plataforma de E-commerce", icon: "layout",
     tagline: "Sua loja D2C, pronta para escalar",
     desc: "Lojas rápidas, customizáveis e otimizadas para conversão. Do primeiro pedido aos milhões em vendas.",
     metric: "4×", metricLbl: "mais conversão", href: "/#plataforma",
@@ -55,7 +67,7 @@ const PILLARS = [
     ],
   },
   {
-    n: "02", name: "Unbox Pay", icon: "card",
+    n: "03", name: "Unbox Pay", icon: "card",
     tagline: "Pagamento que aprova + capital que escala",
     desc: "Gateway próprio com antifraude por IA e crédito para crescer sem travar o caixa.",
     metric: "+98%", metricLbl: "aprovação", href: "/#checkout",
@@ -67,7 +79,7 @@ const PILLARS = [
     ],
   },
   {
-    n: "03", name: "Dashs & Dados", icon: "chart",
+    n: "04", name: "Dashs & Dados", icon: "chart",
     tagline: "Decisões guiadas por dados em tempo real",
     desc: "Dashboards e relatórios nativos para enxergar vendas, conversão e LTV, e agir na hora.",
     metric: "Tempo real", metricLbl: "visão do negócio", href: "/#plataforma",
@@ -79,7 +91,7 @@ const PILLARS = [
     ],
   },
   {
-    n: "04", name: "Creators", icon: "users",
+    n: "05", name: "Creators", icon: "users",
     tagline: "Creators como canal de aquisição",
     desc: "Rede de creators integrada ao checkout, você só paga quando a venda acontece.",
     metric: "~15%", metricLbl: "custo por venda", href: "/#prova",
@@ -116,10 +128,10 @@ function Ecossistema() {
                 className={"pillar-tab" + (active === i ? " is-active" : "")}
                 onClick={() => setActive(i)}
                 onMouseEnter={() => setActive(i)}>
-                <span className="pillar-tab-ico"><Icon name={pl.icon} size={20} /></span>
+                <span className={"pillar-tab-ico" + (pl.logo ? " pillar-tab-ico--logo" : "")}>{pl.logo ? <img src={R["simbolo-unbox"]} alt="Unbox" /> : <Icon name={pl.icon} size={20} />}</span>
                 <span className="pillar-tab-label">
                   <span className="pillar-tab-num">{pl.n}</span>
-                  <span className="pillar-tab-name">{pl.name}</span>
+                  <span className="pillar-tab-name">{pl.name}{pl.soon && <span className="pillar-soon">Coming soon</span>}</span>
                 </span>
                 <span className="pillar-tab-chev" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
@@ -134,7 +146,7 @@ function Ecossistema() {
                 <h3 className="pillar-panel-title">{p.tagline}</h3>
                 <p className="pillar-panel-desc">{p.desc}</p>
               </div>
-              <div className="pillar-metric">
+              <div className={"pillar-metric" + (p.soon ? " pillar-metric--soon" : "")}>
                 <strong>{p.metric}</strong>
                 <span>{p.metricLbl}</span>
               </div>

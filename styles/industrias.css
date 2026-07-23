@@ -21,8 +21,8 @@
 /* fluxo vertical (3 cards empilhados) do hero */
 .ind-stack { background: var(--ub-surface-1); border: 1px solid var(--ub-border); border-radius: var(--ub-r-xl); padding: 30px; box-shadow: var(--ub-shadow-lg); }
 .ind-stack-node { display: flex; align-items: center; gap: 16px; background: var(--ub-surface-2); border: 1px solid var(--ub-border); border-radius: 18px; padding: 18px; }
-.ind-stack-node.is-brand { background: var(--ub-roxo); border-color: transparent; box-shadow: 0 16px 40px rgba(123,47,190,0.4); }
-.ind-stack-ico { width: 54px; height: 54px; border-radius: 14px; background: rgba(123,47,190,0.16); display: grid; place-items: center; color: var(--ub-roxo-claro); flex: 0 0 auto; }
+.ind-stack-node.is-brand { background: var(--ub-roxo); border-color: transparent; box-shadow: 0 16px 40px rgba(143,40,246,0.4); }
+.ind-stack-ico { width: 54px; height: 54px; border-radius: 14px; background: rgba(143,40,246,0.16); display: grid; place-items: center; color: var(--ub-roxo-claro); flex: 0 0 auto; }
 .ind-stack-node.is-brand .ind-stack-ico { background: rgba(255,255,255,0.14); color: #fff; }
 .ind-stack-node .nm { font-size: 16px; font-weight: 700; color: #fff; margin: 0; }
 .ind-stack-node .ds { font-size: 13px; color: var(--ub-text-mute); margin: 2px 0 0; }
@@ -30,8 +30,8 @@
 .ind-stack-tag { margin-left: auto; background: var(--ind-green-tint); color: var(--ind-green); font-size: 12px; font-weight: 700; padding: 5px 11px; border-radius: 999px; flex: 0 0 auto; }
 .ind-stack-conn { display: flex; justify-content: center; padding: 8px 0; }
 .ind-stack-conn span { width: 6px; height: 6px; border-radius: 50%; background: var(--ub-roxo); margin: 0 0 4px; animation: ind-bounce 1s ease-in-out infinite; }
-.ind-stack-conn span:nth-child(2) { background: rgba(123,47,190,0.7); animation-delay: 0.15s; }
-.ind-stack-conn span:nth-child(3) { background: rgba(123,47,190,0.4); animation-delay: 0.3s; }
+.ind-stack-conn span:nth-child(2) { background: rgba(143,40,246,0.7); animation-delay: 0.15s; }
+.ind-stack-conn span:nth-child(3) { background: rgba(143,40,246,0.4); animation-delay: 0.3s; }
 .ind-stack-conn { flex-direction: column; align-items: center; }
 @keyframes ind-bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
 @media (prefers-reduced-motion: reduce) { .ind-stack-conn span { animation: none; } }
@@ -39,17 +39,17 @@
 /* ---------- Categorias ---------- */
 .ind-cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; max-width: 1000px; margin: 0 auto; }
 .ind-cat { background: var(--ub-surface-2); border: 1px solid var(--ub-border); border-radius: var(--ub-r-lg); padding: 28px 22px; text-align: center; transition: border-color 280ms ease, box-shadow 280ms ease, transform 280ms ease; }
-.ind-cat:hover { border-color: rgba(123,47,190,0.4); box-shadow: var(--ub-shadow-md); transform: translateY(-3px); }
+.ind-cat:hover { border-color: rgba(143,40,246,0.4); box-shadow: var(--ub-shadow-md); transform: translateY(-3px); }
 .ind-cat-ico { width: 58px; height: 58px; border-radius: 16px; background: var(--cf-tint); display: grid; place-items: center; margin: 0 auto 16px; color: var(--ub-roxo-claro); }
 .ind-cat h3 { font-size: 16px; font-weight: 700; color: #fff; margin: 0; line-height: 1.3; }
 
 /* ---------- Fluxo horizontal (4 nós) ---------- */
 .ind-flowbox { max-width: 920px; margin: 0 auto; background: var(--ub-surface-2); border: 1px solid var(--ub-border); border-radius: var(--ub-r-xl); padding: 40px 32px; box-shadow: var(--ub-shadow-md); }
 .ind-flow4 { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.ind-flow4::before { content: ""; position: absolute; top: 38px; left: 12.5%; right: 12.5%; height: 2px; background: rgba(123,47,190,0.4); z-index: 0; }
+.ind-flow4::before { content: ""; position: absolute; top: 38px; left: 12.5%; right: 12.5%; height: 2px; background: rgba(143,40,246,0.4); z-index: 0; }
 .ind-flow4-node { position: relative; z-index: 1; text-align: center; }
-.ind-flow4-ico { width: 76px; height: 76px; border-radius: 20px; background: rgba(123,47,190,0.14); display: grid; place-items: center; margin: 0 auto 14px; color: var(--ub-roxo-claro); }
-.ind-flow4-node.is-brand .ind-flow4-ico { background: var(--ub-roxo); color: #fff; box-shadow: 0 12px 30px rgba(123,47,190,0.4); }
+.ind-flow4-ico { width: 76px; height: 76px; border-radius: 20px; background: rgba(143,40,246,0.14); display: grid; place-items: center; margin: 0 auto 14px; color: var(--ub-roxo-claro); }
+.ind-flow4-node.is-brand .ind-flow4-ico { background: var(--ub-roxo); color: #fff; box-shadow: 0 12px 30px rgba(143,40,246,0.4); }
 .ind-flow4-node .nm { font-size: 14px; font-weight: 700; color: #fff; margin: 0; }
 .ind-flow4-node .tag { font-size: 12px; color: var(--ub-roxo-claro); margin: 6px 0 0; }
 .ind-chips { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 36px; }
@@ -65,8 +65,8 @@
 /* ---------- O que muda (3 role cards) ---------- */
 .ind-roles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto; }
 .ind-role { background: var(--ub-surface-2); border: 1px solid var(--ub-border); border-radius: var(--ub-r-lg); padding: 30px; transition: border-color 280ms ease, box-shadow 280ms ease; }
-.ind-role:hover { border-color: rgba(123,47,190,0.4); box-shadow: var(--ub-shadow-md); }
-.ind-role-ico { width: 56px; height: 56px; border-radius: 16px; background: rgba(123,47,190,0.14); display: grid; place-items: center; margin-bottom: 20px; color: var(--ub-roxo-claro); }
+.ind-role:hover { border-color: rgba(143,40,246,0.4); box-shadow: var(--ub-shadow-md); }
+.ind-role-ico { width: 56px; height: 56px; border-radius: 16px; background: rgba(143,40,246,0.14); display: grid; place-items: center; margin-bottom: 20px; color: var(--ub-roxo-claro); }
 .ind-role h3 { font-size: 21px; font-weight: 700; color: #fff; margin: 0 0 18px; }
 .ind-role ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 13px; }
 .ind-role li { display: flex; align-items: center; gap: 11px; }
