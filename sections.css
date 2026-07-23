@@ -440,7 +440,7 @@
 .hp-eco-grid .eco-tile { background: var(--ub-surface-3); border: 1px solid var(--ub-border); border-radius: var(--ub-r-md); padding: 13px 12px; display: flex; flex-direction: column; gap: 9px; min-height: 96px; }
 .hp-eco-grid .eco-tile .icon-chip { width: 34px; height: 34px; }
 .hp-eco-grid .eco-tile-label { font-size: 12px; font-weight: 600; color: var(--ub-text); line-height: 1.25; margin-top: auto; }
-.hp-eco-grid .eco-core { background: linear-gradient(150deg, var(--ub-roxo) 0%, var(--ub-roxo-escuro) 100%); border-color: rgba(201,155,255,0.5); box-shadow: var(--ub-shadow-glow); align-items: center; justify-content: center; }
+.hp-eco-grid .eco-core { background: #0D0D0D; border-color: rgba(255,255,255,0.14); box-shadow: 0 0 34px rgba(143,40,246,0.25); align-items: center; justify-content: center; }
 .hp-eco-grid .eco-core img { height: 30px; width: auto; }
 /* ── Arte do popup Checkout TURBO ── */
 .hp-ck-art { position: relative; width: 100%; height: 100%; min-height: 380px; display: flex; align-items: center; justify-content: center; }
