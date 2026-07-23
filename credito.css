@@ -6,12 +6,12 @@
 
 :root {
   --cf-purple: var(--ub-roxo);
-  --cf-tint: rgba(139,0,253,0.10);   /* no lugar do bg-blue-50 */
-  --cf-tint-2: rgba(139,0,253,0.18);
+  --cf-tint: rgba(143,40,246,0.10);   /* no lugar do bg-blue-50 */
+  --cf-tint-2: rgba(143,40,246,0.18);
 }
 
 /* tom de seção alternada (no lugar do bg-blue-50 claro) */
-.crd-alt { background: linear-gradient(180deg, rgba(139,0,253,0.06), transparent), var(--ub-surface-1); }
+.crd-alt { background: linear-gradient(180deg, rgba(143,40,246,0.06), transparent), var(--ub-surface-1); }
 /* seção sólida roxa (no lugar do bg-primary) */
 .crd-solid { background: var(--ub-roxo); }
 
@@ -30,7 +30,7 @@
 .crd-hero-cta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* card-gráfico do hero (visual recriado, no lugar do vídeo) */
-.cf-visual { position: relative; background: #22242A; border: 1px solid var(--ub-border-strong); border-radius: 28px; padding: 0; min-height: 480px; height: 520px; width: 100%; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,0.5); }
+.cf-visual { position: relative; background: #2A2D34; border: 1px solid var(--ub-border-strong); border-radius: 28px; padding: 0; min-height: 480px; height: 520px; width: 100%; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,0.5); }
 .cf-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
 .cf-chart { position: absolute; inset: 0; width: 100%; height: 100%; }
 .cf-chart path.line { fill: none; stroke: #fff; stroke-width: 3.5; stroke-linecap: round; }
@@ -39,7 +39,7 @@
 .cf-coin-box { width: 54px; height: 54px; border-radius: 16px; background: #24242E; border: 1px solid rgba(255,255,255,0.12); display: grid; place-items: center; color: #fff; position: relative; box-shadow: 0 10px 28px rgba(0,0,0,0.55); }
 .cf-coin-plus { position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: var(--cf-purple); color: #fff; display: grid; place-items: center; font-size: 15px; font-weight: 700; }
 .cf-corner { position: absolute; top: 26px; right: 26px; width: 64px; height: 64px; border-radius: 18px; background: #20202A; border: 1px solid rgba(255,255,255,0.1); }
-.cf-limit { position: absolute; top: 28px; left: 28px; background: var(--cf-purple); color: #fff; border-radius: 18px; padding: 16px 18px; box-shadow: 0 16px 40px rgba(139,0,253,0.45); max-width: 62%; }
+.cf-limit { position: absolute; top: 28px; left: 28px; background: var(--cf-purple); color: #fff; border-radius: 18px; padding: 16px 18px; box-shadow: 0 16px 40px rgba(143,40,246,0.45); max-width: 62%; }
 .cf-limit-head { display: flex; align-items: center; gap: 8px; font-size: 13px; opacity: 0.92; }
 .cf-limit-icon { width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.2); display: grid; place-items: center; flex: 0 0 auto; }
 .cf-limit-val { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin: 8px 0 2px; }
@@ -62,7 +62,7 @@
 /* ---------- GRID 3 cards (Soluções) ---------- */
 .crd-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1080px; margin: 0 auto; }
 .crd-sol { padding: 30px; border-radius: var(--ub-r-lg); background: var(--ub-surface-2); border: 1px solid var(--ub-border); transition: border-color 280ms ease, box-shadow 280ms ease, transform 280ms ease; cursor: default; }
-.crd-sol:hover { border-color: rgba(139,0,253,0.4); box-shadow: var(--ub-shadow-lg); transform: translateY(-3px); }
+.crd-sol:hover { border-color: rgba(143,40,246,0.4); box-shadow: var(--ub-shadow-lg); transform: translateY(-3px); }
 .crd-sol-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
 .crd-sol-ico { width: 48px; height: 48px; border-radius: 14px; background: var(--cf-tint-2); display: grid; place-items: center; color: var(--ub-roxo-claro); }
 .crd-sol-arrow { color: var(--ub-text-faint); transition: color 220ms ease, transform 220ms ease; }
@@ -78,7 +78,7 @@
 /* ---------- Comparativo (Por que) ---------- */
 .crd-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: stretch; max-width: 980px; margin: 0 auto; }
 .crd-cmp { border-radius: var(--ub-r-lg); padding: 28px; }
-.crd-cmp--good { background: var(--ub-surface-2); border: 1px solid rgba(139,0,253,0.3); }
+.crd-cmp--good { background: var(--ub-surface-2); border: 1px solid rgba(143,40,246,0.3); }
 .crd-cmp--bad { background: var(--ub-surface-1); border: 1px solid var(--ub-border); opacity: 0.78; }
 .crd-cmp-head { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
 .crd-cmp-badge { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; flex: 0 0 auto; }
@@ -88,7 +88,7 @@
 .crd-cmp-list { display: flex; flex-direction: column; gap: 13px; }
 .crd-cmp-row { display: flex; align-items: flex-start; gap: 12px; }
 .crd-cmp-dot { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; flex: 0 0 auto; margin-top: 1px; }
-.crd-cmp-dot--good { background: rgba(139,0,253,0.22); color: var(--ub-roxo-claro); }
+.crd-cmp-dot--good { background: rgba(143,40,246,0.22); color: var(--ub-roxo-claro); }
 .crd-cmp-dot--bad { background: rgba(255,90,90,0.18); color: #FF6B6B; }
 .crd-cmp-row span { font-size: 14.5px; }
 .crd-cmp-row.good span { color: #fff; font-weight: 500; }
@@ -119,7 +119,7 @@
 /* ---------- Como funciona (4 passos) ---------- */
 .crd-grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; max-width: 1080px; margin: 0 auto; }
 .crd-step { position: relative; background: var(--ub-surface-2); border: 1px solid var(--ub-border); border-radius: var(--ub-r-lg); padding: 22px; transition: border-color 280ms ease, box-shadow 280ms ease; }
-.crd-step:hover { border-color: rgba(139,0,253,0.4); box-shadow: var(--ub-shadow-md); }
+.crd-step:hover { border-color: rgba(143,40,246,0.4); box-shadow: var(--ub-shadow-md); }
 .crd-step-num { position: absolute; top: -13px; left: 20px; width: 28px; height: 28px; border-radius: 50%; background: var(--cf-purple); color: #fff; display: grid; place-items: center; font-size: 12px; font-weight: 700; }
 .crd-step-ico { height: 60px; border-radius: 14px; background: var(--cf-tint); display: grid; place-items: center; margin-bottom: 16px; color: var(--ub-roxo-claro); }
 .crd-step h3 { font-size: 17px; font-weight: 700; color: #fff; margin: 0 0 8px; }
@@ -166,10 +166,10 @@
 .crd-elig-h2 { font-size: clamp(30px, 4vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.06; color: #fff; margin: 0 0 40px; max-width: 18ch; }
 .crd-elig-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
 .crd-elig { border-radius: var(--ub-r-lg); padding: 22px; display: flex; flex-direction: column; min-height: 280px; }
-.crd-elig--dark { background: #1A1B20; color: #fff; position: relative; overflow: hidden; }
+.crd-elig--dark { background: #22242A; color: #fff; position: relative; overflow: hidden; }
 .crd-elig--light { background: var(--ub-surface-2); border: 1px solid var(--ub-border); color: #fff; }
 .crd-elig p.cap { font-size: 14px; font-weight: 600; margin: 0 0 16px; position: relative; z-index: 1; }
-.crd-elig .month-badge { background: #fff; color: #1A1B20; font-size: 11px; font-weight: 600; padding: 5px 11px; border-radius: 8px; width: fit-content; margin-bottom: 12px; }
+.crd-elig .month-badge { background: #fff; color: #22242A; font-size: 11px; font-weight: 600; padding: 5px 11px; border-radius: 8px; width: fit-content; margin-bottom: 12px; }
 .crd-elig .big-val { font-size: 28px; font-weight: 800; color: #fff; margin: 0; letter-spacing: -0.02em; }
 .crd-elig .bars { display: flex; align-items: flex-end; gap: 4px; height: 90px; margin-top: auto; }
 .crd-elig .bars .bar { flex: 1; background: var(--cf-purple); border-radius: 4px 4px 0 0; }
@@ -180,7 +180,7 @@
 .crd-elig .prod .qt { font-size: 11px; color: rgba(255,255,255,0.55); margin: 0; }
 .crd-elig .prod .pr { font-size: 13px; font-weight: 600; color: #fff; margin-left: auto; }
 .crd-states { display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
-.crd-state { display: inline-flex; align-items: center; gap: 5px; background: #1A1B20; color: #fff; font-size: 11px; font-weight: 500; padding: 6px 11px; border-radius: 999px; }
+.crd-state { display: inline-flex; align-items: center; gap: 5px; background: #22242A; color: #fff; font-size: 11px; font-weight: 500; padding: 6px 11px; border-radius: 999px; }
 
 /* ---------- Stats ---------- */
 .crd-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 880px; margin: 0 auto 40px; }

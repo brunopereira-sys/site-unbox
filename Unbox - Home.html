@@ -160,13 +160,13 @@ window.UNBOX_LEADS = {
 
 <script type="text/babel">
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "accent": "#A64DFF",
+  "accent": "#8F28F6",
   "aura": "padrao",
   "heroLayout": "split",
   "density": "compacto"
 }/*EDITMODE-END*/;
 
-const AURA_MAP = { sutil: "rgba(139,0,253,0.32)", padrao: "rgba(139,0,253,0.55)", intensa: "rgba(139,0,253,0.8)" };
+const AURA_MAP = { sutil: "rgba(143,40,246,0.32)", padrao: "rgba(143,40,246,0.55)", intensa: "rgba(143,40,246,0.8)" };
 const PAD_MAP = { compacto: "84px", padrao: "112px", espacoso: "140px" };
 
 function App() {
@@ -222,7 +222,7 @@ function App() {
       <TweaksPanel>
         <TweakSection label="Paleta" />
         <TweakColor label="Roxo" value={t.accent}
-          options={["#8B00FD", "#A64DFF", "#6921A8", "#C99BFF"]}
+          options={["#8F28F6", "#8F28F6", "#6921A8", "#C99BFF"]}
           onChange={(v) => setTweak("accent", v)} />
         <TweakRadio label="Brilho" value={t.aura}
           options={["sutil", "padrao", "intensa"]}
