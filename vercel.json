@@ -29,10 +29,6 @@
     {
       "source": "/industrias",
       "destination": "/Unbox - Industrias.html"
-    },
-    {
-      "source": "/ai",
-      "destination": "/ai.html"
     }
   ],
   "redirects": [
