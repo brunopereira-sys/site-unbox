@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unbox AI Foundry — a fundação de AI do e-commerce</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0A0A0B; --paper:#F4F2EE; --card:#FBFAF8;
+    --green:#39FF14; --purple:#7A2CFF; --cyan:#18C7E6;
+    --muted:#6B6B70; --line:rgba(10,10,11,0.10);
+    --grad:linear-gradient(110deg,#39FF14,#18C7E6 48%,#7A2CFF);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:'Sora',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+
+  /* ====== BUILD OVERLAY (preservado) ====== */
+  #builder{position:fixed;inset:0;z-index:100;background:var(--ink);color:#EDEDED;
+    display:flex;align-items:center;justify-content:center;transition:opacity .8s ease;}
+  #builder.gone{opacity:0;pointer-events:none;}
+  .builder-inner{width:min(560px,90vw);}
+  .b-prompt{font-family:ui-monospace,Menlo,monospace;font-size:15px;line-height:1.7;color:#9A9AA0;margin-bottom:22px;}
+  .b-prompt .you{color:#39FF14;}
+  .b-prompt .cursor{animation:blink 1s steps(2) infinite;}
+  .b-log{font-family:ui-monospace,Menlo,monospace;font-size:13px;line-height:2;min-height:160px;}
+  .b-log div{opacity:0;transform:translateX(-6px);animation:slidein .4s ease forwards;color:#C4C4CA;}
+  .b-log .ok{color:#39FF14;}
+  .b-bar{height:2px;background:rgba(255,255,255,.1);margin-top:24px;border-radius:2px;overflow:hidden;}
+  .b-bar i{display:block;height:100%;width:0;background:var(--grad);transition:width .3s ease;}
+  @keyframes blink{50%{opacity:0;}}
+  @keyframes slidein{to{opacity:1;transform:translateX(0);}}
+
+  /* ====== META BAR ====== */
+  #metabar{position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;gap:14px;padding:11px 22px;
+    background:rgba(10,10,11,0.92);backdrop-filter:blur(8px);
+    color:#D8D8DC;font-size:12.5px;transform:translateY(-100%);transition:transform .6s ease .3s;}
+  #metabar.show{transform:translateY(0);}
+  #metabar .dot{width:7px;height:7px;border-radius:99px;background:#39FF14;box-shadow:0 0 8px #39FF14;flex-shrink:0;}
+  #metabar .sep{color:#55555C;}
+  #metabar a{color:#fff;text-decoration:none;font-weight:600;margin-left:auto;
+    border:1px solid rgba(255,255,255,.18);padding:6px 14px;border-radius:8px;font-size:12.5px;white-space:nowrap;}
+  #metabar a:hover{background:rgba(255,255,255,.08);}
+  #metabar .mtext{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ====== NAV ====== */
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;}
+  .brand{display:flex;align-items:center;gap:11px;}
+  .brand .bm{font-weight:700;font-size:21px;letter-spacing:-0.01em;}
+  .brand .tag{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--muted);border:1px solid var(--line);padding:4px 8px;border-radius:6px;}
+  .nav nav{display:flex;gap:26px;font-size:14px;color:var(--muted);align-items:center;}
+  .nav a{text-decoration:none;color:var(--muted);}
+  .nav a.cta{color:var(--ink);font-weight:600;border:1px solid var(--line);padding:9px 18px;border-radius:99px;}
+
+  /* ====== HERO ====== */
+  .hero{padding:46px 0 22px;max-width:720px;}
+  .hero h1{font-size:64px;line-height:0.98;font-weight:800;letter-spacing:-0.038em;margin:0 0 22px;}
+  .hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero p{font-size:19px;line-height:1.55;color:var(--muted);margin:0 0 32px;max-width:540px;}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+  .btn-dark{background:var(--ink);color:var(--paper);border:none;padding:16px 28px;border-radius:99px;
+    font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:transform .15s ease;}
+  .btn-dark:hover{transform:translateY(-2px);}
+  .hero-cta .micro{font-size:13px;color:var(--muted);}
+
+  /* ====== SECTION SHELL ====== */
+  .sec{padding:64px 0;border-top:1px solid var(--line);}
+  .sec-k{font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+  .sec-h{font-size:32px;font-weight:700;letter-spacing:-0.02em;margin:0 0 8px;max-width:640px;line-height:1.12;}
+  .sec-sub{font-size:16px;color:var(--muted);margin:0 0 38px;max-width:560px;line-height:1.5;}
+
+  /* ====== CASES ====== */
+  .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .case{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card);
+    text-decoration:none;color:inherit;display:block;transition:transform .18s ease,box-shadow .18s ease;}
+  .case:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.08);}
+  .case .shot{height:188px;background:#1A1410;position:relative;overflow:hidden;}
+  .case .shot .frame{position:absolute;inset:0;display:flex;flex-direction:column;}
+  .case .shot .bar{height:26px;background:#2A211A;display:flex;align-items:center;gap:5px;padding:0 10px;}
+  .case .shot .bar i{width:6px;height:6px;border-radius:99px;background:#5A4A3A;}
+  .case .shot .body{flex:1;background:linear-gradient(160deg,#E8B84B,#C8822E);position:relative;}
+  .case .shot .body .h{position:absolute;top:18px;left:18px;color:#1A1008;font-weight:800;font-size:18px;letter-spacing:-0.01em;}
+  .case .shot .body .h small{display:block;font-weight:500;font-size:10px;letter-spacing:.1em;opacity:.7;margin-top:2px;}
+  .case .shot .body .prods{position:absolute;bottom:16px;left:18px;right:18px;display:flex;gap:8px;}
+  .case .shot .body .prods span{flex:1;height:34px;background:rgba(255,255,255,.55);border-radius:6px;}
+  .case .meta{padding:18px 20px;}
+  .case .meta .nm{font-weight:600;font-size:16px;margin-bottom:3px;display:flex;align-items:center;gap:8px;}
+  .case .meta .nm .live{font-size:10px;font-weight:600;color:#127A1E;background:rgba(18,122,30,.1);padding:2px 7px;border-radius:99px;letter-spacing:.04em;}
+  .case .meta .ds{font-size:13.5px;color:var(--muted);line-height:1.45;}
+  .case .meta .lk{font-size:13px;color:var(--ink);font-weight:600;margin-top:12px;display:inline-flex;align-items:center;gap:5px;}
+
+  /* ====== ENTRY PATHS (interativo) ====== */
+  .paths-wrap{background:var(--ink);color:#EDEDED;border-radius:28px;padding:54px 48px;position:relative;overflow:hidden;}
+  .paths-wrap::after{content:"";position:absolute;inset:0;pointer-events:none;background:
+    radial-gradient(70% 110% at 92% 8%, rgba(122,44,255,.16), transparent 50%),
+    radial-gradient(60% 80% at 4% 96%, rgba(57,255,20,.10), transparent 45%);}
+  .paths-wrap .pk{position:relative;font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#9A9AA0;margin-bottom:14px;}
+  .paths-wrap h2{position:relative;font-size:34px;font-weight:700;letter-spacing:-0.02em;margin:0 0 10px;line-height:1.1;}
+  .paths-wrap h2 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .paths-wrap .psub{position:relative;font-size:16px;color:#B4B4BA;margin:0 0 34px;max-width:600px;line-height:1.55;}
+
+  .paths{position:relative;display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;}
+  .chip{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);
+    border-radius:99px;padding:11px 20px;font-size:14px;font-weight:500;cursor:pointer;
+    transition:all .18s ease;color:#D8D8DC;display:flex;align-items:center;gap:9px;}
+  .chip:hover{border-color:rgba(255,255,255,.4);}
+  .chip.active{background:var(--paper);color:var(--ink);border-color:var(--paper);}
+  .chip .ic{width:16px;height:16px;display:inline-block;}
+
+  .path-panel{position:relative;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+    border-radius:18px;padding:30px 32px;min-height:150px;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;}
+  .path-panel .pp-text h3{margin:0 0 10px;font-size:21px;font-weight:600;}
+  .path-panel .pp-text p{margin:0;font-size:15.5px;color:#B4B4BA;line-height:1.55;}
+  .path-panel .pp-flow{display:flex;align-items:center;gap:14px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:#9A9AA0;white-space:nowrap;}
+  .path-panel .pp-flow .node{border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:12px 14px;text-align:center;color:#EDEDED;background:rgba(255,255,255,.03);}
+  .path-panel .pp-flow .node.out{border-color:transparent;background:var(--grad);color:#0A0A0B;font-weight:700;}
+  .path-panel .pp-flow .arr{color:#55555C;}
+  .pp-note{position:relative;margin-top:18px;font-size:13.5px;color:#7A7A82;}
+  .pp-note b{color:#C4C4CA;font-weight:600;}
+
+  /* ====== DIFF STRIP ====== */
+  .strip{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:18px;overflow:hidden;}
+  .strip > div{padding:30px 26px;border-right:1px solid var(--line);}
+  .strip > div:last-child{border-right:none;}
+  .strip .n{font-size:12.5px;color:var(--muted);margin-bottom:10px;font-weight:600;letter-spacing:.04em;}
+  .strip h4{margin:0 0 8px;font-size:18px;font-weight:600;letter-spacing:-0.01em;}
+  .strip p{margin:0;font-size:14px;color:var(--muted);line-height:1.5;}
+
+  /* ====== FINAL ====== */
+  .final{text-align:center;padding:96px 0 70px;}
+  .final h2{font-size:50px;font-weight:800;letter-spacing:-0.035em;margin:0 0 16px;line-height:1.04;}
+  .final p{font-size:18px;color:var(--muted);max-width:480px;margin:0 auto 34px;line-height:1.5;}
+  .wl{display:flex;gap:10px;max-width:440px;margin:0 auto;}
+  .wl input{flex:1;padding:15px 18px;border-radius:99px;border:1px solid var(--line);background:var(--card);font-family:inherit;font-size:15px;outline:none;}
+  .wl button{background:var(--ink);color:var(--paper);border:none;border-radius:99px;padding:15px 26px;font-family:inherit;font-weight:600;font-size:15px;cursor:pointer;white-space:nowrap;}
+  .wl-note{font-size:13px;color:var(--muted);margin-top:14px;}
+  .ent{margin-top:38px;font-size:14px;color:var(--muted);}
+  .ent a{color:var(--ink);font-weight:600;}
+
+  footer{border-top:1px solid var(--line);padding:26px 0;}
+  .foot{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);flex-wrap:wrap;gap:12px;}
+  .foot .fm{font-weight:700;letter-spacing:.06em;color:var(--ink);}
+
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--purple);outline-offset:2px;}
+
+  @media (max-width:820px){
+    .hero h1{font-size:44px;}.nav nav a:not(.cta){display:none;}
+    .cases{grid-template-columns:1fr;}
+    .strip{grid-template-columns:1fr;}.strip>div{border-right:none;border-bottom:1px solid var(--line);}
+    .strip>div:last-child{border-bottom:none;}
+    .paths-wrap{padding:38px 26px;}.paths-wrap h2{font-size:26px;}
+    .path-panel{grid-template-columns:1fr;}.path-panel .pp-flow{flex-wrap:wrap;}
+    .final h2{font-size:36px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .b-log div{animation:none;opacity:1;transform:none;}
+    .reveal{transition:none;opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ BUILD OVERLAY (preservado) ============ -->
+<div id="builder">
+  <div class="builder-inner">
+    <div class="b-prompt"><span class="you">você</span> &rsaquo; <span id="bp"></span><span class="cursor" id="bc">▋</span></div>
+    <div class="b-log" id="blog"></div>
+    <div class="b-bar"><i id="bbar"></i></div>
+  </div>
+</div>
+
+<!-- ============ META BAR ============ -->
+<div id="metabar">
+  <span class="dot"></span>
+  <span class="mtext">Unbox AI Foundry — a fundação que transforma qualquer ideia em loja real, com checkout.</span>
+  <a href="#waitlist">Entrar na waitlist →</a>
+</div>
+
+<div class="wrap">
+
+  <!-- NAV -->
+  <div class="nav reveal">
+    <div class="brand">
+      <span id="logo-svg"></span>
+      <span class="bm">unbox</span>
+      <span class="tag">AI Foundry</span>
+    </div>
+    <nav>
+      <a href="#casos">Lojas reais</a>
+      <a href="#caminhos">Como criar</a>
+      <a href="#waitlist" class="cta">Entrar na waitlist</a>
+    </nav>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero reveal">
+    <h1>Crie do seu jeito.<br>A fundação faz <em>o resto.</em></h1>
+    <p>Você desenha no seu Claude, manda uma foto, importa um Figma ou migra uma página que já existe. O Unbox AI Foundry transforma isso numa loja real — com estoque, campanha e checkout no Pix. Não importa o caminho.</p>
+    <div class="hero-cta">
+      <button class="btn-dark" onclick="document.getElementById('waitlist').scrollIntoView()">Entrar na waitlist</button>
+      <span class="micro">Vagas limitadas · liberação em lotes</span>
+    </div>
+  </section>
+
+  <!-- CASES -->
+  <section class="sec" id="casos">
+    <div class="sec-k reveal">Não é demo. Está no ar.</div>
+    <h2 class="sec-h reveal">Lojas reais, criadas com o Foundry.</h2>
+    <p class="sec-sub reveal">Vendendo de verdade agora — com checkout, Pix e operação completa. Clique e navegue.</p>
+    <div class="cases reveal" id="cases"></div>
+  </section>
+
+  <!-- ENTRY PATHS -->
+  <section class="sec" id="caminhos" style="border:none;">
+    <div class="paths-wrap reveal">
+      <div class="pk">O caminho é seu</div>
+      <h2>Comece de onde você já está. <em>A fundação aceita.</em></h2>
+      <p class="psub">A Unbox não te prende a um jeito de construir. Crie como quiser no seu Claude — e entregue à fundação. Escolha um ponto de partida:</p>
+
+      <div class="paths" id="chips"></div>
+      <div class="path-panel" id="panel"></div>
+      <div class="pp-note">Seja qual for a entrada, a saída é a mesma: uma loja React de verdade, com <b>controle total da experiência de compra — incluindo o checkout</b>. Isso o gerador de site não faz; a plataforma fechada não deixa.</div>
+    </div>
+  </section>
+
+  <!-- DIFF STRIP -->
+  <section class="sec">
+    <div class="sec-k reveal">Por que é diferente</div>
+    <div class="strip reveal">
+      <div>
+        <div class="n">A loja inteira</div>
+        <h4>Um MCP, não dez apps</h4>
+        <p>Produto, Pix, assinatura, campanha e checkout num lugar só. A AI gerencia tudo — inclusive o que nem está em tela.</p>
+      </div>
+      <div>
+        <div class="n">Nasce vendendo</div>
+        <h4>Checkout real, não maquete</h4>
+        <p>A loja gerada já processa pagamento. Onde os geradores de site param, o Foundry atravessa.</p>
+      </div>
+      <div>
+        <div class="n">Feita pro Brasil</div>
+        <h4>Pix nativo, de fábrica</h4>
+        <p>Operação e pagamento locais desde o primeiro segundo. Sem ferramenta gringa, sem dólar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section class="final" id="waitlist">
+    <h2 class="reveal">Sua loja é o próximo prompt.</h2>
+    <p class="reveal">O acesso ao Foundry abre em lotes. Entre na fila e construa a sua loja inteira via AI.</p>
+    <div class="wl reveal">
+      <input id="wlemail" placeholder="seu@email.com" />
+      <button onclick="joinWl(this)">Entrar na waitlist</button>
+    </div>
+    <div class="wl-note reveal" id="wlnote">Vagas limitadas · liberação em lotes · sem cartão</div>
+    <div class="ent reveal">Operação de maior porte? <a href="#">Fale com a gente</a></div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <div class="fm">unbox · AI Foundry</div>
+    <span>© 2026 Unbox — a ferramenta de e-commerce de AI.</span>
+  </div>
+</footer>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  // ---------- logo svg ----------
+  (function(){
+    const id='lg';
+    document.getElementById('logo-svg').innerHTML =
+    `<svg width="30" height="30" viewBox="0 0 100 100" fill="none">
+      <defs><linearGradient id="${id}" x1="10" y1="10" x2="90" y2="90">
+        <stop offset="0%" stop-color="#39FF14"/><stop offset="50%" stop-color="#18C7E6"/><stop offset="100%" stop-color="#7A2CFF"/>
+      </linearGradient></defs>
+      <path d="M50 4 C54 32 68 46 96 50 C68 54 54 68 50 96 C46 68 32 54 4 50 C32 46 46 32 50 4 Z"
+        fill="url(#${id})" fill-opacity="0.16" stroke="url(#${id})" stroke-width="3"/>
+    </svg>`;
+  })();
+
+  // ---------- CASES (placeholder: Badia 3x — SUBSTITUIR 2 antes de lançar) ----------
+  const cases = [
+    {nm:"TemperosBadia", ds:"Temperos e especiarias · combos, Pix, assinatura", url:"https://temperosbadia-storefront.vercel.app/", live:true},
+    // TODO: substituir por caso real antes do lançamento
+    {nm:"TemperosBadia", ds:"Temperos e especiarias · combos, Pix, assinatura", url:"https://temperosbadia-storefront.vercel.app/", live:true},
+    // TODO: substituir por caso real antes do lançamento
+    {nm:"TemperosBadia", ds:"Temperos e especiarias · combos, Pix, assinatura", url:"https://temperosbadia-storefront.vercel.app/", live:true},
+  ];
+  document.getElementById('cases').innerHTML = cases.map(c=>`
+    <a class="case" href="${c.url}" target="_blank" rel="noopener">
+      <div class="shot">
+        <div class="frame">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="body">
+            <div class="h">${c.nm}<small>BADIA SPICES · DESDE 1967</small></div>
+            <div class="prods"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="nm">${c.nm} ${c.live?'<span class="live">● no ar</span>':''}</div>
+        <div class="ds">${c.ds}</div>
+        <div class="lk">Visitar a loja →</div>
+      </div>
+    </a>`).join('');
+
+  // ---------- ENTRY PATHS ----------
+  const paths = [
+    {key:"Claude Design", icon:"✦",
+     h:"De um Claude Design",
+     p:"Você desenha a loja no Claude, do seu jeito. A fundação recebe o design e o transforma numa loja React funcional, plugada no checkout.",
+     flow:["Claude Design","Foundry","Loja real"]},
+    {key:"Uma foto", icon:"◎",
+     h:"De uma foto",
+     p:"Tirou foto de uma referência, um print, um rascunho no papel? Manda pro seu Claude, ele interpreta, a fundação constrói a loja de verdade.",
+     flow:["Foto","Foundry","Loja real"]},
+    {key:"Um Figma", icon:"⬡",
+     h:"De um Figma",
+     p:"Seu time de design já fez no Figma? Importe. O Foundry pega o layout e entrega uma loja viva — não um protótipo estático.",
+     flow:["Figma","Foundry","Loja real"]},
+    {key:"Migrar uma LP", icon:"⇄",
+     h:"Migrando uma página existente",
+     p:"Já tem uma landing page rodando? Traga pra cá. A fundação migra e pluga no e-commerce, com checkout e Pix, sem refazer do zero.",
+     flow:["LP atual","Foundry","Loja real"]},
+    {key:"Controle total", icon:"⌘",
+     h:"Controle total da experiência",
+     p:"Quer customizar cada detalhe da jornada de compra — inclusive o checkout? A fundação te dá a loja como código, sem amarra de tema fechado.",
+     flow:["Sua visão","Foundry","Loja real"]},
+  ];
+  const chipsEl=document.getElementById('chips'), panelEl=document.getElementById('panel');
+  function renderPath(i){
+    const p=paths[i];
+    [...chipsEl.children].forEach((c,j)=>c.classList.toggle('active',j===i));
+    const flow = p.flow.map((n,k)=>{
+      const out = k===p.flow.length-1;
+      return `<div class="node${out?' out':''}">${n}</div>${out?'':'<span class="arr">→</span>'}`;
+    }).join('');
+    panelEl.innerHTML = `
+      <div class="pp-text"><h3>${p.h}</h3><p>${p.p}</p></div>
+      <div class="pp-flow">${flow}</div>`;
+  }
+  paths.forEach((p,i)=>{
+    const b=document.createElement('button');
+    b.className='chip'+(i===0?' active':'');
+    b.innerHTML=`<span class="ic">${p.icon}</span>${p.key}`;
+    b.onclick=()=>renderPath(i);
+    chipsEl.appendChild(b);
+  });
+  renderPath(0);
+
+  // ---------- BUILD OVERLAY ----------
+  const promptText = "crie a loja da minha marca a partir do meu design — com checkout no Pix";
+  const log = [
+    ["lendo SDK da Unbox · Foundry online",0],
+    ["interpretando o ponto de partida",16],
+    ["gerando storefront React + Tailwind",36],
+    ["montando catálogo, carrinho e estoque",56],
+    ["ativando assinatura e campanhas",74],
+    ["conectando checkout Pix nativo",90],
+    ["loja no ar — vendendo de verdade",100],
+  ];
+  const bp=document.getElementById('bp'), bc=document.getElementById('bc'),
+        blog=document.getElementById('blog'), bbar=document.getElementById('bbar');
+
+  function runBuild(){
+    if(reduce){ finish(); return; }
+    let i=0;
+    const typer=setInterval(()=>{
+      i++; bp.textContent=promptText.slice(0,i);
+      if(i>=promptText.length){ clearInterval(typer); bc.style.display='none'; setTimeout(logStep,400); }
+    },34);
+    let j=0;
+    function logStep(){
+      const [txt,pct]=log[j];
+      const d=document.createElement('div');
+      const last=j===log.length-1;
+      d.innerHTML=(last?'<span class="ok">✓ ':'<span style="color:#55555C">→ </span>')+txt+(last?'</span>':'');
+      blog.appendChild(d); bbar.style.width=pct+'%'; j++;
+      if(j<log.length) setTimeout(logStep,420); else setTimeout(finish,650);
+    }
+  }
+  function finish(){
+    document.getElementById('builder').classList.add('gone');
+    document.getElementById('metabar').classList.add('show');
+    revealAll();
+  }
+  function revealAll(){
+    const els=[...document.querySelectorAll('.reveal')];
+    if(reduce){ els.forEach(e=>e.classList.add('in')); return; }
+    const io=new IntersectionObserver((ents)=>{
+      ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    },{threshold:.1});
+    els.forEach(e=>io.observe(e));
+    setTimeout(()=>document.querySelectorAll('.nav.reveal,.hero.reveal').forEach(e=>e.classList.add('in')),50);
+  }
+  window.addEventListener('load',()=>setTimeout(runBuild,300));
+
+  // ---------- waitlist ----------
+  function joinWl(btn){
+    const e=document.getElementById('wlemail').value;
+    if(!e) return;
+    btn.textContent='Você está na fila ✓';
+    document.getElementById('wlnote').textContent='Liberação em lotes. Avisamos quando seu acesso abrir.';
+  }
+</script>
+</body>
+</html>
