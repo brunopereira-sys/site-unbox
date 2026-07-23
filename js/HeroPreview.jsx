@@ -337,7 +337,7 @@ function HeroPreview() {
 
         <div className="hp-center">
           <h2 className="hp-h2">Você faz a marca.<br /><span className="hp-h2-accent">A Unbox faz a venda.</span></h2>
-          <p className="hp-sub">A camada de vendas AI-native para sua marca escalar no digital. Tudo em um só lugar e conectado com suas principais ferramentas.</p>
+          <p className="hp-sub">A camada de vendas AI-native para sua marca escalar no digital. Tudo em um só lugar e conectado com suas ferramentas de AI.</p>
           <div className="hp-ctas">
             <a href={window.UNBOX_URLS.demo} className="btn btn--primary">Agendar demo →</a>
             <a href={window.UNBOX_URLS.signup} className="btn btn--secondary">Comece agora</a>
@@ -348,7 +348,7 @@ function HeroPreview() {
       <div className="hp-mobile">
         <div className="hpm-hero">
           <h2 className="hpm-h2">Você faz a marca.<br /><span className="hp-h2-accent">A Unbox faz a venda.</span></h2>
-          <p className="hpm-sub">A camada de vendas AI-native para sua marca escalar no digital. Tudo em um só lugar e conectado com suas principais ferramentas.</p>
+          <p className="hpm-sub">A camada de vendas AI-native para sua marca escalar no digital. Tudo em um só lugar e conectado com suas ferramentas de AI.</p>
           <div className="hpm-ctas">
             <a href={window.UNBOX_URLS.demo} className="btn btn--primary">Agendar demo →</a>
             <a href={window.UNBOX_URLS.signup} className="btn btn--secondary">Comece agora</a>
