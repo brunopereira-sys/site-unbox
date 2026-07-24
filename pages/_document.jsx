@@ -7,8 +7,8 @@ export default function Document() {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-        <link rel="icon" type="image/png" href="/img/favicon.png" />
-        <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" href="/img/favicon.png?v=r26" />
+        <link rel="apple-touch-icon" href="/img/apple-touch-icon.png?v=r26" />
         <meta name="theme-color" content="#22242A" />
         <meta name="robots" content="index, follow" />
         <meta name="google-site-verification" content="pYYds3FLNQBOFC-a8LSWtraTFEYfeS4fvpVxn898g6g" />
