@@ -9,75 +9,77 @@ const PILLARS = [
     tag: 'CRIAR',
     seal: 'Unbox CLI',
     title: 'De ideia a loja no ar.',
-    body: 'Você descreve sua marca e seu catálogo. A IA constrói a loja completa: design, produtos, checkout, assinatura. Sem template, sem projeto de semanas.',
+    body: 'Você descreve a marca e o catálogo. A IA constrói a loja completa: design, produtos, checkout e assinatura nativa, no tempo que antes levava semanas. Recorrência não é módulo à parte: nasce junto com a loja.',
   },
   {
     n: '02',
     tag: 'OPERAR',
     seal: 'Unbox MCP',
     title: 'Sua operação por texto.',
-    body: 'Preço, estoque, cupom, campanha, assinatura. Em vez de abrir telas, você pede: “cria um cupom de 10% pra quem comprar duas vezes”. Feito, confirmado, em produção.',
+    body: 'Preço, estoque, cupom, campanha, regra de assinatura: você pede em texto, como pediria pra alguém do seu time. A diferença é que sai do rascunho e vai ao ar imediatamente, pronto pra virar dado.',
     live: true,
   },
   {
     n: '03',
     tag: 'ESCALAR',
     seal: 'CLI + MCP',
-    title: 'Agentes que crescem o negócio por você.',
-    body: 'Sobre essa base, você (ou sua agência) cria agentes que monitoram a operação, otimizam preço e rodam campanhas continuamente. Seu e-commerce ganha um time que não dorme.',
+    title: 'Agentes de crescimento.',
+    body: 'Agentes de IA aplicam inteligência em tarefas específicas do seu crescimento: ajustar preço, testar campanha, identificar risco de cancelamento, reengajar assinante. Não é IA genérica: é inteligência aplicada às decisões que fazem cliente voltar.',
   },
 ]
 
-const PROBLEMS = [
-  { icon: '⛭', title: 'Operação manual', body: 'Estoque numa tela, cupom em outra, campanha num terceiro lugar. O dia inteiro clicando.' },
-  { icon: '⁙', title: 'Dados espalhados', body: 'Exportar planilha pra entender o que vendeu. A resposta existe, mas nunca no mesmo lugar.' },
-  { icon: '◷', title: 'Campanha que consome o dia', body: 'Configurar, ajustar, repetir. O tempo que era pra construir marca vira tempo de operação.' },
+const FAQ = [
+  {
+    q: 'Isso substitui minha equipe ou minha agência?',
+    a: 'Não. Substitui o tempo gasto executando ajuste manual, não a estratégia, o julgamento ou o relacionamento com o cliente.',
+  },
+  {
+    q: 'É IA genérica ou aplicada ao meu negócio?',
+    a: 'Inteligência focada em preço, campanha, cupom, risco de cancelamento e reengajamento de assinante. Não é um chatbot geral.',
+  },
+  {
+    q: 'Vou perder visibilidade do que a IA faz?',
+    a: 'Não. Toda ação é registrada. Você define o que ela executa sozinha e o que depende da sua aprovação.',
+  },
+  {
+    q: 'Preciso aprender uma plataforma nova?',
+    a: 'Não. Você fala o que quer testar; a IA constrói e executa. A parte técnica é o nosso trabalho.',
+  },
+  {
+    q: 'Preciso já ser cliente Unbox?',
+    a: 'Não. A lista é aberta. Clientes Unbox ativam primeiro, mas quem chega agora entra na frente da fila.',
+  },
+  {
+    q: 'Quanto vai custar?',
+    a: 'Quem está na lista conhece as condições antes de todo mundo e trava a vantagem de early access antes do preço final. Entrar não custa nada.',
+  },
 ]
 
-const FAQ = [
-  { q: 'Preciso saber de tecnologia pra usar?', a: 'Não. Se você sabe escrever uma mensagem no WhatsApp, sabe operar. A parte técnica é o nosso trabalho.' },
-  { q: 'A IA vai fazer coisas sem eu saber?', a: 'Não. Você define o que ela pode executar sozinha e o que precisa da sua aprovação. Tudo fica registrado, e nada irreversível acontece sem você.' },
-  { q: 'Preciso já ser cliente Unbox?', a: 'Não. A lista de espera é aberta. Clientes Unbox ativam primeiro, mas quem chega agora entra na frente da fila.' },
-  { q: 'Isso substitui minha equipe (ou minha agência)?', a: 'Substitui tarefas repetitivas, não pessoas. Sua equipe para de executar clique e passa a decidir. Agências entregam mais por cliente, não menos.' },
-  { q: 'Quanto vai custar?', a: 'Quem está na lista de espera conhece as condições antes de todo mundo, com vantagem de early access. Entrar na lista não custa nada e não compromete a nada.' },
-]
+const PERFIS = ['Marca D2C', 'Agência', 'Outro']
 
 const FATURAMENTO = [
   'Até R$ 50 mil/mês',
   'R$ 50 mil a R$ 200 mil/mês',
   'R$ 200 mil a R$ 1 mi/mês',
   'Acima de R$ 1 mi/mês',
-  'Prefiro não informar',
+]
+
+const URGENCIA = [
+  'Ativam antes da abertura pública',
+  'Ajudam a moldar o produto com feedback direto',
+  'Travam a condição de early access antes do preço final',
 ]
 
 export default function AiUnboxLP() {
   const [openFaq, setOpenFaq] = useState(-1)
-  const [form, setForm] = useState({ nome: '', email: '', perfil: '', faturamento: '' })
-  const [status, setStatus] = useState('idle') // idle | sending | done | error
-  const formRef = useRef(null)
+  const [perfilPre, setPerfilPre] = useState('')
+  const finalRef = useRef(null)
 
-  const scrollToForm = (perfil) => {
-    if (perfil) setForm((f) => ({ ...f, perfil }))
-    if (formRef.current) formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  const goToForm = (perfil) => {
+    if (perfil) setPerfilPre(perfil)
+    if (finalRef.current) finalRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
 
-  const submit = async (e) => {
-    e.preventDefault()
-    if (!form.nome.trim() || !/.+@.+\..+/.test(form.email)) return
-    setStatus('sending')
-    try {
-      const res = await fetch('/api/ai-lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, origem: 'LP /ai-unbox' }),
-      })
-      setStatus(res.ok ? 'done' : 'error')
-    } catch {
-      setStatus('error')
-    }
-  }
-
-  // subtle reveal-on-scroll
   useEffect(() => {
     const els = document.querySelectorAll('#lpai [data-reveal]')
     if (!('IntersectionObserver' in window)) {
@@ -96,8 +98,9 @@ export default function AiUnboxLP() {
     <>
       <Head>
         <title>Unbox AI Foundry — crie, opere e escale seu e-commerce com IA</title>
-        <meta name="description" content="Criar, operar e escalar um e-commerce com IA. Descreva a loja e ela nasce pronta; peça e a operação executa; tenha agentes crescendo seu negócio. Entre na lista de espera do Unbox AI Foundry." />
+        <meta name="description" content="Você descreve, e a loja nasce pronta. Você pede, e a mudança vai pro ar. E agentes de IA trabalham pelo seu crescimento todos os dias. Entre na lista de espera do Unbox AI Foundry." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="canonical" href="https://www.unbox.com.br/ai-unbox" />
         <meta property="og:title" content="Unbox AI Foundry — crie, opere e escale seu e-commerce com IA" />
         <meta property="og:description" content="Você pede. A Unbox executa. Entre na lista de espera." />
         <meta property="og:url" content="https://www.unbox.com.br/ai-unbox" />
@@ -109,107 +112,55 @@ export default function AiUnboxLP() {
       <Nav />
 
       <div id="lpai">
-        {/* ===== HERO ===== */}
+        {/* ===== 2 · HERO ===== */}
         <header className="aiu-hero">
           <div className="wrap aiu-hero-grid">
             <div className="hero-copy" data-reveal>
-              <span className="aiu-eyebrow"><i className="pulse" />UNBOX AI FOUNDRY · LISTA DE ESPERA ABERTA</span>
-              <h1>Crie, opere e escale seu <span className="grad">e-commerce com IA</span>.</h1>
+              <span className="aiu-eyebrow"><i className="pulse" />LISTA DE ESPERA ABERTA · VAGAS POR LOTE</span>
+              <h1>Crie, opere e escale seu e-commerce <span className="grad">com IA</span>.</h1>
               <p className="lead">
-                Descrever a loja e ela nascer pronta. Pedir e a operação executar. Ter agentes trabalhando
-                pelo seu crescimento todos os dias. É isso que estamos construindo na Unbox — e você pode ser
-                dos primeiros a usar.
+                Você descreve, e a loja nasce pronta. Você pede, e a mudança vai pro ar.
+                E agentes de IA trabalham pelo seu crescimento todos os dias. Em minutos, não dias.
               </p>
-              <div className="cta-row">
-                <button className="aiu-btn aiu-btn-primary" onClick={() => scrollToForm('')}>Entrar na lista de espera</button>
+              <div className="hero-seals">
+                <span className="hseal"><b>assinatura nativa</b> na plataforma</span>
+                <span className="hseal"><b>loja, checkout e recorrência</b> num só lugar</span>
               </div>
-              <p className="reinforce">Sem custo. Sem compromisso. Acesso por ordem de chegada.</p>
             </div>
 
             <div className="aiu-hero-visual" data-reveal>
-              <div className="chat">
-                <div className="chat-head"><span className="dot g" /><span className="dot p" /><span className="chat-title">você · Unbox</span></div>
-                <div className="bubble user b1">cria um cupom de 10% pra primeira compra</div>
-                <div className="bubble aiu-ai b2">
-                  <span className="typing"><i /><i /><i /></span>
-                  <span className="ai-text">✓ Cupom <b>PRIMEIRA10</b> criado e no ar.</span>
-                </div>
-                <div className="bubble user b3">e coloca frete grátis acima de R$199</div>
-                <div className="bubble aiu-ai b4"><span className="ai-text">✓ Regra de frete ativada em produção.</span></div>
-              </div>
+              <WaitlistForm
+                id="hero"
+                title="Garanta seu acesso antecipado"
+                subtitle="Leva 20 segundos. Sem custo, sem compromisso."
+                micro="Chamada por ordem de chegada. Sem spam."
+                perfilPre={perfilPre}
+              />
               <div className="glow gp" />
               <div className="glow gg" />
             </div>
           </div>
         </header>
 
-        {/* ===== PROBLEM ===== */}
+        {/* ===== 3 · PROVA REAL ===== */}
         <section className="sec">
           <div className="wrap">
             <div className="sec-head" data-reveal>
-              <span className="kicker">O DIA A DIA</span>
-              <h2>Tocar um e-commerce virou um segundo emprego.</h2>
-              <p className="sub">
-                Ajustar estoque numa tela. Criar cupom em outra. Exportar planilha pra entender o que vendeu.
-                Configurar campanha num terceiro lugar. Quem toca uma loja passa o dia operando ferramentas —
-                em vez de construir marca.
-              </p>
-            </div>
-            <div className="cards-3">
-              {PROBLEMS.map((p, i) => (
-                <div className="aiu-card prob" data-reveal style={{ transitionDelay: `${i * 70}ms` }} key={p.title}>
-                  <span className="prob-ico">{p.icon}</span>
-                  <h3>{p.title}</h3>
-                  <p>{p.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ===== PILLARS ===== */}
-        <section className="sec pillars-sec">
-          <div className="wrap">
-            <div className="sec-head" data-reveal>
-              <span className="kicker">A PLATAFORMA</span>
-              <h2>Criar. Operar. Escalar. <span className="grad">Tudo com IA.</span></h2>
-            </div>
-            <div className="cards-3 pillars">
-              {PILLARS.map((p, i) => (
-                <div className="aiu-card pillar" data-reveal style={{ transitionDelay: `${i * 80}ms` }} key={p.tag}>
-                  <div className="pillar-top">
-                    <span className="pillar-n">{p.n}</span>
-                    {p.live && <span className="live-badge"><i className="pulse" />em produção</span>}
-                  </div>
-                  <span className="pillar-tag">{p.tag}</span>
-                  <h3>{p.title}</h3>
-                  <p>{p.body}</p>
-                  <span className="seal">{p.seal}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ===== PROOF ===== */}
-        <section className="sec proof-sec">
-          <div className="wrap">
-            <div className="sec-head" data-reveal>
               <span className="kicker">PROVA REAL</span>
-              <h2>Não é conceito. Já está rodando em loja de verdade.</h2>
-              <p className="sub">Um pedido em texto. Cupom criado, ativado e confirmado numa loja em produção.</p>
+              <h2>Não é conceito. É print de loja de verdade.</h2>
+              <p className="sub">Um pedido em texto. Cupom criado, ativado e publicado numa loja em produção.</p>
             </div>
 
             <div className="proof-grid" data-reveal>
-              {/* mock: pedido no agente */}
               <div className="proof-card">
                 <div className="proof-label">no agente</div>
                 <div className="mini-chat">
                   <div className="bubble user">cria o cupom BRUNINHO10, 10% de desconto</div>
-                  <div className="bubble aiu-ai"><span className="ai-text">✓ Cupom <b>BRUNINHO10</b> criado, ativado e publicado.</span></div>
+                  <div className="bubble aiu-ai">
+                    <span className="ai-text">✓ Cupom <b>BRUNINHO10</b> criado, ativado e publicado.</span>
+                  </div>
                 </div>
               </div>
-              {/* mock: checkout */}
               <div className="proof-card">
                 <div className="proof-label">no checkout da loja</div>
                 <div className="checkout-mock">
@@ -231,7 +182,47 @@ export default function AiUnboxLP() {
           </div>
         </section>
 
-        {/* ===== FOR WHOM ===== */}
+        {/* ===== 4 · CONSCIÊNCIA ===== */}
+        <section className="sec">
+          <div className="wrap narrow">
+            <div className="sec-head" data-reveal>
+              <span className="kicker">O QUE MUDA</span>
+              <h2>Testar uma hipótese na sua loja não devia levar dias. Agora leva minutos.</h2>
+              <p className="sub big">
+                Você não precisa aprender a operar mais uma plataforma. Você fala o que quer: um preço,
+                uma oferta, uma campanha, uma regra de assinatura. A IA constrói e executa na hora.
+                Mais teste rodando é mais clareza pra decidir pra onde crescer — e mais motivo pro seu
+                cliente voltar a comprar.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== 5 · PILARES ===== */}
+        <section className="sec">
+          <div className="wrap">
+            <div className="sec-head" data-reveal>
+              <span className="kicker">A PLATAFORMA</span>
+              <h2>O conhecimento continua sendo seu. O que muda é a <span className="grad">velocidade de execução</span>, e a recorrência.</h2>
+            </div>
+            <div className="cards-3">
+              {PILLARS.map((p, i) => (
+                <div className="aiu-card pillar" data-reveal style={{ transitionDelay: `${i * 80}ms` }} key={p.tag}>
+                  <div className="pillar-top">
+                    <span className="pillar-n">{p.n}</span>
+                    {p.live && <span className="live-badge"><i className="pulse" />em produção</span>}
+                  </div>
+                  <span className="pillar-tag">{p.tag}</span>
+                  <h3>{p.title}</h3>
+                  <p>{p.body}</p>
+                  <span className="seal">{p.seal}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ===== 6 · PERSONAS ===== */}
         <section className="sec">
           <div className="wrap">
             <div className="sec-head" data-reveal>
@@ -241,26 +232,63 @@ export default function AiUnboxLP() {
             <div className="whom-grid">
               <div className="aiu-card whom" data-reveal>
                 <span className="whom-tag green">MARCAS D2C</span>
+                <h3>Crescer é vender de novo pro mesmo cliente.</h3>
                 <p>
-                  Sua operação inteira — loja, assinatura, pagamento, crédito, campanhas — num só lugar,
-                  respondendo a você. Menos tempo operando, mais tempo construindo marca.
+                  O Unbox nasceu com <b>assinatura nativa</b>: recorrência é parte de como sua loja é
+                  construída desde o primeiro dia. O AI Foundry aplica essa lógica na velocidade de
+                  execução — você testa oferta, preço e regra de recorrência com a agilidade de um cupom
+                  simples. Cada ajuste vira dado real na hora.
                 </p>
-                <button className="link-cta" onClick={() => scrollToForm('Marca D2C')}>Entre na lista como marca →</button>
+                <button className="link-cta" onClick={() => goToForm('Marca D2C')}>Entrar como marca →</button>
               </div>
               <div className="aiu-card whom" data-reveal style={{ transitionDelay: '80ms' }}>
                 <span className="whom-tag purple">AGÊNCIAS E OPERADORES</span>
+                <h3>Você já sabe o que fazer. Isso multiplica quanto você consegue entregar.</h3>
                 <p>
-                  Cada cliente seu com uma operação que executa por texto. Mais contas com o mesmo time,
-                  entregas mais rápidas, e sua agência na frente da transição que vai redefinir o mercado.
-                  Parceiros da lista terão acesso antecipado e condição de <b>early partner</b>.
+                  O trabalho de uma agência boa nunca foi o clique, foi a estratégia. O que consome seu
+                  time é o tempo de execução: montar loja, configurar ajuste, repetir pra cada conta. O AI
+                  Foundry tira essa fricção do meio do caminho: <b>mais contas com o mesmo time</b>, mais
+                  teste por cliente. Parceiros da lista travam condição de <b>early partner</b>,
+                  indisponível depois da abertura pública.
                 </p>
-                <button className="link-cta purple" onClick={() => scrollToForm('Agência ou operador')}>Entre na lista como agência →</button>
+                <button className="link-cta purple" onClick={() => goToForm('Agência')}>Entrar como agência →</button>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ===== FAQ ===== */}
+        {/* ===== 7 · CONTROLE ===== */}
+        <section className="sec control-sec">
+          <div className="wrap narrow">
+            <div className="control-card" data-reveal>
+              <span className="ctrl-ico">🛡</span>
+              <h2>Você define o que a IA executa sozinha. E o que precisa da sua aprovação antes.</h2>
+              <p>
+                Toda ação fica registrada. Nada irreversível acontece sem você validar. O ganho de
+                velocidade não é “perder o controle pra IA”: é decidir, com mais dado disponível, o que
+                vale aprovar e o que vale rodar em piloto automático.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== 8 · URGÊNCIA ===== */}
+        <section className="sec">
+          <div className="wrap narrow">
+            <div className="sec-head" data-reveal>
+              <span className="kicker">POR QUE AGORA</span>
+              <h2>Quem entra agora testa mais cedo. Quem espera, decide com menos dado que o concorrente.</h2>
+              <p className="sub">O acesso é liberado em lotes, por ordem de chegada. Marcas e agências que entrarem agora:</p>
+            </div>
+            <ul className="urg-list" data-reveal>
+              {URGENCIA.map((u) => (
+                <li key={u}><span className="urg-arrow">→</span>{u}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* ===== 9 · FAQ ===== */}
         <section className="sec">
           <div className="wrap narrow">
             <div className="sec-head" data-reveal>
@@ -281,54 +309,24 @@ export default function AiUnboxLP() {
           </div>
         </section>
 
-        {/* ===== FINAL CTA / FORM ===== */}
-        <section className="sec form-sec" ref={formRef} id="lista">
+        {/* ===== 10 · CTA FINAL ===== */}
+        <section className="final-band" ref={finalRef} id="lista">
           <div className="wrap narrow">
             <div className="sec-head aiu-center" data-reveal>
-              <span className="kicker">LISTA DE ESPERA</span>
-              <h2>O futuro do e-commerce vai chegar primeiro pra quem está na lista.</h2>
+              <h2>Cada semana de espera é uma semana a menos de teste rodando na sua loja.</h2>
+              <p className="sub">
+                Não custa nada entrar na lista. Custa dado e velocidade ficar de fora enquanto seu
+                concorrente já está testando.
+              </p>
             </div>
 
-            <div className="form-card" data-reveal>
-              {status === 'done' ? (
-                <div className="thanks">
-                  <div className="thanks-ico">✓</div>
-                  <h3>Você está na lista.</h3>
-                  <p>Vamos te chamar por ordem de chegada, com as novidades e as condições de early access do AI Foundry antes de todo mundo.</p>
-                </div>
-              ) : (
-                <form onSubmit={submit}>
-                  <div className="field">
-                    <label>Nome</label>
-                    <input type="text" value={form.nome} placeholder="Seu nome" onChange={(e) => setForm({ ...form, nome: e.target.value })} required />
-                  </div>
-                  <div className="field">
-                    <label>E-mail</label>
-                    <input type="email" value={form.email} placeholder="voce@marca.com.br" onChange={(e) => setForm({ ...form, email: e.target.value })} required />
-                  </div>
-                  <div className="field">
-                    <label>Sou</label>
-                    <select value={form.perfil} onChange={(e) => setForm({ ...form, perfil: e.target.value })} required>
-                      <option value="" disabled>Selecione</option>
-                      <option>Marca D2C</option>
-                      <option>Agência ou operador</option>
-                      <option>Outro</option>
-                    </select>
-                  </div>
-                  <div className="field">
-                    <label>Faturamento mensal aproximado <span className="opt">(opcional)</span></label>
-                    <select value={form.faturamento} onChange={(e) => setForm({ ...form, faturamento: e.target.value })}>
-                      <option value="">Prefiro não informar</option>
-                      {FATURAMENTO.map((f) => <option key={f}>{f}</option>)}
-                    </select>
-                  </div>
-                  <button className="aiu-btn aiu-btn-primary full" type="submit" disabled={status === 'sending'}>
-                    {status === 'sending' ? 'Enviando…' : 'Quero meu acesso antecipado'}
-                  </button>
-                  {status === 'error' && <p className="err">Algo deu errado ao enviar. Tente de novo em instantes.</p>}
-                  <p className="micro">Você recebe as novidades do AI Foundry e é chamado por ordem de chegada. Sem spam.</p>
-                </form>
-              )}
+            <div data-reveal>
+              <WaitlistForm
+                id="final"
+                full
+                micro="Novidades em primeira mão, chamada por ordem de chegada. Sem spam."
+                perfilPre={perfilPre}
+              />
             </div>
 
             <div className="signature" data-reveal>
@@ -354,147 +352,225 @@ export default function AiUnboxLP() {
         }
         #lpai *, #lpai *::before, #lpai *::after { box-sizing: border-box; }
         #lpai .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
-        #lpai .wrap.narrow { max-width: 720px; }
+        #lpai .wrap.narrow { max-width: 760px; }
         #lpai [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
         #lpai [data-reveal].aiu-in { opacity: 1; transform: none; }
-
         #lpai .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
         #lpai .kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .22em; color: var(--green); text-transform: uppercase; }
-        #lpai .sec { padding: 96px 0; border-top: 1px solid var(--line); }
-        #lpai .sec-head { max-width: 720px; margin-bottom: 44px; }
+        #lpai .sec { padding: 92px 0; border-top: 1px solid var(--line); }
+        #lpai .sec-head { max-width: 760px; margin-bottom: 40px; }
         #lpai .sec-head.aiu-center { margin-left: auto; margin-right: auto; text-align: center; }
-        #lpai .sec-head h2 { font-size: clamp(28px, 4.4vw, 46px); font-weight: 800; letter-spacing: -.025em; line-height: 1.08; margin: 14px 0 0; }
-        #lpai .sec-head .sub { color: var(--mut); font-size: 17px; margin-top: 16px; line-height: 1.6; }
+        #lpai .sec-head h2 { font-size: clamp(26px, 4.1vw, 42px); font-weight: 800; letter-spacing: -.025em; line-height: 1.12; margin: 14px 0 0; }
+        #lpai .sec-head .sub { color: var(--mut); font-size: 17px; margin-top: 16px; line-height: 1.62; }
+        #lpai .sec-head .sub.big { font-size: 18.5px; color: #B6B6BE; }
 
-        /* HERO */
-        #lpai .aiu-hero { position: relative; padding: clamp(104px, 14vw, 150px) 0 84px; overflow: hidden; }
+        /* ---- HERO ---- */
+        #lpai .aiu-hero { position: relative; padding: clamp(104px, 14vw, 148px) 0 80px; overflow: hidden; }
         #lpai .aiu-hero::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-          background: radial-gradient(60% 60% at 82% 6%, rgba(122,44,255,.20), transparent 60%),
-                      radial-gradient(50% 50% at 8% 92%, rgba(57,255,20,.10), transparent 58%); }
-        #lpai .aiu-hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr .95fr; gap: 52px; align-items: center; }
+          background: radial-gradient(58% 58% at 84% 4%, rgba(122,44,255,.22), transparent 60%),
+                      radial-gradient(48% 48% at 6% 94%, rgba(57,255,20,.10), transparent 58%); }
+        #lpai .aiu-hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.02fr .98fr; gap: 48px; align-items: center; }
         #lpai .aiu-eyebrow { display: inline-flex; align-items: center; gap: 9px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; color: var(--mut);
           border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; background: rgba(255,255,255,.02); }
         #lpai .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: lppulse 1.8s infinite; }
         @keyframes lppulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
-        #lpai h1 { font-size: clamp(34px, 5.4vw, 60px); font-weight: 800; letter-spacing: -.03em; line-height: 1.04; margin: 22px 0 0; }
+        #lpai h1 { font-size: clamp(32px, 5vw, 56px); font-weight: 800; letter-spacing: -.03em; line-height: 1.06; margin: 22px 0 0; }
         #lpai .lead { color: var(--mut); font-size: 18px; line-height: 1.6; margin: 20px 0 0; max-width: 540px; }
-        #lpai .cta-row { margin-top: 30px; display: flex; gap: 12px; flex-wrap: wrap; }
-        #lpai .reinforce { margin-top: 14px; font-family: var(--mono); font-size: 12.5px; color: var(--dim); }
+        #lpai .hero-seals { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+        #lpai .hseal { font-family: var(--mono); font-size: 11.5px; color: var(--mut); border: 1px solid var(--line); border-radius: 9px; padding: 8px 12px; background: rgba(255,255,255,.02); }
+        #lpai .hseal b { color: var(--green); font-weight: 500; }
 
-        #lpai .aiu-btn { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 15.5px; border-radius: 12px; padding: 15px 26px; cursor: pointer; border: 1px solid transparent; transition: transform .15s ease, box-shadow .2s ease, background .2s; }
-        #lpai .aiu-btn-primary { background: var(--green); color: #06210A; box-shadow: 0 0 0 rgba(57,255,20,0); }
-        #lpai .aiu-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(57,255,20,.28); }
-        #lpai .aiu-btn.full { width: 100%; }
-
-        /* HERO chat visual */
+        /* ---- FORM ---- */
         #lpai .aiu-hero-visual { position: relative; }
         #lpai .glow { position: absolute; border-radius: 50%; filter: blur(60px); z-index: 0; }
-        #lpai .glow.gp { width: 260px; height: 260px; background: rgba(122,44,255,.25); top: -30px; right: -20px; }
-        #lpai .glow.gg { width: 200px; height: 200px; background: rgba(57,255,20,.12); bottom: -30px; left: -10px; }
-        #lpai .chat { position: relative; z-index: 1; background: linear-gradient(180deg, #141418, #0f0f12); border: 1px solid var(--line); border-radius: 20px; padding: 18px; box-shadow: 0 30px 70px rgba(0,0,0,.5); }
-        #lpai .chat-head { display: flex; align-items: center; gap: 7px; padding-bottom: 14px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
-        #lpai .chat-head .dot { width: 9px; height: 9px; border-radius: 50%; }
-        #lpai .chat-head .dot.g { background: var(--green); } #lpai .chat-head .dot.p { background: var(--purple); }
-        #lpai .chat-title { font-family: var(--mono); font-size: 11.5px; color: var(--dim); margin-left: 6px; }
-        #lpai .bubble { max-width: 82%; padding: 12px 15px; border-radius: 14px; font-size: 14.5px; line-height: 1.45; margin: 9px 0; opacity: 0; transform: translateY(8px); }
-        #lpai .bubble.user { margin-left: auto; background: #23232a; color: #eaeaef; border-bottom-right-radius: 5px; }
-        #lpai .bubble.aiu-ai { background: rgba(57,255,20,.08); border: 1px solid rgba(57,255,20,.22); color: #d9ffd0; border-bottom-left-radius: 5px; }
-        #lpai .bubble.aiu-ai b { color: #fff; } #lpai .bubble.user + .bubble.aiu-ai b, #lpai .bubble.aiu-ai b { font-weight: 700; }
-        #lpai .chat .b1 { animation: bin .5s ease .3s forwards; }
-        #lpai .chat .b2 { animation: bin .5s ease 1.2s forwards; }
-        #lpai .chat .b3 { animation: bin .5s ease 2.2s forwards; }
-        #lpai .chat .b4 { animation: bin .5s ease 3.1s forwards; }
-        @keyframes bin { to { opacity: 1; transform: none; } }
-        #lpai .typing { display: inline-flex; gap: 3px; margin-right: 8px; }
-        #lpai .typing i { width: 5px; height: 5px; border-radius: 50%; background: var(--green); opacity: .5; animation: lptp 1.1s infinite; }
-        #lpai .typing i:nth-child(2){animation-delay:.15s} #lpai .typing i:nth-child(3){animation-delay:.3s}
-        @keyframes lptp { 0%,60%,100%{opacity:.3} 30%{opacity:1} }
+        #lpai .glow.gp { width: 250px; height: 250px; background: rgba(122,44,255,.26); top: -34px; right: -18px; }
+        #lpai .glow.gg { width: 190px; height: 190px; background: rgba(57,255,20,.10); bottom: -30px; left: -12px; }
+        #lpai .wl-card { position: relative; z-index: 1; background: linear-gradient(180deg, #141418, #101013); border: 1px solid var(--line); border-radius: 20px; padding: 26px; box-shadow: 0 30px 70px rgba(0,0,0,.5); }
+        #lpai .wl-card.full { max-width: 560px; margin: 0 auto; }
+        #lpai .wl-title { font-size: 20px; font-weight: 800; letter-spacing: -.02em; margin: 0 0 6px; }
+        #lpai .wl-sub { color: var(--mut); font-size: 13.5px; margin: 0 0 20px; }
+        #lpai .field { margin-bottom: 14px; }
+        #lpai .field label { display: block; font-size: 12.5px; color: var(--mut); margin-bottom: 7px; }
+        #lpai .field .opt { color: var(--dim); }
+        #lpai .field input, #lpai .field select { width: 100%; background: #0c0c0f; border: 1px solid var(--line); border-radius: 11px; padding: 13px 15px; color: var(--ink); font-family: 'Sora', sans-serif; font-size: 15px; outline: none; transition: border-color .15s, box-shadow .15s; }
+        #lpai .field input::placeholder { color: var(--dim); }
+        #lpai .field input:focus, #lpai .field select:focus { border-color: rgba(122,44,255,.7); box-shadow: 0 0 0 3px rgba(122,44,255,.16); }
+        #lpai .aiu-btn { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 15.5px; border-radius: 12px; padding: 15px 26px; cursor: pointer; border: none; width: 100%; margin-top: 6px;
+          background: var(--purple); color: #fff; transition: transform .15s ease, box-shadow .2s ease, filter .2s; }
+        #lpai .aiu-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(122,44,255,.38); }
+        #lpai .aiu-btn:disabled { filter: grayscale(.4) brightness(.8); cursor: default; transform: none; box-shadow: none; }
+        #lpai .micro { font-family: var(--mono); font-size: 11px; color: var(--dim); text-align: center; margin: 14px 0 0; line-height: 1.55; }
+        #lpai .err { color: #ff6b6b; font-size: 13px; text-align: center; margin: 12px 0 0; }
+        #lpai .thanks { text-align: center; padding: 14px 4px; }
+        #lpai .thanks-ico { width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 50%; background: rgba(57,255,20,.12); border: 1px solid rgba(57,255,20,.42); color: var(--green); font-size: 25px; display: flex; align-items: center; justify-content: center; }
+        #lpai .thanks h3 { font-size: 21px; font-weight: 800; margin: 0 0 8px; }
+        #lpai .thanks p { color: var(--mut); font-size: 14.5px; line-height: 1.6; margin: 0; }
 
-        /* cards */
+        /* ---- cards ---- */
         #lpai .cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
         #lpai .aiu-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 26px; transition: transform .2s ease, border-color .2s ease, background .2s; }
         #lpai .aiu-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.18); background: var(--card2); }
-        #lpai .aiu-card h3 { font-size: 19px; font-weight: 700; letter-spacing: -.01em; margin: 12px 0 8px; }
-        #lpai .aiu-card p { color: var(--mut); font-size: 14.5px; line-height: 1.58; margin: 0; }
-        #lpai .prob-ico { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 11px; background: rgba(122,44,255,.12); color: #c9a8ff; font-size: 20px; }
+        #lpai .aiu-card h3 { font-size: 19px; font-weight: 700; letter-spacing: -.015em; margin: 10px 0 10px; line-height: 1.25; }
+        #lpai .aiu-card p { color: var(--mut); font-size: 14.5px; line-height: 1.6; margin: 0; }
+        #lpai .aiu-card b { color: #fff; font-weight: 600; }
 
-        /* pillars */
-        #lpai .pillar { display: flex; flex-direction: column; min-height: 260px; }
+        #lpai .pillar { display: flex; flex-direction: column; min-height: 290px; }
         #lpai .pillar-top { display: flex; align-items: center; justify-content: space-between; }
         #lpai .pillar-n { font-family: var(--mono); font-size: 12px; color: var(--dim); letter-spacing: .1em; }
-        #lpai .live-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; color: var(--green); border: 1px solid rgba(57,255,20,.3); border-radius: 999px; padding: 3px 9px; }
+        #lpai .live-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; color: var(--green); border: 1px solid rgba(57,255,20,.32); border-radius: 999px; padding: 3px 9px; }
         #lpai .pillar-tag { font-family: var(--mono); font-size: 12px; letter-spacing: .2em; color: var(--green); margin: 16px 0 0; }
         #lpai .pillar h3 { margin: 8px 0 10px; font-size: 20px; }
         #lpai .pillar p { flex: 1; }
         #lpai .seal { align-self: flex-start; margin-top: 18px; font-family: var(--mono); font-size: 11.5px; color: var(--mut); border: 1px solid var(--line); border-radius: 8px; padding: 5px 10px; background: rgba(255,255,255,.02); }
 
-        /* proof */
+        /* ---- proof ---- */
         #lpai .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
         #lpai .proof-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
         #lpai .proof-label { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin-bottom: 14px; }
-        #lpai .mini-chat .bubble { opacity: 1; transform: none; max-width: 92%; }
+        #lpai .bubble { max-width: 92%; padding: 12px 15px; border-radius: 14px; font-size: 14.5px; line-height: 1.45; margin: 9px 0; }
+        #lpai .bubble.user { margin-left: auto; background: #23232a; color: #eaeaef; border-bottom-right-radius: 5px; font-family: var(--mono); font-size: 13.5px; }
+        #lpai .bubble.aiu-ai { background: rgba(57,255,20,.08); border: 1px solid rgba(57,255,20,.24); color: #d9ffd0; border-bottom-left-radius: 5px; font-family: var(--mono); font-size: 13.5px; }
+        #lpai .bubble.aiu-ai b { color: #fff; font-weight: 700; }
         #lpai .checkout-mock { font-family: var(--mono); }
         #lpai .ck-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--mut); padding: 9px 0; border-bottom: 1px dashed var(--line); }
-        #lpai .ck-row.disc { color: var(--green); } #lpai .ck-row.total { color: #fff; font-size: 16px; font-weight: 500; border-bottom: none; }
-        #lpai .ck-tag { margin-top: 12px; display: inline-block; font-size: 12px; color: var(--green); border: 1px solid rgba(57,255,20,.3); border-radius: 999px; padding: 4px 11px; }
-        #lpai .terminal-teaser { display: flex; flex-direction: column; gap: 12px; margin-top: 22px; text-decoration: none; background: #0a0a0c; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; transition: border-color .2s; }
+        #lpai .ck-row.disc { color: var(--green); }
+        #lpai .ck-row.total { color: #fff; font-size: 16px; font-weight: 500; border-bottom: none; }
+        #lpai .ck-tag { margin-top: 12px; display: inline-block; font-size: 12px; color: var(--green); border: 1px solid rgba(57,255,20,.32); border-radius: 999px; padding: 4px 11px; }
+        #lpai .terminal-teaser { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; text-decoration: none; background: #0a0a0c; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; transition: border-color .2s; }
         #lpai .terminal-teaser:hover { border-color: rgba(122,44,255,.5); }
         #lpai .tt-mini { font-family: var(--mono); font-size: 14px; color: #cfd0d6; }
         #lpai .tt-prompt { color: var(--purple); margin-right: 8px; }
         #lpai .tt-cursor { display: inline-block; width: 8px; height: 15px; background: var(--green); margin-left: 4px; vertical-align: middle; animation: lppulse 1s steps(2) infinite; }
         #lpai .tt-cta { font-family: var(--mono); font-size: 12.5px; color: var(--mut); }
 
-        /* whom */
+        /* ---- personas ---- */
         #lpai .whom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
         #lpai .whom { display: flex; flex-direction: column; }
-        #lpai .whom-tag { align-self: flex-start; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; padding: 5px 11px; border-radius: 8px; margin-bottom: 14px; }
-        #lpai .whom-tag.green { color: var(--green); background: rgba(57,255,20,.08); border: 1px solid rgba(57,255,20,.24); }
-        #lpai .whom-tag.purple { color: #c9a8ff; background: rgba(122,44,255,.1); border: 1px solid rgba(122,44,255,.3); }
-        #lpai .whom p { flex: 1; color: var(--mut); font-size: 15.5px; line-height: 1.6; }
-        #lpai .whom b { color: #fff; }
+        #lpai .whom-tag { align-self: flex-start; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; padding: 5px 11px; border-radius: 8px; }
+        #lpai .whom-tag.green { color: var(--green); background: rgba(57,255,20,.08); border: 1px solid rgba(57,255,20,.26); }
+        #lpai .whom-tag.purple { color: #c9a8ff; background: rgba(122,44,255,.12); border: 1px solid rgba(122,44,255,.34); }
+        #lpai .whom h3 { font-size: 18.5px; }
+        #lpai .whom p { flex: 1; font-size: 15px; }
         #lpai .link-cta { align-self: flex-start; margin-top: 18px; background: none; border: none; color: var(--green); font-family: 'Sora', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer; padding: 0; }
         #lpai .link-cta.purple { color: #b98bff; }
 
-        /* faq */
+        /* ---- control ---- */
+        #lpai .control-sec { background: radial-gradient(70% 60% at 50% 0%, rgba(122,44,255,.08), transparent 62%); }
+        #lpai .control-card { background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--green); border-radius: 18px; padding: 34px; }
+        #lpai .ctrl-ico { font-size: 24px; }
+        #lpai .control-card h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: -.02em; line-height: 1.2; margin: 14px 0 14px; }
+        #lpai .control-card p { color: var(--mut); font-size: 16px; line-height: 1.62; margin: 0; }
+
+        /* ---- urgency ---- */
+        #lpai .urg-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+        #lpai .urg-list li { display: flex; align-items: flex-start; gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; font-size: 15.5px; color: #D6D6DC; }
+        #lpai .urg-arrow { color: var(--green); font-family: var(--mono); flex-shrink: 0; }
+
+        /* ---- faq ---- */
         #lpai .aiu-faq-item { border: 1px solid var(--line); border-radius: 14px; margin-bottom: 10px; overflow: hidden; background: var(--card); }
-        #lpai .aiu-faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 14px; text-align: left; background: none; border: none; color: var(--ink); font-family: 'Sora', sans-serif; font-size: 16.5px; font-weight: 600; padding: 20px 22px; cursor: pointer; }
+        #lpai .aiu-faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 14px; text-align: left; background: none; border: none; color: var(--ink); font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 600; padding: 20px 22px; cursor: pointer; }
         #lpai .aiu-faq-q .chev { color: var(--green); font-size: 20px; transition: transform .25s; flex-shrink: 0; }
         #lpai .aiu-faq-item.open .aiu-faq-q .chev { transform: rotate(45deg); }
         #lpai .aiu-faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
-        #lpai .aiu-faq-item.open .aiu-faq-a { max-height: 220px; }
-        #lpai .aiu-faq-a p { margin: 0; padding: 0 22px 20px; color: var(--mut); font-size: 15px; line-height: 1.6; }
+        #lpai .aiu-faq-item.open .aiu-faq-a { max-height: 260px; }
+        #lpai .aiu-faq-a p { margin: 0; padding: 0 22px 20px; color: var(--mut); font-size: 15px; line-height: 1.62; }
 
-        /* form */
-        #lpai .form-sec { background: radial-gradient(80% 60% at 50% 0%, rgba(122,44,255,.08), transparent 60%); }
-        #lpai .form-card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 30px; max-width: 560px; margin: 0 auto; }
-        #lpai .field { margin-bottom: 16px; }
-        #lpai .field label { display: block; font-size: 13px; color: var(--mut); margin-bottom: 7px; }
-        #lpai .field .opt { color: var(--dim); }
-        #lpai .field input, #lpai .field select { width: 100%; background: #0d0d10; border: 1px solid var(--line); border-radius: 11px; padding: 13px 15px; color: var(--ink); font-family: 'Sora', sans-serif; font-size: 15px; outline: none; transition: border-color .15s, box-shadow .15s; }
-        #lpai .field input::placeholder { color: var(--dim); }
-        #lpai .field input:focus, #lpai .field select:focus { border-color: rgba(57,255,20,.6); box-shadow: 0 0 0 3px rgba(57,255,20,.12); }
-        #lpai .form-card .aiu-btn { margin-top: 8px; }
-        #lpai .micro { font-family: var(--mono); font-size: 11.5px; color: var(--dim); text-align: center; margin: 14px 0 0; line-height: 1.5; }
-        #lpai .err { color: #ff6b6b; font-size: 13px; text-align: center; margin: 12px 0 0; }
-        #lpai .thanks { text-align: center; padding: 20px 6px; }
-        #lpai .thanks-ico { width: 54px; height: 54px; margin: 0 auto 16px; border-radius: 50%; background: rgba(57,255,20,.12); border: 1px solid rgba(57,255,20,.4); color: var(--green); font-size: 26px; display: flex; align-items: center; justify-content: center; }
-        #lpai .thanks h3 { font-size: 22px; font-weight: 800; margin: 0 0 8px; }
-        #lpai .thanks p { color: var(--mut); font-size: 15px; line-height: 1.6; margin: 0; }
+        /* ---- final band ---- */
+        #lpai .final-band { position: relative; padding: 92px 0; border-top: 1px solid var(--line);
+          background: linear-gradient(180deg, rgba(57,255,20,.06), rgba(122,44,255,.14)); }
+        #lpai .final-band::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--grad); }
+        #lpai .final-band .sec-head h2 { font-size: clamp(24px, 3.6vw, 38px); }
+        #lpai .signature { text-align: center; margin-top: 44px; font-size: clamp(21px, 3.2vw, 30px); font-weight: 800; letter-spacing: -.02em; }
 
-        #lpai .signature { text-align: center; margin-top: 46px; font-size: clamp(22px, 3.4vw, 32px); font-weight: 800; letter-spacing: -.02em; }
-
-        /* responsive */
-        @media (max-width: 860px) {
-          #lpai .aiu-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+        @media (max-width: 900px) {
+          #lpai .aiu-hero-grid { grid-template-columns: 1fr; gap: 34px; }
           #lpai .cards-3, #lpai .proof-grid, #lpai .whom-grid { grid-template-columns: 1fr; }
-          #lpai .sec { padding: 72px 0; }
+          #lpai .sec, #lpai .final-band { padding: 70px 0; }
           #lpai .lead { max-width: none; }
+          #lpai .aiu-hero { padding-top: 96px; }
+          #lpai .pillar { min-height: 0; }
+          #lpai .control-card { padding: 26px; }
         }
         @media (prefers-reduced-motion: reduce) {
           #lpai [data-reveal] { opacity: 1 !important; transform: none !important; }
-          #lpai .bubble { opacity: 1 !important; transform: none !important; animation: none !important; }
         }
       `}</style>
     </>
+  )
+}
+
+function WaitlistForm({ id, title, subtitle, micro, full, perfilPre }) {
+  const [form, setForm] = useState({ nome: '', email: '', perfil: '', faturamento: '' })
+  const [status, setStatus] = useState('idle')
+
+  // CTAs de persona pré-selecionam o perfil
+  useEffect(() => {
+    if (perfilPre) setForm((f) => (f.perfil ? f : { ...f, perfil: perfilPre }))
+  }, [perfilPre])
+
+  const submit = async (e) => {
+    e.preventDefault()
+    if (!form.nome.trim() || !/.+@.+\..+/.test(form.email) || !form.perfil) return
+    setStatus('sending')
+    try {
+      const res = await fetch('/api/ai-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, origem: `LP /ai-unbox (${id})` }),
+      })
+      setStatus(res.ok ? 'done' : 'error')
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  if (status === 'done') {
+    return (
+      <div className={`wl-card${full ? ' full' : ''}`}>
+        <div className="thanks">
+          <div className="thanks-ico">✓</div>
+          <h3>Você está na lista.</h3>
+          <p>Vamos te chamar por ordem de chegada, com as novidades e as condições de early access antes da abertura pública.</p>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className={`wl-card${full ? ' full' : ''}`}>
+      {title && <h3 className="wl-title">{title}</h3>}
+      {subtitle && <p className="wl-sub">{subtitle}</p>}
+      <form onSubmit={submit}>
+        <div className="field">
+          <label htmlFor={`nome-${id}`}>Seu nome</label>
+          <input id={`nome-${id}`} type="text" value={form.nome} placeholder="Como podemos te chamar" onChange={(e) => setForm({ ...form, nome: e.target.value })} required />
+        </div>
+        <div className="field">
+          <label htmlFor={`email-${id}`}>Seu melhor e-mail</label>
+          <input id={`email-${id}`} type="email" value={form.email} placeholder="voce@suamarca.com.br" onChange={(e) => setForm({ ...form, email: e.target.value })} required />
+        </div>
+        <div className="field">
+          <label htmlFor={`perfil-${id}`}>Sou</label>
+          <select id={`perfil-${id}`} value={form.perfil} onChange={(e) => setForm({ ...form, perfil: e.target.value })} required>
+            <option value="" disabled>Selecione</option>
+            {PERFIS.map((p) => <option key={p}>{p}</option>)}
+          </select>
+        </div>
+        {full && (
+          <div className="field">
+            <label htmlFor={`fat-${id}`}>Faturamento mensal aproximado <span className="opt">(opcional)</span></label>
+            <select id={`fat-${id}`} value={form.faturamento} onChange={(e) => setForm({ ...form, faturamento: e.target.value })}>
+              <option value="">Prefiro não informar</option>
+              {FATURAMENTO.map((f) => <option key={f}>{f}</option>)}
+            </select>
+          </div>
+        )}
+        <button className="aiu-btn" type="submit" disabled={status === 'sending'}>
+          {status === 'sending' ? 'Enviando…' : 'Quero meu acesso antecipado'}
+        </button>
+        {status === 'error' && <p className="err">Algo deu errado ao enviar. Tente de novo em instantes.</p>}
+        {micro && <p className="micro">{micro}</p>}
+      </form>
+    </div>
   )
 }
