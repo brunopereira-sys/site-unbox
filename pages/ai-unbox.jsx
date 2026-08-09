@@ -9,7 +9,7 @@ const PILLARS = [
     tag: 'CRIAR',
     seal: 'Unbox CLI',
     title: 'De ideia a loja no ar.',
-    body: 'Você descreve a marca e o catálogo. A IA constrói a loja completa: design, produtos, checkout e assinatura nativa, no tempo que antes levava semanas. Recorrência não é módulo à parte: nasce junto com a loja.',
+    body: 'Você descreve a marca e o catálogo. A AI constrói a loja completa: design, produtos, checkout e assinatura nativa, no tempo que antes levava semanas. Recorrência não é módulo à parte: nasce junto com a loja.',
   },
   {
     n: '02',
@@ -24,7 +24,7 @@ const PILLARS = [
     tag: 'ESCALAR',
     seal: 'CLI + MCP',
     title: 'Agentes de crescimento.',
-    body: 'Agentes de IA aplicam inteligência em tarefas específicas do seu crescimento: ajustar preço, testar campanha, identificar risco de cancelamento, reengajar assinante. Não é IA genérica: é inteligência aplicada às decisões que fazem cliente voltar.',
+    body: 'Agentes de AI aplicam inteligência em tarefas específicas do seu crescimento: ajustar preço, testar campanha, identificar risco de cancelamento, reengajar assinante. Não é AI genérica: é inteligência aplicada às decisões que fazem cliente voltar.',
   },
 ]
 
@@ -34,16 +34,16 @@ const FAQ = [
     a: 'Não. Substitui o tempo gasto executando ajuste manual, não a estratégia, o julgamento ou o relacionamento com o cliente.',
   },
   {
-    q: 'É IA genérica ou aplicada ao meu negócio?',
+    q: 'É AI genérica ou aplicada ao meu negócio?',
     a: 'Inteligência focada em preço, campanha, cupom, risco de cancelamento e reengajamento de assinante. Não é um chatbot geral.',
   },
   {
-    q: 'Vou perder visibilidade do que a IA faz?',
+    q: 'Vou perder visibilidade do que a AI faz?',
     a: 'Não. Toda ação é registrada. Você define o que ela executa sozinha e o que depende da sua aprovação.',
   },
   {
     q: 'Preciso aprender uma plataforma nova?',
-    a: 'Não. Você fala o que quer testar; a IA constrói e executa. A parte técnica é o nosso trabalho.',
+    a: 'Não. Você fala o que quer testar; a AI constrói e executa. A parte técnica é o nosso trabalho.',
   },
   {
     q: 'Preciso já ser cliente Unbox?',
@@ -63,6 +63,13 @@ const FATURAMENTO = [
   'R$ 200 mil a R$ 1 mi/mês',
   'Acima de R$ 1 mi/mês',
 ]
+
+function maskBR(v) {
+  v = v.replace(/\D/g, '').slice(0, 11)
+  if (v.length <= 2) return v.length ? '(' + v : ''
+  if (v.length <= 7) return '(' + v.slice(0, 2) + ') ' + v.slice(2)
+  return '(' + v.slice(0, 2) + ') ' + v.slice(2, 7) + '-' + v.slice(7)
+}
 
 const URGENCIA = [
   'Ativam antes da abertura pública',
@@ -97,11 +104,11 @@ export default function AiUnboxLP() {
   return (
     <>
       <Head>
-        <title>Unbox AI Foundry — crie, opere e escale seu e-commerce com IA</title>
-        <meta name="description" content="Você descreve, e a loja nasce pronta. Você pede, e a mudança vai pro ar. E agentes de IA trabalham pelo seu crescimento todos os dias. Entre na lista de espera do Unbox AI Foundry." />
+        <title>Unbox AI Foundry — crie, opere e escale seu e-commerce com AI</title>
+        <meta name="description" content="Você descreve e a loja nasce pronta. Você pede e a mudança vai pro ar. Agentes de AI trabalham pelo seu crescimento todos os dias. Entre na lista de espera do Unbox AI Foundry." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href="https://www.unbox.com.br/ai-unbox" />
-        <meta property="og:title" content="Unbox AI Foundry — crie, opere e escale seu e-commerce com IA" />
+        <meta property="og:title" content="Unbox AI Foundry — crie, opere e escale seu e-commerce com AI" />
         <meta property="og:description" content="Você pede. A Unbox executa. Entre na lista de espera." />
         <meta property="og:url" content="https://www.unbox.com.br/ai-unbox" />
         <meta property="og:image" content="https://www.unbox.com.br/img/og-image.png?v=r26" />
@@ -117,15 +124,11 @@ export default function AiUnboxLP() {
           <div className="wrap aiu-hero-grid">
             <div className="hero-copy" data-reveal>
               <span className="aiu-eyebrow"><i className="pulse" />LISTA DE ESPERA ABERTA · VAGAS POR LOTE</span>
-              <h1>Crie, opere e escale seu e-commerce <span className="grad">com IA</span>.</h1>
+              <h1>Crie, opere e escale seu e-commerce <span className="grad">com AI</span>.</h1>
               <p className="lead">
-                Você descreve, e a loja nasce pronta. Você pede, e a mudança vai pro ar.
-                E agentes de IA trabalham pelo seu crescimento todos os dias. Em minutos, não dias.
+                Você descreve e a loja nasce pronta. Você pede e a mudança vai pro ar.
+                Agentes de AI trabalham pelo seu crescimento todos os dias. Tudo em minutos.
               </p>
-              <div className="hero-seals">
-                <span className="hseal"><b>assinatura nativa</b> na plataforma</span>
-                <span className="hseal"><b>loja, checkout e recorrência</b> num só lugar</span>
-              </div>
             </div>
 
             <div className="aiu-hero-visual" data-reveal>
@@ -148,28 +151,31 @@ export default function AiUnboxLP() {
             <div className="sec-head" data-reveal>
               <span className="kicker">PROVA REAL</span>
               <h2>Não é conceito. É print de loja de verdade.</h2>
-              <p className="sub">Um pedido em texto. Cupom criado, ativado e publicado numa loja em produção.</p>
+              <p className="sub">
+                Um pedido em texto. Cupom criado, ativado e publicado na{' '}
+                <a className="case-link" href="https://temperosbadia.com.br/" target="_blank" rel="noopener noreferrer">Temperos Badia</a>
+                {' '}— loja em produção, rodando na Unbox.
+              </p>
             </div>
 
-            <div className="proof-grid" data-reveal>
-              <div className="proof-card">
-                <div className="proof-label">no agente</div>
-                <div className="mini-chat">
-                  <div className="bubble user">cria o cupom BRUNINHO10, 10% de desconto</div>
-                  <div className="bubble aiu-ai">
-                    <span className="ai-text">✓ Cupom <b>BRUNINHO10</b> criado, ativado e publicado.</span>
-                  </div>
-                </div>
-              </div>
-              <div className="proof-card">
-                <div className="proof-label">no checkout da loja</div>
-                <div className="checkout-mock">
-                  <div className="ck-row"><span>Subtotal</span><span>R$ 100,00</span></div>
-                  <div className="ck-row disc"><span>Cupom BRUNINHO10</span><span>- R$ 10,00</span></div>
-                  <div className="ck-row total"><span>Total</span><span>R$ 90,00</span></div>
-                  <div className="ck-tag">✓ desconto aplicado</div>
-                </div>
-              </div>
+            <div className="proof-flow" data-reveal>
+              <figure className="proof-shot">
+                <figcaption className="proof-label">1 · no agente</figcaption>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/img/ai-prova-agente.png" alt="Agente confirmando: cupom BRUNINHO10 criado e ativo na Badia, 10% off, confirmado direto no banco" loading="lazy" />
+              </figure>
+
+              <div className="proof-arrow" aria-hidden="true">↓</div>
+
+              <figure className="proof-shot shot-checkout">
+                <figcaption className="proof-label">2 · no checkout da loja</figcaption>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/img/ai-prova-checkout.png" alt="Carrinho da loja Temperos Badia com o cupom BRUNINHO10 aplicado e desconto de R$ 3,29" loading="lazy" />
+              </figure>
+
+              <p className="proof-caption">
+                <b>Do pedido ao desconto no carrinho do cliente.</b> Sem abrir painel, sem deploy, sem esperar time técnico.
+              </p>
             </div>
 
             <a className="terminal-teaser" href="/ai" data-reveal>
@@ -177,7 +183,7 @@ export default function AiUnboxLP() {
                 <span className="tt-prompt">›</span> /mcp unbox crie um e-commerce para minha marca
                 <span className="tt-cursor" />
               </div>
-              <span className="tt-cta">É assim que um agente de IA constrói uma loja inteira com a Unbox — ver demo completa →</span>
+              <span className="tt-cta">É assim que um agente de AI constrói uma loja inteira com a Unbox — ver demo completa →</span>
             </a>
           </div>
         </section>
@@ -190,7 +196,7 @@ export default function AiUnboxLP() {
               <h2>Testar uma hipótese na sua loja não devia levar dias. Agora leva minutos.</h2>
               <p className="sub big">
                 Você não precisa aprender a operar mais uma plataforma. Você fala o que quer: um preço,
-                uma oferta, uma campanha, uma regra de assinatura. A IA constrói e executa na hora.
+                uma oferta, uma campanha, uma regra de assinatura. A AI constrói e executa na hora.
                 Mais teste rodando é mais clareza pra decidir pra onde crescer — e mais motivo pro seu
                 cliente voltar a comprar.
               </p>
@@ -262,10 +268,10 @@ export default function AiUnboxLP() {
           <div className="wrap narrow">
             <div className="control-card" data-reveal>
               <span className="ctrl-ico">🛡</span>
-              <h2>Você define o que a IA executa sozinha. E o que precisa da sua aprovação antes.</h2>
+              <h2>Você define o que a AI executa sozinha. E o que precisa da sua aprovação antes.</h2>
               <p>
                 Toda ação fica registrada. Nada irreversível acontece sem você validar. O ganho de
-                velocidade não é “perder o controle pra IA”: é decidir, com mais dado disponível, o que
+                velocidade não é “perder o controle pra AI”: é decidir, com mais dado disponível, o que
                 vale aprovar e o que vale rodar em piloto automático.
               </p>
             </div>
@@ -376,9 +382,6 @@ export default function AiUnboxLP() {
         @keyframes lppulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
         #lpai h1 { font-size: clamp(32px, 5vw, 56px); font-weight: 800; letter-spacing: -.03em; line-height: 1.06; margin: 22px 0 0; }
         #lpai .lead { color: var(--mut); font-size: 18px; line-height: 1.6; margin: 20px 0 0; max-width: 540px; }
-        #lpai .hero-seals { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
-        #lpai .hseal { font-family: var(--mono); font-size: 11.5px; color: var(--mut); border: 1px solid var(--line); border-radius: 9px; padding: 8px 12px; background: rgba(255,255,255,.02); }
-        #lpai .hseal b { color: var(--green); font-weight: 500; }
 
         /* ---- FORM ---- */
         #lpai .aiu-hero-visual { position: relative; }
@@ -424,18 +427,16 @@ export default function AiUnboxLP() {
         #lpai .seal { align-self: flex-start; margin-top: 18px; font-family: var(--mono); font-size: 11.5px; color: var(--mut); border: 1px solid var(--line); border-radius: 8px; padding: 5px 10px; background: rgba(255,255,255,.02); }
 
         /* ---- proof ---- */
-        #lpai .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-        #lpai .proof-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
+        #lpai .case-link { color: var(--green); text-decoration: none; border-bottom: 1px solid rgba(57,255,20,.35); }
+        #lpai .case-link:hover { border-bottom-color: var(--green); }
+        #lpai .proof-flow { display: flex; flex-direction: column; align-items: center; }
+        #lpai .proof-shot { margin: 0; width: 100%; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; overflow: hidden; }
+        #lpai .proof-shot.shot-checkout { max-width: 620px; }
+        #lpai .proof-shot img { display: block; width: 100%; height: auto; border-radius: 10px; }
         #lpai .proof-label { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin-bottom: 14px; }
-        #lpai .bubble { max-width: 92%; padding: 12px 15px; border-radius: 14px; font-size: 14.5px; line-height: 1.45; margin: 9px 0; }
-        #lpai .bubble.user { margin-left: auto; background: #23232a; color: #eaeaef; border-bottom-right-radius: 5px; font-family: var(--mono); font-size: 13.5px; }
-        #lpai .bubble.aiu-ai { background: rgba(57,255,20,.08); border: 1px solid rgba(57,255,20,.24); color: #d9ffd0; border-bottom-left-radius: 5px; font-family: var(--mono); font-size: 13.5px; }
-        #lpai .bubble.aiu-ai b { color: #fff; font-weight: 700; }
-        #lpai .checkout-mock { font-family: var(--mono); }
-        #lpai .ck-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--mut); padding: 9px 0; border-bottom: 1px dashed var(--line); }
-        #lpai .ck-row.disc { color: var(--green); }
-        #lpai .ck-row.total { color: #fff; font-size: 16px; font-weight: 500; border-bottom: none; }
-        #lpai .ck-tag { margin-top: 12px; display: inline-block; font-size: 12px; color: var(--green); border: 1px solid rgba(57,255,20,.32); border-radius: 999px; padding: 4px 11px; }
+        #lpai .proof-arrow { color: var(--green); font-size: 20px; line-height: 1; margin: 14px 0; opacity: .8; }
+        #lpai .proof-caption { font-size: 15px; color: var(--mut); text-align: center; margin: 22px 0 0; max-width: 620px; line-height: 1.6; }
+        #lpai .proof-caption b { color: #fff; font-weight: 600; }
         #lpai .terminal-teaser { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; text-decoration: none; background: #0a0a0c; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; transition: border-color .2s; }
         #lpai .terminal-teaser:hover { border-color: rgba(122,44,255,.5); }
         #lpai .tt-mini { font-family: var(--mono); font-size: 14px; color: #cfd0d6; }
@@ -500,7 +501,7 @@ export default function AiUnboxLP() {
 }
 
 function WaitlistForm({ id, title, subtitle, micro, full, perfilPre }) {
-  const [form, setForm] = useState({ nome: '', email: '', perfil: '', faturamento: '' })
+  const [form, setForm] = useState({ nome: '', email: '', whatsapp: '', perfil: '', faturamento: '' })
   const [status, setStatus] = useState('idle')
 
   // CTAs de persona pré-selecionam o perfil
@@ -508,9 +509,12 @@ function WaitlistForm({ id, title, subtitle, micro, full, perfilPre }) {
     if (perfilPre) setForm((f) => (f.perfil ? f : { ...f, perfil: perfilPre }))
   }, [perfilPre])
 
+  const onPhone = (e) => setForm({ ...form, whatsapp: maskBR(e.target.value) })
+
   const submit = async (e) => {
     e.preventDefault()
-    if (!form.nome.trim() || !/.+@.+\..+/.test(form.email) || !form.perfil) return
+    const digits = form.whatsapp.replace(/\D/g, '')
+    if (!form.nome.trim() || !/.+@.+\..+/.test(form.email) || digits.length < 10 || !form.perfil) return
     setStatus('sending')
     try {
       const res = await fetch('/api/ai-lead', {
@@ -548,6 +552,18 @@ function WaitlistForm({ id, title, subtitle, micro, full, perfilPre }) {
         <div className="field">
           <label htmlFor={`email-${id}`}>Seu melhor e-mail</label>
           <input id={`email-${id}`} type="email" value={form.email} placeholder="voce@suamarca.com.br" onChange={(e) => setForm({ ...form, email: e.target.value })} required />
+        </div>
+        <div className="field">
+          <label htmlFor={`wpp-${id}`}>Seu WhatsApp</label>
+          <input
+            id={`wpp-${id}`}
+            type="tel"
+            inputMode="tel"
+            value={form.whatsapp}
+            placeholder="(11) 91234-5678"
+            onChange={onPhone}
+            required
+          />
         </div>
         <div className="field">
           <label htmlFor={`perfil-${id}`}>Sou</label>
