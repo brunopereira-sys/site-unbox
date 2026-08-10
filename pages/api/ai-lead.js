@@ -3,9 +3,10 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { nome, email, perfil, faturamento, origem } = req.body || {};
+  const { nome, email, whatsapp, perfil, faturamento, origem } = req.body || {};
 
-  if (!nome || !email || !/.+@.+\..+/.test(email)) {
+  const digits = String(whatsapp || '').replace(/\D/g, '');
+  if (!nome || !email || !/.+@.+\..+/.test(email) || digits.length < 10) {
     return res.status(400).json({ error: 'invalid_fields' });
   }
 
@@ -31,6 +32,7 @@ export default async function handler(req, res) {
     // 2. Create person
     const personPayload = { name: nome };
     if (email) personPayload.email = [{ value: email, primary: true }];
+    if (whatsapp) personPayload.phone = [{ value: whatsapp, label: 'mobile', primary: true }];
     const personRes = await fetch(`${base}/persons?${q}`, {
       method: 'POST', headers: h, body: JSON.stringify(personPayload),
     });
@@ -51,6 +53,7 @@ export default async function handler(req, res) {
     const lines = [
       '🚀 Unbox AI Foundry — Lista de espera',
       perfil && `👤 Perfil: ${perfil}`,
+      whatsapp && `📱 WhatsApp: ${whatsapp}`,
       faturamento && `💰 Faturamento: ${faturamento}`,
       `🔗 Origem: ${origem || 'LP /ai-unbox'}`,
     ].filter(Boolean).join('<br>');
