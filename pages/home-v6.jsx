@@ -180,9 +180,9 @@ function HeroBoard() {
         <div className="h6-b-bub u">confirma</div>
         <div className="h6-b-bub a ok"><Icon name="check" size={13} /> Criado e publicado.</div>
       </div>
-      <div className="h6-b-chip c1"><Icon name="bolt" size={14} /><span>Checkout TURBO</span><b>98% aprovado</b></div>
-      <div className="h6-b-chip c2"><Icon name="repeat" size={14} /><span>Assinatura</span><b>a cada 30 dias</b></div>
-      <div className="h6-b-chip c3"><Icon name="shield" size={14} /><span>Anti-Fraude IA+</span><b>aprovado · 0,3s</b></div>
+      <div className="h6-b-chip c1"><Icon name="bolt" size={14} /><span>Checkout</span><b>98% aprovado</b></div>
+      <div className="h6-b-chip c2"><Icon name="repeat" size={14} /><span>Assinatura</span><b>30 dias</b></div>
+      <div className="h6-b-chip c3"><Icon name="shield" size={14} /><span>Anti-Fraude IA+</span><b>0,3s</b></div>
       <div className="h6-glow gp" /><div className="h6-glow gg" />
     </div>
   )
@@ -237,8 +237,8 @@ function Mock({ kind }) {
       </div>)
     case 'promo': return (
       <div className="h6-mock h6-m-promo">
-        <div className="h6-m-frame tall"><img src="/img/ai-prova-agente.png" alt="Print real: AI criando o cupom BRUNINHO10 na loja Temperos Badia via MCP" /></div>
-        <div className="h6-m-float fl4"><span className="h6-live" />Print real · Temperos Badia</div>
+        <Chat who="você · Claude" lines={[{ r: 'u', t: 'cria o cupom BRUNINHO10, 10% de desconto' }, { r: 'a', t: 'Plano: cupom BRUNINHO10 · 10% · sem limite. Confirmar?' }, { r: 'u', t: 'confirma' }, { r: 'a ok', t: 'Criado, ativado e publicado na Badia.' }]} />
+        <div className="h6-m-proof"><div className="h6-m-proof-l"><span className="h6-live" />Print real · Temperos Badia · via MCP</div><div className="h6-m-frame wide"><img src="/img/ai-prova-agente.png" alt="Print real: AI criando o cupom BRUNINHO10 na loja Temperos Badia via MCP" /></div></div>
       </div>)
     case 'creators': return (
       <div className="h6-mock h6-m-creators">
@@ -422,7 +422,7 @@ export default function HomeV6() {
           <div className="h6-wrap">
             <div className="h6-head h6-center" data-rv>
               <span className="h6-eye light"><i className="h6-dot" />CONHEÇA O UNBOX AI</span>
-              <h2>Não é um chatbot no canto da tela.<br />É a camada que cria, opera e otimiza a sua loja.</h2>
+              <h2>Não é um chatbot no canto da tela. É a camada que cria, opera e otimiza a sua loja.</h2>
               <p>A AI que você já usa, conectada à Unbox via MCP, com agentes embarcados no projeto. Cada parte da plataforma que você viu acima responde a ela.</p>
             </div>
             <div className="h6-pillars">
@@ -586,17 +586,17 @@ export default function HomeV6() {
         #hv6 .h6-glow.gg { width: 220px; height: 220px; background: rgba(57,255,20,.14); bottom: -20px; left: 0; }
         #hv6 .h6-board { position: relative; height: 520px; }
         #hv6 .h6-board > * { position: absolute; }
-        #hv6 .h6-b-admin { z-index: 1; left: 0; top: 30px; width: 300px; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 16px; box-shadow: 0 20px 50px rgba(22,22,28,.1); animation: h6up .7s .1s both; }
+        #hv6 .h6-b-admin { z-index: 1; left: 0; top: 0; width: 300px; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 16px; box-shadow: 0 20px 50px rgba(22,22,28,.1); animation: h6up .7s .1s both; }
         #hv6 .h6-b-admin-h { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; } #hv6 .h6-b-admin-h em { font-style: normal; color: var(--mut); font-weight: 400; }
-        #hv6 .h6-b-bars { display: flex; align-items: flex-end; gap: 6px; height: 90px; margin: 14px 0 12px; }
+        #hv6 .h6-b-bars { display: flex; align-items: flex-end; gap: 6px; height: 76px; margin: 12px 0 10px; }
         #hv6 .h6-b-bars i { flex: 1; border-radius: 5px 5px 2px 2px; background: linear-gradient(180deg, var(--roxo), #B06BFF); transform-origin: bottom; animation: h6grow .8s cubic-bezier(.2,.7,.2,1) both; }
         #hv6 .h6-b-bars i:last-child { background: linear-gradient(180deg, var(--verde), #7BE495); }
         #hv6 .h6-b-admin-f { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; } #hv6 .h6-b-admin-f b { font-size: 18px; letter-spacing: -.02em; }
-        #hv6 .h6-b-phone { z-index: 2; left: 250px; top: 0; width: 230px; height: 470px; border-radius: 30px; background: #0D0D12; padding: 10px; box-shadow: 0 30px 70px rgba(22,22,28,.28); overflow: hidden; animation: h6up .8s both; }
+        #hv6 .h6-b-phone { z-index: 2; right: 0; top: 10px; width: 230px; height: 470px; border-radius: 30px; background: #0D0D12; padding: 10px; box-shadow: 0 30px 70px rgba(22,22,28,.28); overflow: hidden; animation: h6up .8s both; }
         #hv6 .h6-b-phone img, #hv6 .h6-m-phone img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 22px; }
         #hv6 .h6-b-phone-top { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 70px; height: 18px; border-radius: 999px; background: #0D0D12; z-index: 2; }
         #hv6 .h6-b-phone-cta { position: absolute; left: 24px; right: 24px; bottom: 22px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 600; text-align: center; padding: 11px; border-radius: 12px; box-shadow: 0 10px 24px rgba(0,0,0,.35); }
-        #hv6 .h6-b-chat { z-index: 3; left: 0; bottom: 10px; width: 330px; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 14px; box-shadow: 0 24px 60px rgba(22,22,28,.16); display: grid; gap: 8px; animation: h6up .7s .3s both; }
+        #hv6 .h6-b-chat { z-index: 3; left: 0; top: 248px; width: 300px; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 14px; box-shadow: 0 24px 60px rgba(22,22,28,.16); display: grid; gap: 8px; animation: h6up .7s .3s both; }
         #hv6 .h6-b-chat-h, #hv6 .h6-chat-h { display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: var(--mut); padding-bottom: 8px; border-bottom: 1px solid var(--line); }
         #hv6 .h6-b-bub, #hv6 .h6-bub { max-width: 90%; padding: 9px 12px; border-radius: 12px; font-size: 13px; line-height: 1.4; opacity: 0; transform: translateY(6px); animation: h6bub .45s ease forwards; }
         #hv6 .h6-b-bub.u, #hv6 .h6-bub.u { margin-left: auto; background: var(--ink); color: #fff; border-bottom-right-radius: 4px; }
@@ -605,7 +605,7 @@ export default function HomeV6() {
         #hv6 .h6-b-bub:nth-child(2), #hv6 .h6-bub:nth-child(2) { animation-delay: .9s } #hv6 .h6-b-bub:nth-child(3), #hv6 .h6-bub:nth-child(3) { animation-delay: 1.6s } #hv6 .h6-b-bub:nth-child(4), #hv6 .h6-bub:nth-child(4) { animation-delay: 2.3s } #hv6 .h6-b-bub:nth-child(5), #hv6 .h6-bub:nth-child(5) { animation-delay: 2.9s }
         #hv6 .h6-b-chip { z-index: 4; display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px 8px 10px; font-size: 12.5px; box-shadow: 0 12px 30px rgba(22,22,28,.12); animation: h6up .6s both; }
         #hv6 .h6-b-chip svg { color: var(--roxo-2); } #hv6 .h6-b-chip span { color: var(--mut); } #hv6 .h6-b-chip b { font-weight: 600; }
-        #hv6 .h6-b-chip.c1 { right: 0; top: 60px; animation-delay: .5s; } #hv6 .h6-b-chip.c2 { right: 10px; top: 210px; animation-delay: .8s; } #hv6 .h6-b-chip.c3 { right: 30px; bottom: 70px; animation-delay: 1.1s; }
+        #hv6 .h6-b-chip.c1 { left: 0; top: 196px; animation-delay: .5s; } #hv6 .h6-b-chip.c2 { left: 186px; top: 196px; animation-delay: .8s; } #hv6 .h6-b-chip.c3 { right: -14px; top: 300px; animation-delay: 1.1s; }
         @keyframes h6up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
         @keyframes h6grow { from { transform: scaleY(0); } to { transform: none; } }
         @keyframes h6bub { to { opacity: 1; transform: none; } }
@@ -661,15 +661,15 @@ export default function HomeV6() {
         #hv6 .h6-m-phone img { border-radius: 20px; }
         #hv6 .h6-m-store { display: flex; gap: 22px; align-items: center; justify-content: center; }
         #hv6 .h6-m-agents { background: #fff; border-radius: 18px; padding: 16px; box-shadow: 0 20px 50px rgba(22,22,28,.12); width: 270px; display: grid; gap: 10px; }
-        #hv6 .h6-m-agents-h { display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: var(--mut); padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+        #hv6 .h6-m-agents-h { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; font-size: 11.5px; color: var(--mut); padding-bottom: 8px; border-bottom: 1px solid var(--line); }
         #hv6 .h6-m-agent { display: flex; gap: 10px; align-items: flex-start; } #hv6 .h6-m-agent svg { color: var(--verde); margin-top: 3px; flex-shrink: 0; }
         #hv6 .h6-m-agent b { display: block; font-size: 13.5px; } #hv6 .h6-m-agent span { font-size: 12px; color: var(--mut); }
         #hv6 .h6-m-frame { border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 24px 60px rgba(22,22,28,.18); max-height: 420px; }
         #hv6 .h6-m-frame img { display: block; width: 100%; height: auto; object-fit: cover; object-position: top; }
-        #hv6 .h6-m-frame.tall { max-height: 460px; }
+        #hv6 .h6-m-frame.tall { max-height: 460px; } #hv6 .h6-m-frame.wide { max-height: none; border-radius: 12px; } #hv6 .h6-m-promo { display: grid; gap: 14px; } #hv6 .h6-m-proof { background: #fff; border-radius: 18px; padding: 12px; box-shadow: 0 20px 50px rgba(22,22,28,.12); } #hv6 .h6-m-proof-l { display: flex; align-items: center; font-size: 12px; font-weight: 600; color: var(--ink-2); padding: 2px 4px 10px; }
         #hv6 .h6-m-float { position: absolute; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px; box-shadow: 0 14px 34px rgba(22,22,28,.14); font-size: 12.5px; display: grid; gap: 2px; }
-        #hv6 .h6-m-float b { font-size: 13.5px; } #hv6 .h6-m-float span { color: var(--mut); } #hv6 .h6-m-float .h6-aitag { justify-self: start; margin-bottom: 4px; }
-        #hv6 .h6-m-float.fl1 { right: -8px; top: 28px; } #hv6 .h6-m-float.fl2 { left: -8px; bottom: 30px; } #hv6 .h6-m-float.fl3 { right: -6px; top: -14px; } #hv6 .h6-m-float.fl4 { left: 14px; bottom: 14px; display: flex; align-items: center; font-weight: 600; }
+        #hv6 .h6-m-float b { font-size: 13.5px; } #hv6 .h6-m-float span { color: var(--mut); } #hv6 .h6-m-float .h6-aitag { color: #fff; } #hv6 .h6-m-float .h6-aitag { justify-self: start; margin-bottom: 4px; }
+        #hv6 .h6-m-float.fl1 { right: -8px; bottom: 26px; } #hv6 .h6-m-float.fl2 { left: -8px; top: -16px; } #hv6 .h6-m-float.fl3 { position: static; grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; } #hv6 .h6-m-float.fl3 .h6-aitag { margin: 0; } #hv6 .h6-m-float.fl3 span { margin-left: auto; } #hv6 .h6-m-float.fl4 { left: 14px; bottom: 14px; display: flex; align-items: center; font-weight: 600; }
         #hv6 .h6-m-pay { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
         #hv6 .h6-m-stat { background: #fff; border-radius: 16px; padding: 16px; box-shadow: 0 14px 34px rgba(22,22,28,.1); display: grid; gap: 4px; }
         #hv6 .h6-m-stat span { font-size: 11.5px; color: var(--mut); } #hv6 .h6-m-stat b { font-size: 26px; letter-spacing: -.03em; line-height: 1.05; } #hv6 .h6-m-stat em { font-style: normal; font-size: 11.5px; color: var(--ink-2); }
@@ -683,13 +683,13 @@ export default function HomeV6() {
         #hv6 .h6-m-subcard-h, #hv6 .h6-m-order-h, #hv6 .h6-m-list-h, #hv6 .h6-m-panel-h { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--mut); padding-bottom: 8px; border-bottom: 1px solid var(--line); }
         #hv6 .h6-m-subcard-h b, #hv6 .h6-m-order-h b { color: var(--ink); font-size: 13px; } #hv6 .h6-m-order-h b.ok { color: var(--verde); } #hv6 .h6-m-list-h em, #hv6 .h6-m-panel-h em { font-style: normal; }
         #hv6 .h6-m-subrow { display: flex; justify-content: space-between; gap: 10px; font-size: 12.5px; } #hv6 .h6-m-subrow span { color: var(--mut); } #hv6 .h6-m-subrow b { font-weight: 600; text-align: right; display: inline-flex; align-items: center; gap: 4px; }
-        #hv6 .h6-m-cre { display: grid; grid-template-columns: 82px 58px 1fr 60px; align-items: center; gap: 8px; font-size: 12px; } #hv6 .h6-m-cre b { font-weight: 600; } #hv6 .h6-m-cre code { font-size: 10.5px; padding: 2px 5px; } #hv6 .h6-m-cre i { height: 8px; border-radius: 999px; background: var(--sky); overflow: hidden; display: block; } #hv6 .h6-m-cre i span { display: block; height: 100%; background: var(--roxo); border-radius: 999px; } #hv6 .h6-m-cre em { font-style: normal; color: var(--mut); text-align: right; }
+        #hv6 .h6-m-cre { display: grid; grid-template-columns: 84px 58px 1fr 68px; align-items: center; gap: 8px; font-size: 12px; } #hv6 .h6-m-cre b { font-weight: 600; } #hv6 .h6-m-cre code { font-size: 10.5px; padding: 2px 5px; } #hv6 .h6-m-cre i { height: 8px; border-radius: 999px; background: var(--sky); overflow: hidden; display: block; } #hv6 .h6-m-cre i span { display: block; height: 100%; background: var(--roxo); border-radius: 999px; } #hv6 .h6-m-cre em { font-style: normal; color: var(--mut); text-align: right; }
         #hv6 .h6-m-src { display: grid; grid-template-columns: 76px 1fr 38px; align-items: center; gap: 8px; font-size: 12px; } #hv6 .h6-m-src i { height: 8px; border-radius: 999px; background: var(--lavender); overflow: hidden; display: block; } #hv6 .h6-m-src i span { display: block; height: 100%; background: linear-gradient(90deg, var(--roxo), #B06BFF); border-radius: 999px; } #hv6 .h6-m-src b { text-align: right; }
         #hv6 .h6-m-panel-f { display: flex; justify-content: space-between; font-size: 12px; color: var(--mut); padding-top: 8px; border-top: 1px solid var(--line); } #hv6 .h6-m-panel-f b { color: var(--ink); }
 
         /* unbox ai band */
         #hv6 .h6-aiband { background: radial-gradient(60% 80% at 85% 0%, rgba(143,40,246,.45), transparent 60%), radial-gradient(40% 60% at 0% 100%, rgba(57,255,20,.14), transparent 60%), #0F0F14; color: #fff; }
-        #hv6 .h6-aiband .h6-head p { color: rgba(255,255,255,.7); } #hv6 .h6-aiband .h6-dot { box-shadow: 0 0 0 3px rgba(57,255,20,.2); background: var(--neon); }
+        #hv6 .h6-aiband .h6-head { max-width: 900px; } #hv6 .h6-aiband .h6-head p { color: rgba(255,255,255,.7); } #hv6 .h6-aiband .h6-dot { box-shadow: 0 0 0 3px rgba(57,255,20,.2); background: var(--neon); }
         #hv6 .h6-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
         #hv6 .h6-pillar { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 22px; padding: 26px; display: flex; flex-direction: column; gap: 10px; }
         #hv6 .h6-pillar-ico { width: 42px; height: 42px; border-radius: 12px; background: rgba(143,40,246,.25); color: #D9C2FF; display: inline-flex; align-items: center; justify-content: center; }
@@ -751,12 +751,12 @@ export default function HomeV6() {
         #hv6 .h6-footer-grid a { display: block; font-size: 15px; padding: 5px 0; color: var(--ink-2); } #hv6 .h6-footer-grid a:hover { color: var(--ink); }
         #hv6 .h6-footer-bottom { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--mut); font-size: 13px; }
 
-        @media (max-width: 1080px) { #hv6 .h6-b-phone { left: 210px; } #hv6 .h6-b-chip.c1, #hv6 .h6-b-chip.c2 { right: -10px; } }
+        @media (max-width: 1080px) { #hv6 .h6-b-admin, #hv6 .h6-b-chat { width: 270px; } #hv6 .h6-b-chip.c2 { left: 0; top: 240px; } #hv6 .h6-b-chat { top: 290px; } }
         @media (max-width: 980px) {
           #hv6 .h6-links, #hv6 .h6-nav-cta .h6-btn-ghost, #hv6 .h6-nav-cta .h6-btn-dark { display: none; } #hv6 .h6-burger { display: inline-flex; }
           #hv6 .h6-hero-grid, #hv6 .h6-prod-grid, #hv6 .h6-split { grid-template-columns: 1fr; gap: 36px; }
           #hv6 .h6-prod.is-rev .h6-prod-copy { order: 0; }
-          #hv6 .h6-board { height: 560px; max-width: 520px; margin: 0 auto; } #hv6 .h6-b-phone { left: auto; right: 0; }
+          #hv6 .h6-board { height: 540px; max-width: 560px; margin: 0 auto; } #hv6 .h6-b-admin, #hv6 .h6-b-chat { width: 300px; } #hv6 .h6-b-chip.c2 { left: 186px; top: 196px; } #hv6 .h6-b-chat { top: 248px; }
           #hv6 .h6-channels, #hv6 .h6-pillars, #hv6 .h6-sizes, #hv6 .h6-cases { grid-template-columns: 1fr; } #hv6 .h6-metrics-grid { grid-template-columns: repeat(2, 1fr); }
           #hv6 .h6-tour-l { display: none; } #hv6 .h6-prod { padding: 64px 0; scroll-margin-top: 126px; }
           #hv6 .h6-footer-grid { grid-template-columns: 1fr 1fr; } #hv6 .h6-sec { padding: 72px 0; }
@@ -765,8 +765,8 @@ export default function HomeV6() {
         @media (max-width: 640px) {
           #hv6 .h6-metrics-grid, #hv6 .h6-footer-grid, #hv6 .h6-feats, #hv6 .h6-m-sub, #hv6 .h6-m-creators, #hv6 .h6-m-ops, #hv6 .h6-m-data { grid-template-columns: 1fr; } #hv6 .h6-cmp { height: 300px; }
           #hv6 .h6-m-store { flex-direction: column; } #hv6 .h6-m-pay { grid-template-columns: 1fr 1fr; } #hv6 .h6-m-float.fl3 { position: static; margin-top: 10px; grid-column: 1 / -1; }
-          #hv6 .h6-board { height: 600px; } #hv6 .h6-b-admin { width: 220px; } #hv6 .h6-b-phone { width: 190px; height: 400px; } #hv6 .h6-b-chat { width: 280px; }
-          #hv6 .h6-b-chip.c1 { top: 20px; } #hv6 .h6-b-chip.c3 { bottom: 40px; right: 0; }
+          #hv6 .h6-board { height: auto; max-width: 100%; display: grid; gap: 14px; justify-items: center; } #hv6 .h6-board > * { position: static; } #hv6 .h6-b-admin, #hv6 .h6-b-chip, #hv6 .h6-glow { display: none; }
+          #hv6 .h6-b-phone { width: 220px; height: 420px; position: relative; } #hv6 .h6-b-chat { width: 100%; max-width: 360px; }
         }
         @media (prefers-reduced-motion: reduce) { #hv6 [data-rv] { opacity: 1 !important; transform: none !important; } #hv6 .h6-marquee-track { animation: none; } #hv6 .h6-b-bub, #hv6 .h6-bub, #hv6 .h6-board > *, #hv6 .h6-b-bars i { opacity: 1; animation: none; } }
       `}</style>
