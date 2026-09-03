@@ -36,7 +36,7 @@ const PIECES = [
 /* ── cases antes/depois ───────────────────────────────────── */
 const CASES = [
   { name: 'Oddie Supply', seg: 'Alimentos funcionais', logo: '/img/cases/logo-oddie.webp', before: '/img/cases/case-oddie-antes.jpg', after: '/img/cases/case-oddie-depois.jpg', note: 'Energia e hidratação em pó. A loja inteira foi remontada em torno de um produto só — e de uma jornada de assinatura.' },
-  { name: 'Pamela Concept', seg: 'Cuidado capilar', logo: '/img/cases/logo-pamela.png', before: '/img/cases/case-pamela-antes.jpg', after: '/img/cases/case-pamela-depois.jpg', note: 'Cada problema (queda, caspa, brilho) virou um caminho claro dentro da loja, em vez de uma prateleira de frascos.' },
+  { name: 'Pamela Concept', seg: 'Cuidado capilar', logo: '/img/cases/logo-pamela.png', dark: true, before: '/img/cases/case-pamela-antes.jpg', after: '/img/cases/case-pamela-depois.jpg', note: 'Cada problema (queda, caspa, brilho) virou um caminho claro dentro da loja, em vez de uma prateleira de frascos.' },
   { name: 'Badia', seg: 'Temperos e especiarias', logo: '/img/cases/logo-badia.svg', before: '/img/cases/case-badia-antes.jpg', after: '/img/cases/case-badia-depois.jpg', note: 'Catálogo enorme. O desafio foi fazer centenas de SKUs virarem uma jornada simples de comprar.' },
 ]
 
@@ -143,7 +143,7 @@ function Pieces() {
     on(); window.addEventListener('scroll', on, { passive: true }); window.addEventListener('resize', on)
     return () => { window.removeEventListener('scroll', on); window.removeEventListener('resize', on); cancelAnimationFrame(raf) }
   }, [])
-  const stage = Math.min(PIECES.length - 1, Math.floor(p * PIECES.length))
+  const stage = Math.min(PIECES.length - 1, Math.max(0, Math.round(p * PIECES.length - 0.5)))
   const ease = (x) => 1 - Math.pow(1 - x, 3)
   return (
     <section className="h5-pieces" ref={wrap} id="pecas">
@@ -189,7 +189,7 @@ function Compare({ c }) {
     <div className="h5-case">
       <div className="h5-case-head">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={c.logo} alt={c.name} className="h5-case-logo" />
+        <img src={c.logo} alt={c.name} className={'h5-case-logo' + (c.dark ? ' is-dark' : '')} />
         <span className="h5-case-seg">{c.seg}</span>
       </div>
       <div className="h5-cmp" style={{ '--x': x + '%' }}>
@@ -553,7 +553,7 @@ export default function HomeV5() {
         #hv5 .h5-chat-head { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--mut); padding-bottom: 10px; border-bottom: 1px solid var(--line); }
         #hv5 .h5-bub { max-width: 86%; padding: 11px 14px; border-radius: 14px; font-size: 14.5px; line-height: 1.4; opacity: 0; transform: translateY(6px); animation: h5bub .45s ease forwards; }
         #hv5 .h5-bub.u { margin-left: auto; background: var(--ink); color: #fff; border-bottom-right-radius: 4px; }
-        #hv5 .h5-bub.a { background: var(--sky); color: var(--ink); border-bottom-left-radius: 4px; display: inline-flex; align-items: center; gap: 6px; }
+        #hv5 .h5-bub.a { background: var(--sky); color: var(--ink); border-bottom-left-radius: 4px; display: block; } #hv5 .h5-bub.a svg { vertical-align: -2px; margin-right: 6px; }
         #hv5 .h5-bub.a.ok { background: var(--lime); } #hv5 .h5-bub.a svg { color: var(--verde); }
         #hv5 .h5-bub:nth-child(2){animation-delay:.2s} #hv5 .h5-bub:nth-child(3){animation-delay:.8s} #hv5 .h5-bub:nth-child(4){animation-delay:1.5s} #hv5 .h5-bub:nth-child(5){animation-delay:2.1s}
         @keyframes h5bub { to { opacity: 1; transform: none; } }
@@ -565,7 +565,7 @@ export default function HomeV5() {
         #hv5 .h5-cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
         #hv5 .h5-case { background: var(--bg); border: 1px solid var(--line); border-radius: 22px; padding: 18px; }
         #hv5 .h5-case-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
-        #hv5 .h5-case-logo { height: 26px; width: auto; max-width: 140px; object-fit: contain; }
+        #hv5 .h5-case-logo { height: 26px; width: auto; max-width: 140px; object-fit: contain; } #hv5 .h5-case-logo.is-dark { filter: brightness(0); }
         #hv5 .h5-case-seg { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--mut); }
         #hv5 .h5-cmp { position: relative; height: 360px; border-radius: 14px; overflow: hidden; background: #eee; user-select: none; }
         #hv5 .h5-cmp-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
