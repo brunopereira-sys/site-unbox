@@ -22,6 +22,14 @@ const CHANNELS = [
   { k: 'meta', icon: 'meta', t: 'Facebook & Meta', d: 'Pixel, Business Manager e catálogo instalados na loja.' },
 ]
 
+const SHOW = [
+  { key: 'loja', label: 'Loja', icon: 'layout', tint: 'sky', title: 'Sua loja, do seu jeito. Sem template.', body: 'Layouts 100% customizáveis, mobile-first, com SEO e performance de ponta. Crie do zero pelo CLI, importe do Figma ou migre de onde estiver.', ai: 'Gerada pelo CLI e revisada por agentes de branding, QA visual, SEO e AEO', img: '/img/loja-olea.png', alt: 'Loja Olea rodando na Unbox', href: '#loja' },
+  { key: 'checkout', label: 'Checkout', icon: 'bolt', tint: 'lime', title: 'Checkout em modo TURBO.', body: '3 etapas, sem redirecionamento, sem fricção. Pix, cartão em até 12× e boleto no mesmo fluxo. 4× mais conversão e +98% de aprovação.', ai: 'Anti-Fraude IA+ analisando cada pedido em tempo real', img: '/img/checkout-dash.png', alt: 'Checkout TURBO da Unbox', href: '#checkout' },
+  { key: 'assinatura', label: 'Assinatura', icon: 'repeat', tint: 'lavender', title: 'Recorrência que nasce no carrinho.', body: 'Assinatura 100% nativa, da página de produto ao checkout. Múltiplas frequências, gestão de falhas automática e cohort de LTV.', ai: 'Planos e regras de assinatura criados por texto, via MCP', img: '/img/assinatura2.png', alt: 'Assinatura nativa no carrinho', href: '#assinatura' },
+  { key: 'pay', label: 'Unbox Pay', icon: 'card', tint: 'mint', title: 'Pagamento e capital no mesmo lugar.', body: 'Gateway próprio com 98% de aprovação, multi provedores e retentativa automática. Crédito de até R$ 500 mil amortizado pelas suas próprias vendas.', ai: 'Gateway turbinado por AI para aprovar mais e custar menos', mock: 'pay', href: '#pay' },
+  { key: 'ai', label: 'Unbox AI', icon: 'sparkle', tint: 'lavender', title: 'A AI que cria, opera e otimiza a loja.', body: 'O CLI gera a loja do zero, do Figma ou migrando. O MCP opera catálogo, pedidos e campanhas por texto. Agentes cuidam de branding, CRO, SEO e AEO.', ai: 'Funciona com Claude, ChatGPT, Cursor e qualquer AI com MCP', mock: 'ai', href: '#unbox-ai' },
+]
+
 const PRODUCTS = [
   { id: 'loja', tint: 'sky', icon: 'layout', tab: 'Loja', eye: 'LOJA VIRTUAL', title: 'Uma loja 100% sua. Gerada e revisada por AI.',
     body: 'Layouts totalmente customizáveis, domínio e SSL grátis, SEO e performance de verdade. Crie do zero pelo CLI, importe do Figma ou migre de onde estiver.',
@@ -159,31 +167,39 @@ function Metric({ m, run }) {
   return <div className="h6-metric"><div className="h6-metric-n">{m.prefix}{shown}<span>{m.suffix}</span></div><div className="h6-metric-l">{m.label}</div></div>
 }
 
-/* ── Hero: a plataforma inteira em uma cena ─────────────────── */
-function HeroBoard() {
+/* ── Hero: painel com abas (ref. v2) — 4 produtos + Unbox AI ── */
+function Showcase() {
+  const [tab, setTab] = useState(0)
+  const [prog, setProg] = useState(0)
+  const paused = useRef(false); const pr = useRef(0)
+  useEffect(() => {
+    const id = setInterval(() => { if (paused.current) return; pr.current += 1 / 160; if (pr.current >= 1) { pr.current = 0; setTab((t) => (t + 1) % SHOW.length) } setProg(pr.current) }, 40)
+    return () => clearInterval(id)
+  }, [])
+  useEffect(() => { const q = new URLSearchParams(window.location.search).get('tab'); if (q !== null) { paused.current = true; setTab(Math.min(SHOW.length - 1, Math.max(0, Number(q) || 0))) } }, [])
+  const T = SHOW[tab]
   return (
-    <div className="h6-board" aria-hidden="true">
-      <div className="h6-b-admin">
-        <div className="h6-b-admin-h"><span>Visão geral de vendas</span><em>últimos 7 dias</em></div>
-        <div className="h6-b-bars">{[38, 52, 46, 70, 64, 88, 96].map((h, i) => <i key={i} style={{ height: h + '%', animationDelay: `${.3 + i * .08}s` }} />)}</div>
-        <div className="h6-b-admin-f"><b>R$ 48.320</b><span className="up">+18% vs semana anterior</span></div>
+    <div className={'h6-panel tint-' + T.tint} onMouseEnter={() => { paused.current = true }} onMouseLeave={() => { paused.current = false }}>
+      <div className="h6-ptabs" role="tablist">
+        {SHOW.map((t, i) => (
+          <button key={t.key} role="tab" aria-selected={i === tab} className={'h6-ptab' + (i === tab ? ' is-on' : '')} onClick={() => { pr.current = 0; setProg(0); setTab(i) }}>
+            <span className="h6-ptab-ico"><Icon name={t.icon} size={16} /></span><span className="h6-ptab-lbl">{t.label}</span>
+            {i === tab && <i className="h6-ptab-prog" style={{ transform: `scaleX(${prog})` }} />}
+          </button>
+        ))}
       </div>
-      <div className="h6-b-phone">
-        <div className="h6-b-phone-top" />
-        <img src="/img/cases/case-badia-depois.jpg" alt="" />
-        <div className="h6-b-phone-cta">Comprar agora</div>
+      <div className="h6-showcase" key={T.key}>
+        <div className="h6-showcase-copy">
+          <span className="h6-chip"><Icon name={T.icon} size={14} /> {T.label}</span>
+          <h3>{T.title}</h3>
+          <p>{T.body}</p>
+          <div className="h6-showcase-ai"><AiTag /><span>{T.ai}</span></div>
+          <a href={T.href} className="h6-textlink">Saiba mais <Icon name="arrow" size={16} /></a>
+        </div>
+        <div className={'h6-showcase-media' + (T.mock ? ' is-mock' : '')}>
+          {T.img ? <img src={T.img} alt={T.alt} /> : <Mock kind={T.mock} />}
+        </div>
       </div>
-      <div className="h6-b-chat">
-        <div className="h6-b-chat-h"><AiTag>Unbox MCP</AiTag><span>você · Claude</span></div>
-        <div className="h6-b-bub u">cria o cupom VOLTA10 com 10% e frete grátis acima de R$ 150</div>
-        <div className="h6-b-bub a"><Icon name="check" size={13} /> Plano: cupom <b>VOLTA10</b> · 10% · frete grátis ≥ R$ 150. Confirmar?</div>
-        <div className="h6-b-bub u">confirma</div>
-        <div className="h6-b-bub a ok"><Icon name="check" size={13} /> Criado e publicado.</div>
-      </div>
-      <div className="h6-b-chip c1"><Icon name="bolt" size={14} /><span>Checkout</span><b>98% aprovado</b></div>
-      <div className="h6-b-chip c2"><Icon name="repeat" size={14} /><span>Assinatura</span><b>30 dias</b></div>
-      <div className="h6-b-chip c3"><Icon name="shield" size={14} /><span>Anti-Fraude IA+</span><b>0,3s</b></div>
-      <div className="h6-glow gp" /><div className="h6-glow gg" />
     </div>
   )
 }
@@ -225,15 +241,15 @@ function Mock({ kind }) {
         </div>
         <div className="h6-m-float fl3"><AiTag /><b>Gateway turbinado por AI</b><span>aprova mais, custa menos</span></div>
       </div>)
+    case 'ai': return (
+      <div className="h6-mock h6-m-ai">
+        <div className="h6-term"><div className="h6-term-cmd"><span>$</span> npx create-unbox-store</div><div className="h6-term-line">→ lendo briefing da marca · estilo editorial</div><div className="h6-term-line">→ gerando storefront: home, catálogo, PDP, checkout</div><div className="h6-term-line ok">✓ loja no ar em preview</div></div>
+        <Chat who="você · Claude" lines={[{ r: 'u', t: 'cria o cupom VOLTA10 com 10% e frete grátis acima de R$ 150' }, { r: 'a', t: 'Plano: VOLTA10 · 10% · frete grátis ≥ R$ 150. Confirmar?' }, { r: 'u', t: 'confirma' }, { r: 'a ok', t: 'Criado e publicado.' }]} />
+      </div>)
     case 'sub': return (
-      <div className="h6-mock h6-m-sub">
-        <div className="h6-m-subcard">
-          <div className="h6-m-subcard-h"><span>Assinatura ativa</span><b>a cada 30 dias</b></div>
-          <div className="h6-m-subrow"><span>Próxima entrega</span><b>em 12 dias</b></div>
-          <div className="h6-m-subrow"><span>Pagamento</span><b>cartão · retentativa automática</b></div>
-          <div className="h6-m-subrow"><span>LTV do cohort</span><b className="up">+40% em 6 meses</b></div>
-        </div>
-        <Chat who="você · Cursor" lines={[{ r: 'u', t: 'cria um plano de assinatura mensal com 15% de desconto para o Kit Cabelo' }, { r: 'a', t: 'Plano: mensal · 15% · Kit Cabelo · pausa após 2 falhas. Confirmar?' }, { r: 'u', t: 'confirma' }, { r: 'a ok', t: 'Plano publicado no carrinho.' }]} />
+      <div className="h6-mock h6-m-shot">
+        <img className="h6-m-shot-img" src="/img/assinatura2.png" alt="Assinatura nativa no carrinho da Unbox" />
+        <div className="h6-m-shot-float"><Chat who="você · Cursor" lines={[{ r: 'u', t: 'cria um plano de assinatura mensal com 15% de desconto para o Kit Cabelo' }, { r: 'a', t: 'Plano: mensal · 15% · Kit Cabelo · pausa após 2 falhas. Confirmar?' }, { r: 'u', t: 'confirma' }, { r: 'a ok', t: 'Plano publicado no carrinho.' }]} /></div>
       </div>)
     case 'promo': return (
       <div className="h6-mock h6-m-promo">
@@ -351,10 +367,10 @@ export default function HomeV6() {
 
         {/* HERO */}
         <section className="h6-hero" id="hero">
-          <div className="h6-wrap h6-hero-grid">
+          <div className="h6-wrap">
             <div className="h6-hero-copy" data-rv>
               <span className="h6-eye"><i className="h6-dot" />PLATAFORMA COMPLETA · AI-NATIVE</span>
-              <h1>Toda a plataforma.<br /><em>AI em cada parte.</em></h1>
+              <h1>A plataforma completa para sua marca vender.<br /><em>Com AI em tudo.</em></h1>
               <p className="h6-lead">Loja, checkout, pagamento, assinatura, promoções, creators, envios e dados em um só lugar. E uma AI que cria, opera e otimiza tudo isso com você.</p>
               <div className="h6-cta-row">
                 <a href="/ai-unbox" className="h6-btn h6-btn-dark h6-btn-lg">Criar minha loja com AI</a>
@@ -362,7 +378,7 @@ export default function HomeV6() {
               </div>
               <p className="h6-micro">Sem taxa de setup · Migração acompanhada · Funciona com Claude, ChatGPT e Cursor via MCP</p>
             </div>
-            <div className="h6-hero-visual" data-rv><HeroBoard /></div>
+            <div data-rv><Showcase /></div>
           </div>
         </section>
 
@@ -393,7 +409,7 @@ export default function HomeV6() {
         <div className="h6-tour" id="tour">
           <div className="h6-wrap h6-tour-in">
             <span className="h6-tour-l">A plataforma</span>
-            <div className="h6-tour-tabs">{PRODUCTS.map((p) => <a href={'#' + p.id} className={'h6-tab' + (active === p.id ? ' is-on' : '')} key={p.id}><Icon name={p.icon} size={14} />{p.tab}</a>)}</div>
+            <div className="h6-tour-tabs">{PRODUCTS.map((p) => <a href={'#' + p.id} className={'h6-tab' + (active === p.id ? ' is-on' : '')} key={p.id}><span className="h6-tab-ico"><Icon name={p.icon} size={13} /></span>{p.tab}</a>)}</div>
           </div>
         </div>
 
@@ -439,6 +455,11 @@ export default function HomeV6() {
                 </div>
               ))}
             </div>
+            <div className="h6-migrate" data-rv>
+              <span>Migre de</span>
+              <img src="/img/logo-shopify.png" alt="Shopify" /><img src="/img/logo-vtex.png" alt="VTEX" /><img src="/img/logo-woocommerce.png" alt="WooCommerce" />
+              <span className="h6-migrate-t">e outras. A AI extrai catálogo, tema e conteúdo do site atual e remonta tudo na Unbox, preservando URLs.</span>
+            </div>
           </div>
         </section>
 
@@ -447,7 +468,7 @@ export default function HomeV6() {
           <div className="h6-wrap">
             <div className="h6-head h6-center" data-rv><span className="h6-eye"><i className="h6-dot" />PARA CADA MOMENTO DA MARCA</span><h2>Do primeiro pedido à indústria.</h2></div>
             <div className="h6-sizes">
-              {SIZES.map((s, i) => <div className={'h6-size tint-' + s.tint} data-rv style={{ transitionDelay: `${i * 80}ms` }} key={s.eye}><span className="h6-size-eye">{s.eye}</span><h3>{s.t}</h3><p>{s.d}</p><a href={s.href} className="h6-textlink">{s.l} <Icon name="arrow" size={15} /></a></div>)}
+              {SIZES.map((s, i) => <div className={'h6-size tint-' + s.tint} data-rv style={{ transitionDelay: `${i * 80}ms` }} key={s.eye}><span className="h6-size-eye">{s.eye}</span><h3>{s.t}</h3><p>{s.d}</p><a href={s.href} className="h6-textlink">{s.l} <Icon name="arrow" size={15} /></a><div className="h6-size-blob" /></div>)}
             </div>
           </div>
         </section>
@@ -572,43 +593,40 @@ export default function HomeV6() {
         #hv6 .h6-burger span { width: 16px; height: 2px; background: var(--ink); border-radius: 2px; }
         #hv6 .h6-sheet { display: flex; flex-direction: column; gap: 6px; padding: 12px 24px 20px; border-top: 1px solid var(--line); background: var(--bg); } #hv6 .h6-sheet a { padding: 10px 0; font-weight: 500; }
 
-        /* hero */
-        #hv6 .h6-hero { padding: 64px 0 24px; }
-        #hv6 .h6-hero-grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: 48px; align-items: center; }
-        #hv6 h1 { font-size: clamp(38px, 5.4vw, 64px); font-weight: 700; letter-spacing: -.04em; line-height: 1.02; margin: 22px 0 20px; }
+        /* hero (copy centralizada + painel com abas, ref. v2) */
+        #hv6 .h6-hero { padding: 76px 0 24px; }
+        #hv6 .h6-hero-copy { text-align: center; max-width: 880px; margin: 0 auto 44px; }
+        #hv6 h1 { font-size: clamp(36px, 5vw, 62px); font-weight: 700; letter-spacing: -.04em; line-height: 1.04; margin: 22px 0 20px; }
         #hv6 h1 em { font-style: normal; background: linear-gradient(90deg, var(--roxo), #B06BFF); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        #hv6 .h6-lead { font-size: clamp(16px, 1.5vw, 19px); color: var(--ink-2); line-height: 1.58; max-width: 520px; margin: 0; }
-        #hv6 .h6-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
-        #hv6 .h6-micro { font-size: 13px; color: var(--mut); margin-top: 14px; max-width: 520px; }
-        #hv6 .h6-hero-visual { position: relative; }
-        #hv6 .h6-glow { position: absolute; border-radius: 50%; filter: blur(60px); z-index: 0; pointer-events: none; }
-        #hv6 .h6-glow.gp { width: 300px; height: 300px; background: rgba(143,40,246,.22); top: -40px; right: -20px; }
-        #hv6 .h6-glow.gg { width: 220px; height: 220px; background: rgba(57,255,20,.14); bottom: -20px; left: 0; }
-        #hv6 .h6-board { position: relative; height: 520px; }
-        #hv6 .h6-board > * { position: absolute; }
-        #hv6 .h6-b-admin { z-index: 1; left: 0; top: 0; width: 300px; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 16px; box-shadow: 0 20px 50px rgba(22,22,28,.1); animation: h6up .7s .1s both; }
-        #hv6 .h6-b-admin-h { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; } #hv6 .h6-b-admin-h em { font-style: normal; color: var(--mut); font-weight: 400; }
-        #hv6 .h6-b-bars { display: flex; align-items: flex-end; gap: 6px; height: 76px; margin: 12px 0 10px; }
-        #hv6 .h6-b-bars i { flex: 1; border-radius: 5px 5px 2px 2px; background: linear-gradient(180deg, var(--roxo), #B06BFF); transform-origin: bottom; animation: h6grow .8s cubic-bezier(.2,.7,.2,1) both; }
-        #hv6 .h6-b-bars i:last-child { background: linear-gradient(180deg, var(--verde), #7BE495); }
-        #hv6 .h6-b-admin-f { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; } #hv6 .h6-b-admin-f b { font-size: 18px; letter-spacing: -.02em; }
-        #hv6 .h6-b-phone { z-index: 2; right: 0; top: 10px; width: 230px; height: 470px; border-radius: 30px; background: #0D0D12; padding: 10px; box-shadow: 0 30px 70px rgba(22,22,28,.28); overflow: hidden; animation: h6up .8s both; }
-        #hv6 .h6-b-phone img, #hv6 .h6-m-phone img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 22px; }
-        #hv6 .h6-b-phone-top { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 70px; height: 18px; border-radius: 999px; background: #0D0D12; z-index: 2; }
-        #hv6 .h6-b-phone-cta { position: absolute; left: 24px; right: 24px; bottom: 22px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 600; text-align: center; padding: 11px; border-radius: 12px; box-shadow: 0 10px 24px rgba(0,0,0,.35); }
-        #hv6 .h6-b-chat { z-index: 3; left: 0; top: 248px; width: 300px; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 14px; box-shadow: 0 24px 60px rgba(22,22,28,.16); display: grid; gap: 8px; animation: h6up .7s .3s both; }
-        #hv6 .h6-b-chat-h, #hv6 .h6-chat-h { display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: var(--mut); padding-bottom: 8px; border-bottom: 1px solid var(--line); }
-        #hv6 .h6-b-bub, #hv6 .h6-bub { max-width: 90%; padding: 9px 12px; border-radius: 12px; font-size: 13px; line-height: 1.4; opacity: 0; transform: translateY(6px); animation: h6bub .45s ease forwards; }
-        #hv6 .h6-b-bub.u, #hv6 .h6-bub.u { margin-left: auto; background: var(--ink); color: #fff; border-bottom-right-radius: 4px; }
-        #hv6 .h6-b-bub.a, #hv6 .h6-bub.a { background: var(--sky); color: var(--ink); border-bottom-left-radius: 4px; } #hv6 .h6-b-bub.a svg, #hv6 .h6-bub.a svg { vertical-align: -2px; margin-right: 5px; color: var(--verde); }
-        #hv6 .h6-b-bub.a.ok, #hv6 .h6-bub.a.ok { background: var(--lime); }
-        #hv6 .h6-b-bub:nth-child(2), #hv6 .h6-bub:nth-child(2) { animation-delay: .9s } #hv6 .h6-b-bub:nth-child(3), #hv6 .h6-bub:nth-child(3) { animation-delay: 1.6s } #hv6 .h6-b-bub:nth-child(4), #hv6 .h6-bub:nth-child(4) { animation-delay: 2.3s } #hv6 .h6-b-bub:nth-child(5), #hv6 .h6-bub:nth-child(5) { animation-delay: 2.9s }
-        #hv6 .h6-b-chip { z-index: 4; display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px 8px 10px; font-size: 12.5px; box-shadow: 0 12px 30px rgba(22,22,28,.12); animation: h6up .6s both; }
-        #hv6 .h6-b-chip svg { color: var(--roxo-2); } #hv6 .h6-b-chip span { color: var(--mut); } #hv6 .h6-b-chip b { font-weight: 600; }
-        #hv6 .h6-b-chip.c1 { left: 0; top: 196px; animation-delay: .5s; } #hv6 .h6-b-chip.c2 { left: 186px; top: 196px; animation-delay: .8s; } #hv6 .h6-b-chip.c3 { right: -14px; top: 300px; animation-delay: 1.1s; }
-        @keyframes h6up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-        @keyframes h6grow { from { transform: scaleY(0); } to { transform: none; } }
+        #hv6 .h6-lead { font-size: clamp(16px, 1.5vw, 19px); color: var(--ink-2); line-height: 1.58; max-width: 640px; margin: 0 auto; }
+        #hv6 .h6-cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 28px; }
+        #hv6 .h6-micro { font-size: 13px; color: var(--mut); margin: 14px auto 0; max-width: 560px; }
+        #hv6 .h6-panel { border-radius: 32px; padding: 28px 28px 0; background: linear-gradient(180deg, var(--t2), var(--t) 60%, #fff 140%); transition: background .6s ease; box-shadow: inset 0 1px 0 rgba(255,255,255,.6); }
+        #hv6 .h6-ptabs { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
+        #hv6 .h6-ptab { position: relative; display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.7); color: var(--ink-2); border-radius: 999px; padding: 8px 16px 8px 8px; font-family: inherit; font-weight: 600; font-size: 14.5px; cursor: pointer; overflow: hidden; transition: background .2s, color .2s; }
+        #hv6 .h6-ptab.is-on { background: #fff; color: var(--ink); box-shadow: 0 8px 22px rgba(22,22,28,.08); }
+        #hv6 .h6-ptab-ico { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--t); color: var(--ink); }
+        #hv6 .h6-ptab.is-on .h6-ptab-ico { background: var(--ink); color: #fff; }
+        #hv6 .h6-ptab-prog { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--ink); transform-origin: left; }
+        #hv6 .h6-showcase { display: grid; grid-template-columns: .9fr 1.1fr; gap: 28px; background: #fff; border-radius: 24px 24px 0 0; padding: 36px 36px 0; align-items: center; animation: h6fade .5s ease; }
+        @keyframes h6fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+        #hv6 .h6-chip { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--ink); background: var(--t, var(--sky)); border-radius: 999px; padding: 6px 12px 6px 9px; }
+        #hv6 .h6-showcase-copy { padding-bottom: 32px; }
+        #hv6 .h6-showcase-copy h3 { font-size: clamp(24px, 2.6vw, 34px); font-weight: 700; letter-spacing: -.03em; line-height: 1.1; margin: 14px 0 12px; }
+        #hv6 .h6-showcase-copy p { color: var(--ink-2); font-size: 16px; line-height: 1.6; margin: 0 0 16px; }
+        #hv6 .h6-showcase-ai { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--ink-2); background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; margin-bottom: 18px; }
+        #hv6 .h6-showcase-media { align-self: end; border-radius: 16px 16px 0 0; overflow: hidden; background: var(--t); padding: 16px 16px 0; }
+        #hv6 .h6-showcase-media img { display: block; width: 100%; height: 340px; object-fit: cover; object-position: top; border-radius: 12px 12px 0 0; box-shadow: 0 -10px 40px rgba(22,22,28,.12); }
+        #hv6 .h6-showcase-media.is-mock { align-self: center; border-radius: 16px; padding: 18px; margin-bottom: 32px; }
+        #hv6 .h6-m-ai { display: grid; gap: 12px; }
+        #hv6 .h6-chat-h { display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: var(--mut); padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+        #hv6 .h6-bub { max-width: 90%; padding: 9px 12px; border-radius: 12px; font-size: 13px; line-height: 1.4; opacity: 0; transform: translateY(6px); animation: h6bub .45s ease forwards; }
+        #hv6 .h6-bub.u { margin-left: auto; background: var(--ink); color: #fff; border-bottom-right-radius: 4px; }
+        #hv6 .h6-bub.a { background: var(--sky); color: var(--ink); border-bottom-left-radius: 4px; } #hv6 .h6-bub.a svg { vertical-align: -2px; margin-right: 5px; color: var(--verde); }
+        #hv6 .h6-bub.a.ok { background: var(--lime); }
+        #hv6 .h6-bub:nth-child(2) { animation-delay: .9s } #hv6 .h6-bub:nth-child(3) { animation-delay: 1.6s } #hv6 .h6-bub:nth-child(4) { animation-delay: 2.3s } #hv6 .h6-bub:nth-child(5) { animation-delay: 2.9s }
         @keyframes h6bub { to { opacity: 1; transform: none; } }
+        #hv6 .h6-b-phone-top { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 70px; height: 18px; border-radius: 999px; background: #0D0D12; z-index: 2; }
 
         /* brands */
         #hv6 .h6-brands { padding: 48px 0 8px; text-align: center; }
@@ -639,8 +657,8 @@ export default function HomeV6() {
         #hv6 .h6-tour-in { display: flex; align-items: center; gap: 18px; height: 54px; }
         #hv6 .h6-tour-l { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--mut); white-space: nowrap; }
         #hv6 .h6-tour-tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; } #hv6 .h6-tour-tabs::-webkit-scrollbar { display: none; }
-        #hv6 .h6-tab { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; font-size: 13.5px; font-weight: 500; color: var(--ink-2); white-space: nowrap; transition: background .2s, color .2s; }
-        #hv6 .h6-tab svg { opacity: .7; } #hv6 .h6-tab:hover { background: rgba(22,22,28,.05); } #hv6 .h6-tab.is-on { background: var(--ink); color: #fff; } #hv6 .h6-tab.is-on svg { opacity: 1; }
+        #hv6 .h6-tab { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px 5px 5px; border-radius: 999px; font-size: 13.5px; font-weight: 500; color: var(--ink-2); white-space: nowrap; transition: background .2s, color .2s; }
+        #hv6 .h6-tab-ico { width: 26px; height: 26px; border-radius: 50%; background: rgba(22,22,28,.06); display: inline-flex; align-items: center; justify-content: center; } #hv6 .h6-tab.is-on .h6-tab-ico { background: rgba(255,255,255,.16); } #hv6 .h6-tab:hover { background: rgba(22,22,28,.05); } #hv6 .h6-tab.is-on { background: var(--ink); color: #fff; } #hv6 .h6-tab.is-on svg { opacity: 1; }
 
         /* produtos */
         #hv6 .h6-prod { padding: 88px 0; scroll-margin-top: 130px; border-bottom: 1px solid var(--line); }
@@ -678,7 +696,8 @@ export default function HomeV6() {
         #hv6 .h6-m-credit-bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,.12); margin: 14px 0 10px; overflow: hidden; } #hv6 .h6-m-credit-bar i { display: block; height: 100%; width: 62%; border-radius: 999px; background: linear-gradient(90deg, var(--roxo), var(--neon)); }
         #hv6 .h6-m-credit-f { display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,.7); }
         #hv6 .h6-chat { background: #fff; border-radius: 18px; padding: 14px; box-shadow: 0 20px 50px rgba(22,22,28,.12); display: grid; gap: 8px; width: 100%; }
-        #hv6 .h6-m-sub, #hv6 .h6-m-creators, #hv6 .h6-m-ops, #hv6 .h6-m-data { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+        #hv6 .h6-m-shot { position: relative; padding: 0 0 96px; } #hv6 .h6-m-shot-img { display: block; width: 78%; border-radius: 14px; box-shadow: 0 20px 50px rgba(22,22,28,.14); } #hv6 .h6-m-shot-float { position: absolute; right: -6px; bottom: 0; width: 300px; }
+        #hv6 .h6-m-creators, #hv6 .h6-m-ops, #hv6 .h6-m-data { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
         #hv6 .h6-m-subcard, #hv6 .h6-m-order, #hv6 .h6-m-list, #hv6 .h6-m-panel { background: #fff; border-radius: 18px; padding: 16px; box-shadow: 0 20px 50px rgba(22,22,28,.12); display: grid; gap: 10px; }
         #hv6 .h6-m-subcard-h, #hv6 .h6-m-order-h, #hv6 .h6-m-list-h, #hv6 .h6-m-panel-h { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--mut); padding-bottom: 8px; border-bottom: 1px solid var(--line); }
         #hv6 .h6-m-subcard-h b, #hv6 .h6-m-order-h b { color: var(--ink); font-size: 13px; } #hv6 .h6-m-order-h b.ok { color: var(--verde); } #hv6 .h6-m-list-h em, #hv6 .h6-m-panel-h em { font-style: normal; }
@@ -689,7 +708,7 @@ export default function HomeV6() {
 
         /* unbox ai band */
         #hv6 .h6-aiband { background: radial-gradient(60% 80% at 85% 0%, rgba(143,40,246,.45), transparent 60%), radial-gradient(40% 60% at 0% 100%, rgba(57,255,20,.14), transparent 60%), #0F0F14; color: #fff; }
-        #hv6 .h6-aiband .h6-head { max-width: 900px; } #hv6 .h6-aiband .h6-head p { color: rgba(255,255,255,.7); } #hv6 .h6-aiband .h6-dot { box-shadow: 0 0 0 3px rgba(57,255,20,.2); background: var(--neon); }
+        #hv6 .h6-aiband .h6-head { max-width: 1000px; } #hv6 .h6-aiband .h6-head p { color: rgba(255,255,255,.7); } #hv6 .h6-aiband .h6-dot { box-shadow: 0 0 0 3px rgba(57,255,20,.2); background: var(--neon); }
         #hv6 .h6-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
         #hv6 .h6-pillar { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 22px; padding: 26px; display: flex; flex-direction: column; gap: 10px; }
         #hv6 .h6-pillar-ico { width: 42px; height: 42px; border-radius: 12px; background: rgba(143,40,246,.25); color: #D9C2FF; display: inline-flex; align-items: center; justify-content: center; }
@@ -699,12 +718,15 @@ export default function HomeV6() {
         #hv6 .h6-term-cmd { color: #fff; } #hv6 .h6-term-cmd span { color: var(--neon); margin-right: 6px; } #hv6 .h6-term-line .w { color: #fff; } #hv6 .h6-term-line.ok { color: var(--neon); }
         #hv6 .h6-agents { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; } #hv6 .h6-agents span { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); } #hv6 .h6-agents svg { color: #C9A8FF; }
         #hv6 .h6-pillar .h6-textlink { margin-top: 10px; }
+        #hv6 .h6-migrate { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 22px; padding: 16px 22px; border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.75); font-size: 14px; }
+        #hv6 .h6-migrate img { height: 20px; width: auto; background: #fff; padding: 7px 12px; border-radius: 10px; box-sizing: content-box; } #hv6 .h6-migrate-t { flex: 1; min-width: 260px; }
 
         /* porte */
         #hv6 .h6-sizes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-        #hv6 .h6-size { border-radius: 22px; padding: 28px; background: linear-gradient(160deg, var(--t2), var(--t)); display: flex; flex-direction: column; }
-        #hv6 .h6-size-eye { font-size: 11px; font-weight: 700; letter-spacing: .16em; color: var(--ink); background: rgba(255,255,255,.7); border-radius: 8px; padding: 5px 10px; align-self: flex-start; }
-        #hv6 .h6-size h3 { font-size: 24px; letter-spacing: -.025em; margin: 16px 0 8px; } #hv6 .h6-size p { margin: 0 0 18px; color: var(--ink-2); font-size: 14.5px; line-height: 1.55; flex: 1; }
+        #hv6 .h6-size { position: relative; overflow: hidden; border-radius: 22px; padding: 26px 24px 130px; background: #fff; border: 1px solid var(--line); display: flex; flex-direction: column; transition: transform .2s, box-shadow .2s; } #hv6 .h6-size:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(22,22,28,.08); }
+        #hv6 .h6-size-blob { position: absolute; left: -10%; right: -10%; bottom: -70px; height: 190px; border-radius: 50% 50% 0 0; background: radial-gradient(60% 80% at 50% 100%, var(--t2), var(--t) 60%, transparent 100%); opacity: .9; pointer-events: none; }
+        #hv6 .h6-size-eye { font-size: 11px; font-weight: 700; letter-spacing: .16em; color: var(--ink); background: var(--t); border-radius: 8px; padding: 5px 10px; align-self: flex-start; }
+        #hv6 .h6-size h3 { font-size: 24px; letter-spacing: -.025em; margin: 16px 0 8px; } #hv6 .h6-size p { margin: 0 0 18px; color: var(--ink-2); font-size: 14.5px; line-height: 1.55; flex: 1; } #hv6 .h6-size .h6-textlink { position: relative; z-index: 1; }
 
         /* integrações */
         #hv6 .h6-split { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: center; }
@@ -751,24 +773,23 @@ export default function HomeV6() {
         #hv6 .h6-footer-grid a { display: block; font-size: 15px; padding: 5px 0; color: var(--ink-2); } #hv6 .h6-footer-grid a:hover { color: var(--ink); }
         #hv6 .h6-footer-bottom { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--mut); font-size: 13px; }
 
-        @media (max-width: 1080px) { #hv6 .h6-b-admin, #hv6 .h6-b-chat { width: 270px; } #hv6 .h6-b-chip.c2 { left: 0; top: 240px; } #hv6 .h6-b-chat { top: 290px; } }
         @media (max-width: 980px) {
           #hv6 .h6-links, #hv6 .h6-nav-cta .h6-btn-ghost, #hv6 .h6-nav-cta .h6-btn-dark { display: none; } #hv6 .h6-burger { display: inline-flex; }
-          #hv6 .h6-hero-grid, #hv6 .h6-prod-grid, #hv6 .h6-split { grid-template-columns: 1fr; gap: 36px; }
+          #hv6 .h6-prod-grid, #hv6 .h6-split { grid-template-columns: 1fr; gap: 36px; }
+          #hv6 .h6-showcase { grid-template-columns: 1fr; padding: 26px 22px 0; } #hv6 .h6-showcase-copy { padding-bottom: 8px; }
           #hv6 .h6-prod.is-rev .h6-prod-copy { order: 0; }
-          #hv6 .h6-board { height: 540px; max-width: 560px; margin: 0 auto; } #hv6 .h6-b-admin, #hv6 .h6-b-chat { width: 300px; } #hv6 .h6-b-chip.c2 { left: 186px; top: 196px; } #hv6 .h6-b-chat { top: 248px; }
           #hv6 .h6-channels, #hv6 .h6-pillars, #hv6 .h6-sizes, #hv6 .h6-cases { grid-template-columns: 1fr; } #hv6 .h6-metrics-grid { grid-template-columns: repeat(2, 1fr); }
           #hv6 .h6-tour-l { display: none; } #hv6 .h6-prod { padding: 64px 0; scroll-margin-top: 126px; }
           #hv6 .h6-footer-grid { grid-template-columns: 1fr 1fr; } #hv6 .h6-sec { padding: 72px 0; }
           #hv6 .h6-visual-bg { padding: 20px; min-height: 0; }
         }
         @media (max-width: 640px) {
-          #hv6 .h6-metrics-grid, #hv6 .h6-footer-grid, #hv6 .h6-feats, #hv6 .h6-m-sub, #hv6 .h6-m-creators, #hv6 .h6-m-ops, #hv6 .h6-m-data { grid-template-columns: 1fr; } #hv6 .h6-cmp { height: 300px; }
+          #hv6 .h6-metrics-grid, #hv6 .h6-footer-grid, #hv6 .h6-feats, #hv6 .h6-m-creators, #hv6 .h6-m-ops, #hv6 .h6-m-data { grid-template-columns: 1fr; } #hv6 .h6-cmp { height: 300px; }
           #hv6 .h6-m-store { flex-direction: column; } #hv6 .h6-m-pay { grid-template-columns: 1fr 1fr; } #hv6 .h6-m-float.fl3 { position: static; margin-top: 10px; grid-column: 1 / -1; }
-          #hv6 .h6-board { height: auto; max-width: 100%; display: grid; gap: 14px; justify-items: center; } #hv6 .h6-board > * { position: static; } #hv6 .h6-b-admin, #hv6 .h6-b-chip, #hv6 .h6-glow { display: none; }
-          #hv6 .h6-b-phone { width: 220px; height: 420px; position: relative; } #hv6 .h6-b-chat { width: 100%; max-width: 360px; }
+          #hv6 .h6-panel { border-radius: 22px; padding: 18px 14px 0; } #hv6 .h6-ptab-lbl { display: none; } #hv6 .h6-ptab { padding: 6px; } #hv6 .h6-showcase-media img { height: 220px; }
+          #hv6 .h6-m-shot { padding-bottom: 0; } #hv6 .h6-m-shot-img { width: 100%; } #hv6 .h6-m-shot-float { position: static; width: 100%; margin-top: 12px; }
         }
-        @media (prefers-reduced-motion: reduce) { #hv6 [data-rv] { opacity: 1 !important; transform: none !important; } #hv6 .h6-marquee-track { animation: none; } #hv6 .h6-b-bub, #hv6 .h6-bub, #hv6 .h6-board > *, #hv6 .h6-b-bars i { opacity: 1; animation: none; } }
+        @media (prefers-reduced-motion: reduce) { #hv6 [data-rv] { opacity: 1 !important; transform: none !important; } #hv6 .h6-marquee-track { animation: none; } #hv6 .h6-bub { opacity: 1; animation: none; } #hv6 .h6-showcase { animation: none; } }
       `}</style>
     </>
   )
