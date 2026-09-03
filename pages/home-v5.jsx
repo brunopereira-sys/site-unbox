@@ -166,7 +166,7 @@ function Pieces() {
             {PIECES.map((pc, i) => {
               const local = Math.min(1, Math.max(0, (p * PIECES.length - i)))
               const e = ease(local)
-              const x = 118 * i * e, y = -30 * i * e, z = -i * 40 * (1 - e)
+              const x = 118 * i * e, y = -42 * i * e, z = -i * 40 * (1 - e)
               return (
                 <div className={'h5-piece tint-' + pc.tint + (i <= stage ? ' is-in' : '')} key={pc.k}
                   style={{ transform: `translate3d(${x}px, ${y}px, ${z}px) rotateY(-22deg) rotateX(8deg)`, opacity: i === 0 ? 1 : 0.15 + 0.85 * e, zIndex: 10 - i }}>
@@ -535,7 +535,7 @@ export default function HomeV5() {
         #hv5 .h5-pstep b { display: block; font-size: 16.5px; font-weight: 600; } #hv5 .h5-pstep p { margin: 4px 0 0; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
         #hv5 .h5-pieces-hint { margin-top: 18px; font-size: 13px; color: var(--mut); }
         #hv5 .h5-stage { position: relative; height: 460px; perspective: 1400px; transform-style: preserve-3d; padding-left: 20px; }
-        #hv5 .h5-piece { position: absolute; left: 0; top: 70px; width: 270px; height: 300px; border-radius: 22px; background: linear-gradient(160deg, var(--t2), var(--t)); border: 1px solid rgba(255,255,255,.7); box-shadow: 0 30px 60px rgba(22,22,28,.16), inset 0 1px 0 rgba(255,255,255,.8); transform-style: preserve-3d; transition: opacity .3s; display: flex; flex-direction: column; justify-content: space-between; padding: 22px; }
+        #hv5 .h5-piece { position: absolute; left: 0; top: 70px; width: 270px; height: 300px; border-radius: 22px; background: linear-gradient(160deg, var(--t2), var(--t)); border: 1px solid rgba(255,255,255,.7); box-shadow: 0 30px 60px rgba(22,22,28,.16), inset 0 1px 0 rgba(255,255,255,.8); transform-style: preserve-3d; transition: opacity .3s; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; padding: 22px; }
         #hv5 .h5-piece-ico { width: 44px; height: 44px; border-radius: 12px; background: #fff; display: inline-flex; align-items: center; justify-content: center; color: var(--ink); box-shadow: 0 6px 16px rgba(22,22,28,.1); }
         #hv5 .h5-piece-lbl { font-size: 17px; font-weight: 700; letter-spacing: -.02em; }
 
