@@ -696,7 +696,7 @@ export default function HomeV4() {
         #hv4 .h4-result b { font-size: 40px; font-weight: 700; letter-spacing: -.04em; line-height: 1; }
         #hv4 .h4-result span { color: var(--muted); font-size: 14px; line-height: 1.5; }
         #hv4 .h4-platforms { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; margin-top: 40px; color: var(--muted-2); font-size: 14px; }
-        #hv4 .h4-platforms img { height: 26px; width: auto; opacity: .9; filter: brightness(0) invert(1) opacity(.8); }
+        #hv4 .h4-platforms img { height: 26px; width: auto; filter: grayscale(1) brightness(1.75) opacity(.9); }
 
         /* faq */
         #hv4 .h4-faq-item { border-top: 1px solid var(--line); }
