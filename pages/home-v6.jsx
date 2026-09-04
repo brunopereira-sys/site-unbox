@@ -86,9 +86,16 @@ const SIZES = [
 ]
 
 const INTEGRATIONS = [
-  { g: 'Canais', items: ['Instagram Shopping', 'Facebook & Meta', 'WhatsApp', 'Google Shopping'] },
-  { g: 'Operação', items: ['ERP Bling', 'Correios', 'Total Express', 'Google Analytics', 'Tag Manager'] },
-  { g: 'AI (via MCP)', items: ['Claude', 'ChatGPT', 'Cursor', 'Claude Code', 'Figma MCP'] },
+  { g: 'Canais', items: [
+    { n: 'Instagram Shopping', k: 'instagram' }, { n: 'Facebook & Meta', k: 'meta' },
+    { n: 'WhatsApp', k: 'whatsapp' }, { n: 'Google Shopping', k: 'google' }] },
+  { g: 'Operação', items: [
+    { n: 'ERP Bling', mono: 'b', bg: '#F5821F' }, { n: 'Correios', mono: 'C', bg: '#FFCC29', fg: '#00427A' },
+    { n: 'Total Express', mono: 'T', bg: '#E30613' }, { n: 'Google Analytics', k: 'google' },
+    { n: 'Tag Manager', mono: 'G', bg: '#246FDB' }] },
+  { g: 'AI (via MCP)', items: [
+    { n: 'Claude', k: 'claude' }, { n: 'ChatGPT', k: 'openai' }, { n: 'Cursor', k: 'cursor' },
+    { n: 'Claude Code', k: 'claudecode' }, { n: 'Figma MCP', k: 'figma' }] },
 ]
 
 const CASES = [
@@ -148,6 +155,52 @@ function Icon({ name, size = 18 }) {
 function Logo() {
   return <a href="/" className="h6-logo" aria-label="Unbox"><img src={'/img/simbolo-unbox.png' + V} alt="" /><span>unbox</span></a>
 }
+const BRANDS_CREATE = [{ k: 'claude', name: 'Claude' }, { k: 'openai', name: 'OpenAI' }, { k: 'figma', name: 'Figma' }]
+const BRANDS_MIGRATE = [{ k: 'shopify', name: 'Shopify' }, { k: 'nuvemshop', name: 'Nuvemshop' }, { k: 'woo', name: 'WooCommerce' }]
+
+function BrandMark({ k, size = 20 }) {
+  const p = { width: size, height: size, viewBox: '0 0 24 24', 'aria-hidden': true }
+  switch (k) {
+    case 'claude': case 'claudecode': return (
+      <svg {...p}><g fill="#D97757">{Array.from({ length: 10 }).map((_, i) => (
+        <rect key={i} x="11.25" y="2.6" width="1.5" height="7.2" rx=".75" transform={`rotate(${i * 36} 12 12)`} />))}</g></svg>)
+    case 'openai': return (
+      <svg {...p} fill="none" stroke="#0F0F14" strokeWidth="1.5">
+        {[0, 60, 120].map((a) => <ellipse key={a} cx="12" cy="12" rx="8.4" ry="3.6" transform={`rotate(${a} 12 12)`} />)}</svg>)
+    case 'figma': return (
+      <svg {...p} viewBox="0 0 16 24">
+        <path d="M4 0h4v8H4a4 4 0 0 1 0-8Z" fill="#F24E1E" /><path d="M8 0h4a4 4 0 0 1 0 8H8V0Z" fill="#FF7262" />
+        <path d="M4 8h4v8H4a4 4 0 0 1 0-8Z" fill="#A259FF" /><circle cx="12" cy="12" r="4" fill="#1ABCFE" />
+        <path d="M4 16h4v4a4 4 0 1 1-4-4Z" fill="#0ACF83" /></svg>)
+    case 'shopify': return (
+      <svg {...p}><path d="M15.4 4.2c-.1-.1-.3-.1-.4-.1l-1 .2c-.3-.9-.9-1.8-1.9-1.8h-.2c-.3-.4-.7-.6-1.1-.6-1.6 0-2.7 2-3.2 3.6l-1.4.4c-.5.1-.5.2-.6.6L4 19.6l8.3 1.6 4.5-1L15.4 4.2Z" fill="#95BF47" /><path d="M15 4.1l-1 .3c-.3-.9-.9-1.8-1.9-1.8l-.7 18.6 4.5-1L15.4 4.2c-.1-.1-.2-.1-.4-.1Z" fill="#5E8E3E" /><path d="M12.6 8.6l-.6 1.7s-.6-.3-1.3-.3c-1 0-1.1.6-1.1.8 0 1 2.6 1.4 2.6 3.8 0 1.8-1.2 3-2.7 3-1.9 0-2.8-1.2-2.8-1.2l.5-1.7s1 .8 1.8.8c.5 0 .7-.4.7-.7 0-1.3-2.1-1.4-2.1-3.6 0-1.8 1.3-3.5 3.9-3.5.9 0 1.1.2 1.1.2Z" fill="#fff" /></svg>)
+    case 'nuvemshop': return (
+      <svg {...p}><path d="M18.6 10.2A5.2 5.2 0 0 0 8.9 8.4a4.2 4.2 0 0 0-.6 8.4h9.9a3.6 3.6 0 0 0 .4-6.6Z" fill="#2C6DF6" /><path d="M10.6 12.6h3.6l-3.1 3.4h3.3" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg>)
+    case 'woo': return (
+      <svg {...p} viewBox="0 0 28 20"><rect y="1.5" width="28" height="15" rx="3.4" fill="#7F54B3" /><path d="M4.6 6.2l1.5 5 1.7-4.4.9 4.4 1.5-5M13.4 6c1.3 0 1.9 1 1.9 2.2 0 1.4-.8 2.6-2.1 2.6-1.2 0-1.9-1-1.9-2.2C11.3 7.2 12.1 6 13.4 6ZM19.4 6c1.3 0 1.9 1 1.9 2.2 0 1.4-.8 2.6-2.1 2.6-1.2 0-1.9-1-1.9-2.2C17.3 7.2 18.1 6 19.4 6Z" stroke="#fff" strokeWidth="1.15" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>)
+    case 'instagram': return (
+      <svg {...p}><defs><linearGradient id="ig6" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stopColor="#FEDA75" /><stop offset=".4" stopColor="#D62976" /><stop offset="1" stopColor="#962FBF" /></linearGradient></defs><rect x="2.5" y="2.5" width="19" height="19" rx="5.4" fill="url(#ig6)" /><circle cx="12" cy="12" r="4.3" fill="none" stroke="#fff" strokeWidth="1.7" /><circle cx="17.2" cy="6.9" r="1.15" fill="#fff" /></svg>)
+    case 'whatsapp': return (
+      <svg {...p}><circle cx="12" cy="12" r="10" fill="#25D366" /><path d="M8.4 8.6c.3 2.6 2.7 5 5.3 5.3l1.2-1.2-2-.8-.8.8c-1-.4-1.9-1.3-2.3-2.3l.8-.8-.8-2-1.4 1Z" fill="#fff" /></svg>)
+    case 'meta': return (
+      <svg {...p} fill="none" stroke="#0081FB" strokeWidth="2.1" strokeLinecap="round"><path d="M3.2 15c0-3.6 1.9-8 4.3-8s3.4 5.4 4.5 5.4S14.1 7 16.5 7s4.3 4.4 4.3 8c0 1.8-.9 2.8-2.3 2.8-2.1 0-3.1-2.9-4.9-5.6-.9-1.4-1.3 0-1.6 0s-.7-1.4-1.6 0C8.6 14.9 7.6 17.8 5.5 17.8 4.1 17.8 3.2 16.8 3.2 15Z" /></svg>)
+    case 'google': return (
+      <svg {...p} viewBox="0 0 24 24"><path d="M21.6 12.2c0-.7-.1-1.3-.2-1.9H12v3.6h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.2Z" fill="#4285F4" /><path d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22Z" fill="#34A853" /><path d="M6.4 14c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V7.4H3.1a10 10 0 0 0 0 9.2L6.4 14Z" fill="#FBBC05" /><path d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.8-2.8A10 10 0 0 0 3.1 7.4L6.4 10c.8-2.3 3-4.1 5.6-4.1Z" fill="#EA4335" /></svg>)
+    case 'cursor': return (
+      <svg {...p} viewBox="0 0 24 24"><path d="M12 2 21 7v10l-9 5-9-5V7l9-5Z" fill="#0F0F14" /><path d="M12 2v10l9-5M12 12v10M12 12 3 7" stroke="#fff" strokeWidth="1.1" fill="none" strokeLinejoin="round" /></svg>)
+    default: return null
+  }
+}
+
+function Mono({ t, bg, fg = '#fff', size = 20 }) {
+  return <span className="h6-mono" style={{ width: size, height: size, background: bg, color: fg }}>{t}</span>
+}
+function IntMark({ m }) {
+  if (m.mono) return <Mono t={m.mono} bg={m.bg} fg={m.fg} />
+  return <BrandMark k={m.k} size={18} />
+}
+function BrandChip({ b }) { return <span className="h6-blogo"><BrandMark k={b.k} /><b>{b.name}</b></span> }
+
 function AiTag({ children = 'AI' }) { return <span className="h6-aitag"><Icon name="sparkle" size={11} />{children}</span> }
 
 function useCountUp(target, decimals = 0, run) {
@@ -375,7 +428,17 @@ export default function HomeV6() {
                 <a href="/ai-unbox" className="h6-btn h6-btn-dark h6-btn-lg">Criar minha loja com AI</a>
                 <a href="#canais" className="h6-btn h6-btn-white h6-btn-lg">Conhecer a plataforma</a>
               </div>
-              <p className="h6-micro">Sem taxa de setup · Migração acompanhada · Funciona com Claude, ChatGPT e Cursor via MCP</p>
+              <p className="h6-micro">Sem taxa de setup · Migração acompanhada · Produtos e visitas ilimitados</p>
+            </div>
+            <div className="h6-logos" data-rv>
+              <div className="h6-logos-g">
+                <span className="h6-logos-l">Você cria com</span>
+                <div className="h6-logos-row">{BRANDS_CREATE.map((b) => <BrandChip b={b} key={b.k} />)}</div>
+              </div>
+              <div className="h6-logos-g">
+                <span className="h6-logos-l">Ou migra de</span>
+                <div className="h6-logos-row">{BRANDS_MIGRATE.map((b) => <BrandChip b={b} key={b.k} />)}</div>
+              </div>
             </div>
             <div data-rv><Showcase /></div>
           </div>
@@ -403,6 +466,19 @@ export default function HomeV6() {
             <div className="h6-ailine" data-rv><AiTag /><span><b>Catálogo por texto.</b> "Cadastra o Kit Verão com 3 variações a R$ 129" e a AI prepara o produto para você confirmar.</span></div>
           </div>
         </section>
+
+        {/* CASES */}
+        <section className="h6-sec" id="cases">
+          <div className="h6-wrap">
+            <div className="h6-head h6-center" data-rv>
+              <span className="h6-eye"><i className="h6-dot" />ANTES E DEPOIS</span>
+              <h2>Três marcas. Três categorias. A mesma virada.</h2>
+              <p>Todas remontadas com a Unbox por AI e vendendo hoje. Arraste para comparar como a loja era e como ficou.</p>
+            </div>
+            <div className="h6-cases" data-rv>{CASES.map((c) => <Compare c={c} key={c.name} />)}</div>
+          </div>
+        </section>
+
 
         {/* TOUR BAR */}
         <div className="h6-tour" id="tour">
@@ -489,7 +565,7 @@ export default function HomeV6() {
               <a href="/recursos" className="h6-textlink" data-rv>Ver todas as integrações <Icon name="arrow" size={15} /></a>
             </div>
             <div className="h6-int" data-rv>
-              {INTEGRATIONS.map((g) => <div className="h6-int-g" key={g.g}><span className="h6-int-l">{g.g}</span><div className="h6-int-items">{g.items.map((it) => <span className={'h6-int-item' + (g.g.startsWith('AI') ? ' is-ai' : '')} key={it}>{g.g.startsWith('AI') && <Icon name="sparkle" size={11} />}{it}</span>)}</div></div>)}
+              {INTEGRATIONS.map((g) => <div className="h6-int-g" key={g.g}><span className="h6-int-l">{g.g}</span><div className="h6-int-items">{g.items.map((it) => <span className={'h6-int-item' + (g.g.startsWith('AI') ? ' is-ai' : '')} key={it.n}><IntMark m={it} />{it.n}</span>)}</div></div>)}
             </div>
           </div>
         </section>
@@ -499,18 +575,6 @@ export default function HomeV6() {
           <div className="h6-wrap">
             <div className="h6-head h6-center" data-rv><span className="h6-eye"><i className="h6-dot" />O MELHOR LUGAR PARA CONSTRUIR A SUA MARCA</span><h2>Checkout que converte mais. Pagamento que aprova mais.</h2></div>
             <div className="h6-metrics-grid" data-rv>{METRICS.map((m) => <Metric key={m.label} m={m} run={metricsOn} />)}</div>
-          </div>
-        </section>
-
-        {/* CASES */}
-        <section className="h6-sec h6-sec-alt" id="cases">
-          <div className="h6-wrap">
-            <div className="h6-head h6-center" data-rv>
-              <span className="h6-eye"><i className="h6-dot" />ANTES E DEPOIS</span>
-              <h2>Três marcas. Três categorias. A mesma virada.</h2>
-              <p>Todas remontadas com a Unbox por AI e vendendo hoje. Arraste para comparar como a loja era e como ficou.</p>
-            </div>
-            <div className="h6-cases" data-rv>{CASES.map((c) => <Compare c={c} key={c.name} />)}</div>
           </div>
         </section>
 
@@ -634,6 +698,16 @@ export default function HomeV6() {
         @keyframes h6bub { to { opacity: 1; transform: none; } }
         #hv6 .h6-b-phone-top { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 70px; height: 18px; border-radius: 999px; background: #0D0D12; z-index: 2; }
 
+        /* faixa de logos do hero */
+        #hv6 .h6-logos { display: grid; grid-template-columns: auto auto; gap: 10px 18px; justify-content: center; align-items: center; margin: 0 auto 32px; }
+        #hv6 .h6-logos-g { display: flex; align-items: center; gap: 14px; }
+        #hv6 .h6-logos-l { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--mut); white-space: nowrap; text-align: right; }
+        #hv6 .h6-logos-row { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+        #hv6 .h6-blogo { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px 8px 10px; }
+        #hv6 .h6-blogo b { font-size: 14.5px; font-weight: 600; letter-spacing: -.01em; color: var(--ink); white-space: nowrap; opacity: 1; }
+        #hv6 .h6-blogo svg, #hv6 .h6-int-item svg { flex-shrink: 0; }
+        #hv6 .h6-mono { display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 12px; font-weight: 800; line-height: 1; flex-shrink: 0; }
+
         /* brands */
         #hv6 .h6-brands { padding: 48px 0 8px; text-align: center; }
         #hv6 .h6-brands-l { font-size: 13px; color: var(--mut); margin: 0 0 22px; }
@@ -748,8 +822,8 @@ export default function HomeV6() {
         #hv6 .h6-int { display: grid; gap: 18px; }
         #hv6 .h6-int-l { display: block; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--mut); margin-bottom: 8px; }
         #hv6 .h6-int-items { display: flex; flex-wrap: wrap; gap: 8px; }
-        #hv6 .h6-int-item { display: inline-flex; align-items: center; gap: 6px; background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; font-size: 14px; font-weight: 500; color: var(--ink-2); }
-        #hv6 .h6-int-item.is-ai { color: var(--ink); border-color: rgba(143,40,246,.35); background: #fff; } #hv6 .h6-int-item svg { color: var(--roxo-2); }
+        #hv6 .h6-int-item { display: inline-flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; font-size: 14px; font-weight: 500; color: var(--ink-2); }
+        #hv6 .h6-int-item.is-ai { color: var(--ink); border-color: rgba(143,40,246,.35); background: #fff; }
 
         /* números, cases, faq, final, footer */
         #hv6 .h6-metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
@@ -793,6 +867,8 @@ export default function HomeV6() {
           #hv6 .h6-showcase { grid-template-columns: 1fr; padding: 26px 22px 0; } #hv6 .h6-showcase-copy { padding-bottom: 8px; }
           #hv6 .h6-prod.is-rev .h6-prod-copy { order: 0; }
           #hv6 .h6-channels, #hv6 .h6-pillars, #hv6 .h6-sizes, #hv6 .h6-cases { grid-template-columns: 1fr; } #hv6 .h6-metrics-grid { grid-template-columns: repeat(2, 1fr); }
+          #hv6 .h6-logos { grid-template-columns: 1fr; gap: 8px; justify-items: center; } #hv6 .h6-logos-g { flex-direction: column; gap: 8px; }
+          #hv6 .h6-logos-l { text-align: center; } #hv6 .h6-logos-row { justify-content: center; }
           #hv6 .h6-tour-l { display: none; } #hv6 .h6-prod { padding: 64px 0; scroll-margin-top: 126px; }
           #hv6 .h6-footer-grid { grid-template-columns: 1fr 1fr; } #hv6 .h6-sec { padding: 72px 0; }
           #hv6 .h6-visual-bg { padding: 20px; min-height: 0; }
