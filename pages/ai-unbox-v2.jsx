@@ -297,24 +297,20 @@ export default function AiFoundryV2() {
                 <button className="f2-btn f2-btn-dark f2-btn-lg" onClick={goForm}>Entrar na lista de espera</button>
                 <a href="#caminhos" className="f2-btn f2-btn-white f2-btn-lg">Ver os três caminhos</a>
               </div>
-              <p className="f2-micro">Sem custo, sem compromisso · Funciona com Claude, ChatGPT e Cursor via MCP</p>
+              <p className="f2-micro">Sem custo, sem compromisso · Chamada por ordem de chegada</p>
+            </div>
+            <div className="f2-logos" data-rv>
+              <div className="f2-logos-g">
+                <span className="f2-logos-l">Você cria com</span>
+                <div className="f2-logos-row">{BRANDS_CREATE.map((b) => <BrandChip b={b} key={b.k} />)}</div>
+              </div>
+              <div className="f2-logos-div" aria-hidden="true" />
+              <div className="f2-logos-g">
+                <span className="f2-logos-l">Ou migra de</span>
+                <div className="f2-logos-row">{BRANDS_MIGRATE.map((b) => <BrandChip b={b} key={b.k} />)}</div>
+              </div>
             </div>
             <div data-rv><Paths /></div>
-          </div>
-        </section>
-
-        {/* LOGOS */}
-        <section className="f2-logos" id="logos">
-          <div className="f2-wrap f2-logos-in" data-rv>
-            <div className="f2-logos-g">
-              <span className="f2-logos-l">Você cria com</span>
-              <div className="f2-logos-row">{BRANDS_CREATE.map((b) => <BrandChip b={b} key={b.k} />)}</div>
-            </div>
-            <div className="f2-logos-div" aria-hidden="true" />
-            <div className="f2-logos-g">
-              <span className="f2-logos-l">Ou migra de</span>
-              <div className="f2-logos-row">{BRANDS_MIGRATE.map((b) => <BrandChip b={b} key={b.k} />)}</div>
-            </div>
           </div>
         </section>
 
@@ -506,7 +502,7 @@ export default function AiFoundryV2() {
 
         /* hero */
         #aif2 .f2-hero { padding: clamp(104px, 13vw, 140px) 0 24px; }
-        #aif2 .f2-hero-copy { text-align: center; max-width: 880px; margin: 0 auto 44px; }
+        #aif2 .f2-hero-copy { text-align: center; max-width: 880px; margin: 0 auto 32px; }
         #aif2 h1 { font-size: clamp(36px, 5vw, 62px); font-weight: 700; letter-spacing: -.04em; line-height: 1.04; margin: 22px 0 20px; }
         #aif2 h1 em { font-style: normal; background: linear-gradient(90deg, var(--roxo), #B06BFF); -webkit-background-clip: text; background-clip: text; color: transparent; }
         #aif2 .f2-lead { font-size: clamp(16px, 1.5vw, 19px); color: var(--ink-2); line-height: 1.58; max-width: 660px; margin: 0 auto; }
@@ -552,12 +548,13 @@ export default function AiFoundryV2() {
         #aif2 .f2-from { gap: 10px; }
 
         /* faixa de logos */
-        #aif2 .f2-logos { padding: 8px 0 4px; }
-        #aif2 .f2-logos-in { display: flex; align-items: center; justify-content: center; gap: 34px; flex-wrap: wrap; padding-top: 34px; padding-bottom: 34px; }
+        #aif2 .f2-logos { display: grid; grid-template-columns: auto auto; gap: 10px 18px; justify-content: center; align-items: center; margin: 0 auto 34px; }
+        #aif2 .f2-logos-g { display: contents; }
+        #aif2 .f2-logos-div { display: none; }
         #aif2 .f2-logos-g { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center; }
-        #aif2 .f2-logos-l { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--mut); white-space: nowrap; }
-        #aif2 .f2-logos-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        #aif2 .f2-logos-div { width: 1px; height: 34px; background: var(--line); }
+        #aif2 .f2-logos-l { font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--mut); white-space: nowrap; text-align: right; }
+        #aif2 .f2-logos-row { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+        
         #aif2 .f2-brand { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px 8px 10px; }
         #aif2 .f2-brand b { font-size: 14.5px; font-weight: 600; letter-spacing: -.01em; color: var(--ink); white-space: nowrap; }
         #aif2 .f2-brand img { flex-shrink: 0; width: 22px; height: 22px; object-fit: contain; display: block; }
@@ -666,11 +663,15 @@ export default function AiFoundryV2() {
         #aif2 .f2-thanks h3 { font-size: 22px; letter-spacing: -.02em; margin: 0 0 8px; }
         #aif2 .f2-thanks p { color: var(--ink-2); font-size: 15px; line-height: 1.55; margin: 0; }
 
+        @media (max-width: 1240px) {
+          #aif2 .f2-logos { grid-template-columns: 1fr; gap: 8px; justify-items: center; }
+          #aif2 .f2-logos-g { justify-content: center; }
+        }
         @media (max-width: 980px) {
           #aif2 .f2-show, #aif2 .f2-mcp, #aif2 .f2-final { grid-template-columns: 1fr; gap: 28px; }
           #aif2 .f2-ways, #aif2 .f2-ready, #aif2 .f2-agents, #aif2 .f2-cases, #aif2 .f2-steps { grid-template-columns: 1fr; }
           #aif2 .f2-sec { padding: 68px 0; } #aif2 .f2-final { padding: 40px 26px; }
-          #aif2 .f2-logos-in { gap: 20px; } #aif2 .f2-logos-div { display: none; } #aif2 .f2-logos-g { width: 100%; }
+          #aif2 .f2-logos { grid-template-columns: 1fr; gap: 6px; margin-bottom: 28px; justify-items: center; } #aif2 .f2-logos-l { text-align: center; } #aif2 .f2-logos-row { justify-content: center; margin-bottom: 8px; }
         }
         @media (max-width: 560px) {
           #aif2 .f2-panel { border-radius: 22px; padding: 18px 14px 0; }
