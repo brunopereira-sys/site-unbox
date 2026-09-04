@@ -158,15 +158,16 @@ function Logo() {
 const BRANDS_CREATE = [{ k: 'claude', name: 'Claude' }, { k: 'openai', name: 'OpenAI' }, { k: 'figma', name: 'Figma' }]
 const BRANDS_MIGRATE = [{ k: 'shopify', name: 'Shopify' }, { k: 'nuvemshop', name: 'Nuvemshop' }, { k: 'woo', name: 'WooCommerce' }]
 
-/* Logos oficiais em /public/img/brands. Símbolos (1:1) do Simple Icons na cor
-   de marca; wordmarks (openai, nuvemshop, bling, correios) do site da própria
-   marca. `wm` marca os que já contêm o nome — nesses o chip não repete o texto. */
+/* Logos oficiais em /public/img/brands — conjunto único compartilhado com
+   /ai-unbox-v2. Símbolos vêm do Simple Icons na cor de marca (ou do kit da
+   própria marca, caso de claude/figma/openai); wordmarks vêm do site oficial.
+   `wm` marca os que já contêm o nome — nesses o chip não repete o texto. */
 const LOGOS = {
   claude: { f: 'claude.svg' }, figma: { f: 'figma.svg' }, shopify: { f: 'shopify.svg' },
   woo: { f: 'woocommerce.svg' }, cursor: { f: 'cursor.svg' }, instagram: { f: 'instagram.svg' },
   whatsapp: { f: 'whatsapp.svg' }, meta: { f: 'meta.svg' }, google: { f: 'google.svg' },
   ga: { f: 'googleanalytics.svg' }, gtm: { f: 'googletagmanager.svg' },
-  openai: { f: 'openai.svg', wm: 3.74 }, nuvemshop: { f: 'nuvemshop.svg', wm: 4 },
+  openai: { f: 'openai.svg' }, nuvemshop: { f: 'nuvemshop.svg', wm: 4 },
   bling: { f: 'bling.svg', wm: 2.06 }, correios: { f: 'correios.svg', wm: 4.88 },
 }
 
