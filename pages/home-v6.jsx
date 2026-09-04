@@ -26,51 +26,50 @@ const SHOW = [
   { key: 'loja', label: 'Loja', icon: 'layout', tint: 'sky', title: 'Sua loja, do seu jeito. Sem template.', body: 'Layouts 100% customizáveis, mobile-first, com SEO e performance de ponta. Crie do zero pelo CLI, importe do Figma ou migre de onde estiver.', ai: 'Gerada pelo CLI e revisada por agentes de branding, QA visual, SEO e AEO', img: '/img/loja-olea.png', alt: 'Loja Olea rodando na Unbox', href: '#loja' },
   { key: 'checkout', label: 'Checkout', icon: 'bolt', tint: 'lime', title: 'Checkout em modo TURBO.', body: '3 etapas, sem redirecionamento, sem fricção. Pix, cartão em até 12× e boleto no mesmo fluxo. 4× mais conversão e +98% de aprovação.', ai: 'Anti-Fraude IA+ analisando cada pedido em tempo real', img: '/img/checkout-dash.png', alt: 'Checkout TURBO da Unbox', href: '#checkout' },
   { key: 'assinatura', label: 'Assinatura', icon: 'repeat', tint: 'lavender', title: 'Recorrência que nasce no carrinho.', body: 'Assinatura 100% nativa, da página de produto ao checkout. Múltiplas frequências, gestão de falhas automática e cohort de LTV.', ai: 'Planos e regras de assinatura criados por texto, via MCP', img: '/img/assinatura2.png', alt: 'Assinatura nativa no carrinho', href: '#assinatura' },
-  { key: 'pay', label: 'Unbox Pay', icon: 'card', tint: 'mint', title: 'Pagamento e capital no mesmo lugar.', body: 'Gateway próprio com 98% de aprovação, multi provedores e retentativa automática. Crédito de até R$ 500 mil amortizado pelas suas próprias vendas.', ai: 'Gateway turbinado por AI para aprovar mais e custar menos', mock: 'pay', href: '#pay' },
+  { key: 'pay', label: 'Unbox Pay', icon: 'card', tint: 'mint', title: 'Pagamento nativo, com as melhores taxas.', body: 'Gateway próprio com 98% de aprovação, multi provedores e retentativa automática. A partir de 2,99% no cartão e 1% no Pix, com saque sem custo.', ai: 'Gateway turbinado por AI para aprovar mais e custar menos', mock: 'pay', href: '#pay' },
   { key: 'ai', label: 'Unbox AI', icon: 'sparkle', tint: 'lavender', title: 'A AI que cria, opera e otimiza a loja.', body: 'O CLI gera a loja do zero, do Figma ou migrando. O MCP opera catálogo, pedidos e campanhas por texto. Agentes cuidam de branding, CRO, SEO e AEO.', ai: 'Funciona com Claude, ChatGPT, Cursor e qualquer AI com MCP', mock: 'ai', href: '#unbox-ai' },
 ]
 
-const PRODUCTS = [
-  { id: 'loja', tint: 'sky', icon: 'layout', tab: 'Loja', eye: 'LOJA VIRTUAL', title: 'Uma loja 100% sua. Gerada e revisada por AI.',
-    body: 'Layouts totalmente customizáveis, domínio e SSL grátis, SEO e performance de verdade. Crie do zero pelo CLI, importe do Figma ou migre de onde estiver.',
-    feats: ['Layouts 100% customizáveis', 'Domínio e SSL grátis', 'Produtos e visitas ilimitados', 'SEO e performance'],
-    ai: { h: 'Gerada pelo CLI, revisada por agentes', d: 'Branding, QA Visual, SEO e AEO rodam dentro do projeto antes de publicar. Sua loja nasce pronta para ser encontrada — inclusive pelo ChatGPT.' },
+const GROUPS = [
+  { id: 'loja', tint: 'sky', icon: 'layout', tab: 'Loja', eye: 'SUA LOJA',
+    title: 'Uma loja 100% sua. Gerada e revisada por AI.',
+    body: 'Layouts totalmente customizáveis, domínio e SSL grátis, SEO e performance de verdade. Crie do zero pelo CLI, importe do Figma ou migre de onde estiver — e mereça o clique com promoções que você monta em minutos.',
+    subs: [
+      { icon: 'layout', t: 'Loja virtual', feats: ['Layouts 100% customizáveis', 'Domínio e SSL grátis', 'Produtos e visitas ilimitados'] },
+      { icon: 'tag', t: 'Promoções e campanhas', feats: ['Cupons e vouchers', 'Bundles & Combos', 'Frete grátis flexível'] },
+    ],
+    ai: { h: 'Gerada pelo CLI, revisada por agentes', d: 'Branding, QA Visual, SEO e AEO rodam dentro do projeto antes de publicar. E a campanha da semana sai de uma frase: você pede, a AI prepara, você confirma.' },
     link: { href: '/recursos', t: 'Ver recursos da loja' }, visual: 'store' },
-  { id: 'checkout', tint: 'lime', icon: 'bolt', tab: 'Checkout', eye: 'CHECKOUT TURBO', title: 'O checkout que mais converte no Brasil.',
-    body: 'Nativo, transparente e em 3 etapas, sem redirecionamento. Order Bump, Upsell, Pix, cartão em até 12× e boleto. 4× mais conversão e +98% de aprovação.',
-    feats: ['3 etapas, sem redirect', 'Order Bump e Upsell', 'Pix, cartão em 12× e boleto', 'Checkout com a sua marca'],
-    ai: { h: 'Anti-Fraude IA+', d: 'Análise de pedidos e cruzamento de dados em tempo real. Aprova mais, bloqueia fraude e protege o seu caixa.' },
+
+  { id: 'checkout', tint: 'lime', icon: 'bolt', tab: 'Conversão', eye: 'SUA CONVERSÃO',
+    title: 'O checkout que mais converte no Brasil.',
+    body: 'Nativo, transparente e em 3 etapas, sem redirecionamento — com o pagamento na mesma casa. 4× mais conversão, +98% de aprovação e as taxas mais competitivas do mercado.',
+    subs: [
+      { icon: 'bolt', t: 'Checkout TURBO', feats: ['3 etapas, sem redirect', 'Order Bump e Upsell', 'Pix, cartão em 12× e boleto'] },
+      { icon: 'card', t: 'Unbox Pay', feats: ['2,99% no cartão · 1% no Pix', 'Multi provedores + retentativa', 'Saque ágil e sem custo'] },
+    ],
+    ai: { h: 'Anti-Fraude IA+ em cada pedido', d: 'Análise e cruzamento de dados em tempo real, com retentativa inteligente entre provedores. Aprova mais, bloqueia fraude e protege o seu caixa.' },
     link: { href: '/checkout', t: 'Conhecer o Checkout TURBO' }, visual: 'checkout' },
-  { id: 'pay', tint: 'mint', icon: 'card', tab: 'Unbox Pay', eye: 'UNBOX PAY & CRÉDITO', title: 'Receba mais, pague menos e cresça com capital.',
-    body: 'Gateway nativo com multi provedores e retentativa automática. A partir de 2,99% no cartão e 1% no Pix, receba em 2, 14 ou 30 dias sem taxa de saque. E crédito de até R$ 500 mil amortizado por 12% das vendas.',
-    feats: ['Multi provedores + retentativa', '2,99% no cartão · 1% no Pix', 'Saque ágil e sem custo', 'Crédito até R$ 500 mil'],
-    ai: { h: 'Gateway turbinado por AI', d: 'Feito para aprovar mais e custar menos: retentativa inteligente entre provedores e antifraude por AI em cada transação.' },
-    link: { href: '/credito', t: 'Ver Unbox Pay e Crédito' }, visual: 'pay' },
-  { id: 'assinatura', tint: 'lavender', icon: 'repeat', tab: 'Assinatura', eye: 'ASSINATURA NATIVA', title: 'Recorrência que nasce no carrinho.',
-    body: 'O cliente assina na própria compra. Múltiplas frequências, gestão de falhas automática, previsão de estoque e cohort de LTV. Criado para produtos físicos, tudo no mesmo lugar.',
-    feats: ['Assina direto no carrinho', 'Múltiplas frequências', 'Gestão de falhas automática', 'Cohort de LTV e previsão de estoque'],
-    ai: { h: 'Regras de assinatura por texto', d: 'Crie e ajuste planos e regras pela sua AI, via MCP. Ela prepara, você confirma, ela publica.' },
+
+  { id: 'recorrencia', tint: 'lavender', icon: 'repeat', tab: 'Recorrência', eye: 'SUA RECORRÊNCIA',
+    title: 'Vender de novo para quem já comprou.',
+    body: 'Assinatura que nasce no próprio carrinho e uma rede de creators ligada ao checkout. Duas formas de transformar a primeira venda em receita que volta todo mês.',
+    subs: [
+      { icon: 'repeat', t: 'Assinatura nativa', feats: ['Assina direto no carrinho', 'Múltiplas frequências', 'Gestão de falhas automática'] },
+      { icon: 'users', t: 'Creators', feats: ['Link e cupom por creator', 'Pague por venda', 'Automação de pagamento'] },
+    ],
+    ai: { h: 'Planos e resultados por texto', d: 'Crie regras de assinatura pela sua AI, via MCP — ela prepara, você confirma. E pergunte quem vendeu mais no mês: ela lê os pedidos e responde.' },
     link: { href: '/assinatura', t: 'Conhecer a Assinatura' }, visual: 'sub' },
-  { id: 'promo', tint: 'lime', icon: 'tag', tab: 'Promoções', eye: 'PROMOÇÕES & CAMPANHAS', title: 'Campanhas que a sua AI monta e publica.',
-    body: 'Cupons, vouchers, bundles e combos com desconto progressivo, preços promocionais e frete grátis por CEP. Tudo nativo, sem app.',
-    feats: ['Cupons e vouchers', 'Bundles & Combos', 'Preços promocionais', 'Frete grátis flexível'],
-    ai: { h: 'Cupom criado em uma frase', d: 'Você pede, a AI prepara o plano, você confirma. Ao lado, o print real: cupom BRUNINHO10 criado e publicado na Temperos Badia.' },
-    link: { href: 'https://temperosbadia.com.br/', t: 'Ver a loja da Badia', ext: true }, visual: 'promo' },
-  { id: 'creators', tint: 'sky', icon: 'users', tab: 'Creators', eye: 'CREATORS', title: 'Creators integrados ao checkout.',
-    body: 'Links e cupons exclusivos por creator, venda rastreada, comissão atribuída e pagamento automático. Envio de sampling e KPIs por campanha.',
-    feats: ['Link e cupom por creator', 'Pague por venda', 'Automação de pagamento', 'Envio de sampling'],
-    ai: { h: 'Pergunte quem vendeu mais', d: 'Resultados por cupom, creator e período, por texto: a AI lê os pedidos da loja pelo MCP e responde.' },
-    link: { href: '/afiliados', t: 'Conhecer Creators' }, visual: 'creators' },
-  { id: 'operacao', tint: 'mint', icon: 'truck', tab: 'Operação', eye: 'OPERAÇÃO & ENVIOS', title: 'Pedidos, estoque e frete no mesmo painel.',
-    body: 'Cálculo de frete automático no checkout, etiquetas, rastreio, retirada na loja e meios próprios. ERP Bling integrado e WhatsApp do cliente na gestão de pedidos.',
-    feats: ['Frete integrado ao checkout', 'Etiquetas e rastreio', 'ERP Bling', 'Correios, Total Express ou a sua'],
-    ai: { h: 'Estoque e preço por texto', d: 'Atualize catálogo, estoque e preços pela sua AI. Toda escrita passa por duas etapas: preparar e confirmar.' },
-    link: { href: '/recursos', t: 'Ver operação e envios' }, visual: 'ops' },
-  { id: 'dados', tint: 'lavender', icon: 'chart', tab: 'Dados', eye: 'DADOS & INSIGHTS', title: 'Receita, não só sessão.',
-    body: 'Visão geral de vendas, de onde vem o dinheiro, onde estão os clientes, recompra, LTV e carrinhos abandonados. Sem planilha e sem BI externo.',
-    feats: ['Recompra e LTV', 'Carrinhos abandonados', 'Origem da receita', 'GA4 e Tag Manager'],
-    ai: { h: 'Insights e decisões por AI', d: 'Pergunte à sua AI o que vendeu, o que caiu e o que fazer. Ela lê os dados da loja pelo MCP e responde com contexto.' },
-    link: { href: '/recursos', t: 'Ver o Painel Unbox' }, visual: 'data' },
+
+  { id: 'operacao', tint: 'mint', icon: 'truck', tab: 'Operação', eye: 'SUA OPERAÇÃO',
+    title: 'Pedidos, estoque, frete e dados no mesmo painel.',
+    body: 'Frete calculado dentro do checkout, etiquetas, rastreio e ERP integrado. E os números que importam — recompra, LTV, origem da receita — sem planilha e sem BI externo.',
+    subs: [
+      { icon: 'truck', t: 'Envios e ERP', feats: ['Frete integrado ao checkout', 'Etiquetas e rastreio', 'ERP Bling'] },
+      { icon: 'chart', t: 'Dados e insights', feats: ['Recompra e LTV', 'Carrinhos abandonados', 'Origem da receita'] },
+    ],
+    ai: { h: 'Operação e decisão por texto', d: 'Atualize catálogo, estoque e preços pela sua AI — toda escrita passa por preparar e confirmar. E pergunte o que caiu na semana: ela lê os dados e sugere o próximo passo.' },
+    link: { href: '/recursos', t: 'Ver operação e dados' }, visual: 'ops' },
 ]
 
 const AI_PILLARS = [
@@ -82,7 +81,7 @@ const AGENTS = ['Branding & Identidade', 'QA Visual', 'CRO', 'SEO avançado', 'A
 
 const SIZES = [
   { tint: 'sky', eye: 'MARCAS NASCENDO', t: 'Do zero ao ar em dias.', d: 'Crie a loja com a sua AI, conecte Instagram e WhatsApp e venda com o Checkout TURBO desde o primeiro pedido.', href: '/ai-unbox', l: 'Criar minha loja' },
-  { tint: 'lavender', eye: 'MARCAS ESCALANDO', t: 'Assinatura, creators e capital.', d: 'Recorrência nativa, programa de creators integrado ao checkout e crédito de até R$ 500 mil pago conforme vende.', href: '/credito', l: 'Ver Unbox Pay' },
+  { tint: 'lavender', eye: 'MARCAS ESCALANDO', t: 'Assinatura e creators.', d: 'Recorrência nativa e programa de creators integrado ao checkout, para vender de novo a quem já comprou.', href: '/assinatura', l: 'Ver Assinatura' },
   { tint: 'mint', eye: 'INDÚSTRIAS', t: 'Crédito produtivo e canal D2C.', d: 'A indústria recebe à vista e a marca paga conforme vende. Mais uma loja D2C para vender direto ao consumidor.', href: '/industrias', l: 'Ver indústrias' },
 ]
 
@@ -235,9 +234,9 @@ function Mock({ kind }) {
         <div className="h6-m-stat"><span>Pix</span><b>1%</b><em>cartão a partir de 2,99%</em></div>
         <div className="h6-m-stat"><span>Receba em</span><b>2 · 14 · 30</b><em>dias, sem taxa de saque</em></div>
         <div className="h6-m-credit">
-          <div className="h6-m-credit-h"><span>Crédito Unbox</span><b>até R$ 500 mil</b></div>
+          <div className="h6-m-credit-h"><span>Retentativa entre provedores</span><b>98% aprovado</b></div>
           <div className="h6-m-credit-bar"><i /></div>
-          <div className="h6-m-credit-f"><span>Amortização: 12% das vendas</span><span>sem diluição de equity</span></div>
+          <div className="h6-m-credit-f"><span>1ª tentativa recusada · 2ª aprovada em 0,4s</span><span>sem o cliente perceber</span></div>
         </div>
         <div className="h6-m-float fl3"><AiTag /><b>Gateway turbinado por AI</b><span>aprova mais, custa menos</span></div>
       </div>)
@@ -311,7 +310,7 @@ export default function HomeV6() {
   const [scrolled, setScrolled] = useState(false)
   const [menu, setMenu] = useState(false)
   const [metricsOn, setMetricsOn] = useState(false)
-  const [active, setActive] = useState(PRODUCTS[0].id)
+  const [active, setActive] = useState(GROUPS[0].id)
   const metricsRef = useRef(null)
 
   useEffect(() => {
@@ -409,19 +408,26 @@ export default function HomeV6() {
         <div className="h6-tour" id="tour">
           <div className="h6-wrap h6-tour-in">
             <span className="h6-tour-l">A plataforma</span>
-            <div className="h6-tour-tabs">{PRODUCTS.map((p) => <a href={'#' + p.id} className={'h6-tab' + (active === p.id ? ' is-on' : '')} key={p.id}><span className="h6-tab-ico"><Icon name={p.icon} size={13} /></span>{p.tab}</a>)}</div>
+            <div className="h6-tour-tabs">{GROUPS.map((p) => <a href={'#' + p.id} className={'h6-tab' + (active === p.id ? ' is-on' : '')} key={p.id}><span className="h6-tab-ico"><Icon name={p.icon} size={13} /></span>{p.tab}</a>)}</div>
           </div>
         </div>
 
         {/* PRODUTOS */}
-        {PRODUCTS.map((p, i) => (
+        {GROUPS.map((p, i) => (
           <section className={'h6-prod tint-' + p.tint + (i % 2 ? ' is-rev' : '')} id={p.id} data-prod key={p.id}>
             <div className="h6-wrap h6-prod-grid">
               <div className="h6-prod-copy">
                 <span className="h6-eye" data-rv><i className="h6-dot" />{p.eye}</span>
                 <h2 data-rv>{p.title}</h2>
                 <p className="h6-sub" data-rv>{p.body}</p>
-                <ul className="h6-feats" data-rv>{p.feats.map((f) => <li key={f}><Icon name="check" size={15} />{f}</li>)}</ul>
+                <div className="h6-subs" data-rv>
+                  {p.subs.map((sb) => (
+                    <div className="h6-sub-card" key={sb.t}>
+                      <span className="h6-sub-h"><span className="h6-sub-ico"><Icon name={sb.icon} size={15} /></span>{sb.t}</span>
+                      <ul>{sb.feats.map((f) => <li key={f}><Icon name="check" size={14} />{f}</li>)}</ul>
+                    </div>
+                  ))}
+                </div>
                 <div className="h6-ai" data-rv>
                   <div className="h6-ai-h"><AiTag>AI EM DESTAQUE</AiTag></div>
                   <b>{p.ai.h}</b><p>{p.ai.d}</p>
@@ -667,6 +673,14 @@ export default function HomeV6() {
         #hv6 .h6-prod h2 { font-size: clamp(28px, 3.3vw, 42px); }
         #hv6 .h6-feats { list-style: none; margin: 22px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
         #hv6 .h6-feats li { display: flex; align-items: center; gap: 8px; font-size: 14.5px; color: var(--ink-2); } #hv6 .h6-feats li svg { color: var(--verde); flex-shrink: 0; }
+        #hv6 .h6-subs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+        #hv6 .h6-sub-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; }
+        #hv6 .h6-sub-h { display: flex; align-items: center; gap: 9px; font-size: 15.5px; font-weight: 600; letter-spacing: -.01em; }
+        #hv6 .h6-sub-ico { width: 28px; height: 28px; border-radius: 9px; background: var(--t); color: var(--ink); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        #hv6 .h6-sub-card ul { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+        #hv6 .h6-sub-card li { display: flex; align-items: flex-start; gap: 7px; font-size: 13.5px; color: var(--ink-2); line-height: 1.45; }
+        #hv6 .h6-sub-card li svg { color: var(--verde); flex-shrink: 0; margin-top: 2px; }
+
         #hv6 .h6-ai { margin-top: 26px; border-radius: 16px; padding: 18px 20px; background: #fff; border: 1px solid rgba(143,40,246,.28); position: relative; box-shadow: 0 10px 30px rgba(143,40,246,.08); }
         #hv6 .h6-ai::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; border-radius: 3px; background: linear-gradient(180deg, var(--roxo), #B06BFF); }
         #hv6 .h6-ai-h { margin-bottom: 8px; } #hv6 .h6-ai b { display: block; font-size: 16.5px; letter-spacing: -.01em; } #hv6 .h6-ai p { margin: 6px 0 0; font-size: 14.5px; color: var(--ink-2); line-height: 1.55; }
@@ -784,7 +798,7 @@ export default function HomeV6() {
           #hv6 .h6-visual-bg { padding: 20px; min-height: 0; }
         }
         @media (max-width: 640px) {
-          #hv6 .h6-metrics-grid, #hv6 .h6-footer-grid, #hv6 .h6-feats, #hv6 .h6-m-creators, #hv6 .h6-m-ops, #hv6 .h6-m-data { grid-template-columns: 1fr; } #hv6 .h6-cmp { height: 300px; }
+          #hv6 .h6-subs, #hv6 .h6-metrics-grid, #hv6 .h6-footer-grid, #hv6 .h6-feats, #hv6 .h6-m-creators, #hv6 .h6-m-ops, #hv6 .h6-m-data { grid-template-columns: 1fr; } #hv6 .h6-cmp { height: 300px; }
           #hv6 .h6-m-store { flex-direction: column; } #hv6 .h6-m-pay { grid-template-columns: 1fr 1fr; } #hv6 .h6-m-float.fl3 { position: static; margin-top: 10px; grid-column: 1 / -1; }
           #hv6 .h6-panel { border-radius: 22px; padding: 18px 14px 0; } #hv6 .h6-ptab-lbl { display: none; } #hv6 .h6-ptab { padding: 6px; } #hv6 .h6-showcase-media img { height: 220px; }
           #hv6 .h6-m-shot { padding-bottom: 0; } #hv6 .h6-m-shot-img { width: 100%; } #hv6 .h6-m-shot-float { position: static; width: 100%; margin-top: 12px; }
