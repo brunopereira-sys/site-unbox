@@ -411,9 +411,8 @@ export default function HomeV6() {
         <section className="h6-hero" id="hero">
           <div className="h6-wrap">
             <div className="h6-hero-copy" data-rv>
-              <span className="h6-eye"><i className="h6-dot" />PLATAFORMA COMPLETA · AI-NATIVE</span>
-              <h1>A plataforma completa para sua marca vender.<br /><em>Com AI em tudo.</em></h1>
-              <p className="h6-lead">Loja, checkout, pagamento, assinatura, promoções, creators, envios e dados em um só lugar. E uma AI que cria, opera e otimiza tudo isso com você.</p>
+              <h1><em>AI Commerce</em>: Seu ecommerce repensado</h1>
+              <p className="h6-lead">Crie, gerencie e escale sua marca com AI.</p>
               <div className="h6-cta-row">
                 <a href="/ai-unbox" className="h6-btn h6-btn-dark h6-btn-lg">Criar minha loja com AI</a>
                 <a href="#canais" className="h6-btn h6-btn-white h6-btn-lg">Conhecer a plataforma</a>
@@ -656,9 +655,9 @@ export default function HomeV6() {
         /* hero (copy centralizada + painel com abas, ref. v2) */
         #hv6 .h6-hero { padding: 76px 0 24px; }
         #hv6 .h6-hero-copy { text-align: center; max-width: 880px; margin: 0 auto 44px; }
-        #hv6 h1 { font-size: clamp(36px, 5vw, 62px); font-weight: 700; letter-spacing: -.04em; line-height: 1.04; margin: 22px 0 20px; }
+        #hv6 h1 { font-size: clamp(36px, 5vw, 62px); font-weight: 700; letter-spacing: -.04em; line-height: 1.04; margin: 0 0 20px; }
         #hv6 h1 em { font-style: normal; background: linear-gradient(90deg, var(--roxo), #B06BFF); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        #hv6 .h6-lead { font-size: clamp(16px, 1.5vw, 19px); color: var(--ink-2); line-height: 1.58; max-width: 640px; margin: 0 auto; }
+        #hv6 .h6-lead { font-size: clamp(17px, 1.6vw, 21px); color: var(--ink-2); line-height: 1.5; max-width: 640px; margin: 0 auto; }
         #hv6 .h6-cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 28px; }
         #hv6 .h6-micro { font-size: 13px; color: var(--mut); margin: 14px auto 0; max-width: 560px; }
         #hv6 .h6-panel { border-radius: 32px; padding: 28px 28px 0; background: linear-gradient(180deg, var(--t2), var(--t) 60%, #fff 140%); transition: background .6s ease; box-shadow: inset 0 1px 0 rgba(255,255,255,.6); }
