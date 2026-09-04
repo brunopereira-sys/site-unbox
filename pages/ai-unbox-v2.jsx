@@ -114,6 +114,50 @@ function Icon({ name, size = 18 }) {
   }
 }
 
+const BRANDS_CREATE = [
+  { k: 'claude', name: 'Claude' },
+  { k: 'openai', name: 'OpenAI' },
+  { k: 'figma', name: 'Figma' },
+]
+const BRANDS_MIGRATE = [
+  { k: 'shopify', name: 'Shopify' },
+  { k: 'nuvemshop', name: 'Nuvemshop' },
+  { k: 'woo', name: 'WooCommerce' },
+]
+
+function BrandMark({ k, size = 22 }) {
+  const p = { width: size, height: size, viewBox: '0 0 24 24', 'aria-hidden': true }
+  switch (k) {
+    case 'claude': return (
+      <svg {...p}><g fill="#D97757">{Array.from({ length: 10 }).map((_, i) => (
+        <rect key={i} x="11.25" y="2.4" width="1.5" height="7.4" rx=".75" transform={`rotate(${i * 36} 12 12)`} />
+      ))}</g></svg>)
+    case 'openai': return (
+      <svg {...p} fill="none" stroke="#0F0F14" strokeWidth="1.5">
+        {[0, 60, 120].map((a) => <ellipse key={a} cx="12" cy="12" rx="8.4" ry="3.6" transform={`rotate(${a} 12 12)`} />)}
+      </svg>)
+    case 'figma': return (
+      <svg {...p} viewBox="0 0 16 24">
+        <path d="M4 0h4v8H4a4 4 0 0 1 0-8Z" fill="#F24E1E" />
+        <path d="M8 0h4a4 4 0 0 1 0 8H8V0Z" fill="#FF7262" />
+        <path d="M4 8h4v8H4a4 4 0 0 1 0-8Z" fill="#A259FF" />
+        <circle cx="12" cy="12" r="4" fill="#1ABCFE" />
+        <path d="M4 16h4v4a4 4 0 1 1-4-4Z" fill="#0ACF83" />
+      </svg>)
+    case 'shopify': return (
+      <svg {...p}><path d="M15.4 4.2c-.1-.1-.3-.1-.4-.1l-1 .2c-.3-.9-.9-1.8-1.9-1.8h-.2c-.3-.4-.7-.6-1.1-.6-1.6 0-2.7 2-3.2 3.6l-1.4.4c-.5.1-.5.2-.6.6L4 19.6l8.3 1.6 4.5-1L15.4 4.2Z" fill="#95BF47" /><path d="M15 4.1l-1 .3c-.3-.9-.9-1.8-1.9-1.8l-.7 18.6 4.5-1L15.4 4.2c-.1-.1-.2-.1-.4-.1Z" fill="#5E8E3E" /><path d="M12.6 8.6l-.6 1.7s-.6-.3-1.3-.3c-1 0-1.1.6-1.1.8 0 1 2.6 1.4 2.6 3.8 0 1.8-1.2 3-2.7 3-1.9 0-2.8-1.2-2.8-1.2l.5-1.7s1 .8 1.8.8c.5 0 .7-.4.7-.7 0-1.3-2.1-1.4-2.1-3.6 0-1.8 1.3-3.5 3.9-3.5.9 0 1.1.2 1.1.2Z" fill="#fff" /></svg>)
+    case 'nuvemshop': return (
+      <svg {...p} viewBox="0 0 24 24"><path d="M18.6 10.2A5.2 5.2 0 0 0 8.9 8.4a4.2 4.2 0 0 0-.6 8.4h9.9a3.6 3.6 0 0 0 .4-6.6Z" fill="#2C6DF6" /><path d="M10.6 12.6h3.6l-3.1 3.4h3.3" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg>)
+    case 'woo': return (
+      <svg {...p} viewBox="0 0 28 20"><rect x="0" y="1.5" width="28" height="15" rx="3.4" fill="#7F54B3" /><path d="M4.6 6.2l1.5 5 1.7-4.4.9 4.4 1.5-5M13.4 6c1.3 0 1.9 1 1.9 2.2 0 1.4-.8 2.6-2.1 2.6-1.2 0-1.9-1-1.9-2.2C11.3 7.2 12.1 6 13.4 6ZM19.4 6c1.3 0 1.9 1 1.9 2.2 0 1.4-.8 2.6-2.1 2.6-1.2 0-1.9-1-1.9-2.2C17.3 7.2 18.1 6 19.4 6Z" stroke="#fff" strokeWidth="1.15" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>)
+    default: return null
+  }
+}
+
+function BrandChip({ b }) {
+  return <span className="f2-brand"><BrandMark k={b.k} /><b>{b.name}</b></span>
+}
+
 function AiTag({ children = 'AI' }) { return <span className="f2-aitag"><Icon name="sparkle" size={11} />{children}</span> }
 
 /* ── mocks por caminho ─────────────────────────────────────── */
@@ -139,7 +183,7 @@ function PathVisual({ p }) {
       {p.kind === 'migrate' && (
         <div className="f2-from">
           <span>Migre de</span>
-          <img src="/img/logo-shopify.png" alt="Shopify" /><img src="/img/logo-vtex.png" alt="VTEX" /><img src="/img/logo-woocommerce.png" alt="WooCommerce" />
+          {BRANDS_MIGRATE.map((b) => <BrandChip b={b} key={b.k} />)}
           <span>e outras</span>
         </div>
       )}
@@ -288,6 +332,21 @@ export default function AiFoundryV2() {
           </div>
         </section>
 
+        {/* LOGOS */}
+        <section className="f2-logos" id="logos">
+          <div className="f2-wrap f2-logos-in" data-rv>
+            <div className="f2-logos-g">
+              <span className="f2-logos-l">Você cria com</span>
+              <div className="f2-logos-row">{BRANDS_CREATE.map((b) => <BrandChip b={b} key={b.k} />)}</div>
+            </div>
+            <div className="f2-logos-div" aria-hidden="true" />
+            <div className="f2-logos-g">
+              <span className="f2-logos-l">Ou migra de</span>
+              <div className="f2-logos-row">{BRANDS_MIGRATE.map((b) => <BrandChip b={b} key={b.k} />)}</div>
+            </div>
+          </div>
+        </section>
+
         {/* CAMINHOS — âncora explicativa */}
         <section className="f2-sec" id="caminhos">
           <div className="f2-wrap">
@@ -310,6 +369,19 @@ export default function AiFoundryV2() {
             </div>
           </div>
         </section>
+
+        {/* CASES */}
+        <section className="f2-sec" id="cases">
+          <div className="f2-wrap">
+            <div className="f2-head f2-center" data-rv>
+              <span className="f2-eye"><i className="f2-dot" />QUEM JÁ MIGROU</span>
+              <h2>Três marcas já remontadas. Arraste para comparar.</h2>
+              <p>Migradas de outras plataformas e refeitas com AI na Unbox. Todas vendendo hoje.</p>
+            </div>
+            <div className="f2-cases" data-rv>{CASES.map((c) => <Compare c={c} key={c.name} />)}</div>
+          </div>
+        </section>
+
 
         {/* O QUE VEM PRONTO */}
         <section className="f2-sec f2-sec-alt" id="pronto">
@@ -378,17 +450,6 @@ export default function AiFoundryV2() {
               <figure className="f2-shot tall"><figcaption>2 · no checkout da loja</figcaption><img src="/img/ai-prova-checkout.png" alt="Carrinho da Temperos Badia com o cupom BRUNINHO10 aplicado" loading="lazy" /></figure>
               <p className="f2-proof-cap"><b>Do pedido ao desconto no carrinho do cliente.</b> Sem abrir painel, sem deploy, sem esperar time técnico.</p>
             </div>
-          </div>
-        </section>
-
-        {/* CASES */}
-        <section className="f2-sec f2-sec-alt" id="cases">
-          <div className="f2-wrap">
-            <div className="f2-head f2-center" data-rv>
-              <span className="f2-eye"><i className="f2-dot" />QUEM JÁ MIGROU</span>
-              <h2>Três marcas remontadas com AI. Arraste para comparar.</h2>
-            </div>
-            <div className="f2-cases" data-rv>{CASES.map((c) => <Compare c={c} key={c.name} />)}</div>
           </div>
         </section>
 
@@ -517,7 +578,19 @@ export default function AiFoundryV2() {
         @keyframes f2blink { 50% { opacity: 0; } }
         #aif2 .f2-term-line { color: #a6a6b3; line-height: 1.95; } #aif2 .f2-term-line.ok { color: var(--neon); } #aif2 .f2-term-line .w { color: #fff; }
         #aif2 .f2-from { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 14px; font-size: 13px; color: var(--mut); }
-        #aif2 .f2-from img { height: 18px; width: auto; background: #fff; padding: 7px 11px; border-radius: 9px; border: 1px solid var(--line); box-sizing: content-box; }
+        #aif2 .f2-from { gap: 10px; }
+
+        /* faixa de logos */
+        #aif2 .f2-logos { padding: 8px 0 4px; }
+        #aif2 .f2-logos-in { display: flex; align-items: center; justify-content: center; gap: 34px; flex-wrap: wrap; padding-top: 34px; padding-bottom: 34px; }
+        #aif2 .f2-logos-g { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center; }
+        #aif2 .f2-logos-l { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--mut); white-space: nowrap; }
+        #aif2 .f2-logos-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        #aif2 .f2-logos-div { width: 1px; height: 34px; background: var(--line); }
+        #aif2 .f2-brand { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px 8px 10px; }
+        #aif2 .f2-brand b { font-size: 14.5px; font-weight: 600; letter-spacing: -.01em; color: var(--ink); white-space: nowrap; }
+        #aif2 .f2-brand svg { flex-shrink: 0; }
+        #aif2 .f2-from .f2-brand { padding: 5px 11px 5px 7px; gap: 6px; } #aif2 .f2-from .f2-brand b { font-size: 12.5px; } #aif2 .f2-from .f2-brand svg { width: 18px; height: 18px; }
 
         /* seções */
         #aif2 .f2-sec { padding: 92px 0; }
@@ -626,6 +699,7 @@ export default function AiFoundryV2() {
           #aif2 .f2-show, #aif2 .f2-mcp, #aif2 .f2-final { grid-template-columns: 1fr; gap: 28px; }
           #aif2 .f2-ways, #aif2 .f2-ready, #aif2 .f2-agents, #aif2 .f2-cases, #aif2 .f2-steps { grid-template-columns: 1fr; }
           #aif2 .f2-sec { padding: 68px 0; } #aif2 .f2-final { padding: 40px 26px; }
+          #aif2 .f2-logos-in { gap: 20px; } #aif2 .f2-logos-div { display: none; } #aif2 .f2-logos-g { width: 100%; }
         }
         @media (max-width: 560px) {
           #aif2 .f2-panel { border-radius: 22px; padding: 18px 14px 0; }
