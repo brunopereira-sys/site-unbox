@@ -115,47 +115,18 @@ function Icon({ name, size = 18 }) {
 }
 
 const BRANDS_CREATE = [
-  { k: 'claude', name: 'Claude' },
-  { k: 'openai', name: 'OpenAI' },
-  { k: 'figma', name: 'Figma' },
+  { k: 'claude', name: 'Claude', src: '/img/brands/claude.svg' },
+  { k: 'openai', name: 'OpenAI', src: '/img/brands/openai.svg' },
+  { k: 'figma', name: 'Figma', src: '/img/brands/figma.svg' },
 ]
 const BRANDS_MIGRATE = [
-  { k: 'shopify', name: 'Shopify' },
-  { k: 'nuvemshop', name: 'Nuvemshop' },
-  { k: 'woo', name: 'WooCommerce' },
+  { k: 'shopify', name: 'Shopify', src: '/img/brands/shopify.png' },
+  { k: 'nuvemshop', name: 'Nuvemshop', src: '/img/brands/nuvemshop.png' },
+  { k: 'woo', name: 'WooCommerce', src: '/img/brands/woocommerce.png' },
 ]
 
-function BrandMark({ k, size = 22 }) {
-  const p = { width: size, height: size, viewBox: '0 0 24 24', 'aria-hidden': true }
-  switch (k) {
-    case 'claude': return (
-      <svg {...p}><g fill="#D97757">{Array.from({ length: 10 }).map((_, i) => (
-        <rect key={i} x="11.25" y="2.4" width="1.5" height="7.4" rx=".75" transform={`rotate(${i * 36} 12 12)`} />
-      ))}</g></svg>)
-    case 'openai': return (
-      <svg {...p} fill="none" stroke="#0F0F14" strokeWidth="1.5">
-        {[0, 60, 120].map((a) => <ellipse key={a} cx="12" cy="12" rx="8.4" ry="3.6" transform={`rotate(${a} 12 12)`} />)}
-      </svg>)
-    case 'figma': return (
-      <svg {...p} viewBox="0 0 16 24">
-        <path d="M4 0h4v8H4a4 4 0 0 1 0-8Z" fill="#F24E1E" />
-        <path d="M8 0h4a4 4 0 0 1 0 8H8V0Z" fill="#FF7262" />
-        <path d="M4 8h4v8H4a4 4 0 0 1 0-8Z" fill="#A259FF" />
-        <circle cx="12" cy="12" r="4" fill="#1ABCFE" />
-        <path d="M4 16h4v4a4 4 0 1 1-4-4Z" fill="#0ACF83" />
-      </svg>)
-    case 'shopify': return (
-      <svg {...p}><path d="M15.4 4.2c-.1-.1-.3-.1-.4-.1l-1 .2c-.3-.9-.9-1.8-1.9-1.8h-.2c-.3-.4-.7-.6-1.1-.6-1.6 0-2.7 2-3.2 3.6l-1.4.4c-.5.1-.5.2-.6.6L4 19.6l8.3 1.6 4.5-1L15.4 4.2Z" fill="#95BF47" /><path d="M15 4.1l-1 .3c-.3-.9-.9-1.8-1.9-1.8l-.7 18.6 4.5-1L15.4 4.2c-.1-.1-.2-.1-.4-.1Z" fill="#5E8E3E" /><path d="M12.6 8.6l-.6 1.7s-.6-.3-1.3-.3c-1 0-1.1.6-1.1.8 0 1 2.6 1.4 2.6 3.8 0 1.8-1.2 3-2.7 3-1.9 0-2.8-1.2-2.8-1.2l.5-1.7s1 .8 1.8.8c.5 0 .7-.4.7-.7 0-1.3-2.1-1.4-2.1-3.6 0-1.8 1.3-3.5 3.9-3.5.9 0 1.1.2 1.1.2Z" fill="#fff" /></svg>)
-    case 'nuvemshop': return (
-      <svg {...p} viewBox="0 0 24 24"><path d="M18.6 10.2A5.2 5.2 0 0 0 8.9 8.4a4.2 4.2 0 0 0-.6 8.4h9.9a3.6 3.6 0 0 0 .4-6.6Z" fill="#2C6DF6" /><path d="M10.6 12.6h3.6l-3.1 3.4h3.3" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg>)
-    case 'woo': return (
-      <svg {...p} viewBox="0 0 28 20"><rect x="0" y="1.5" width="28" height="15" rx="3.4" fill="#7F54B3" /><path d="M4.6 6.2l1.5 5 1.7-4.4.9 4.4 1.5-5M13.4 6c1.3 0 1.9 1 1.9 2.2 0 1.4-.8 2.6-2.1 2.6-1.2 0-1.9-1-1.9-2.2C11.3 7.2 12.1 6 13.4 6ZM19.4 6c1.3 0 1.9 1 1.9 2.2 0 1.4-.8 2.6-2.1 2.6-1.2 0-1.9-1-1.9-2.2C17.3 7.2 18.1 6 19.4 6Z" stroke="#fff" strokeWidth="1.15" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>)
-    default: return null
-  }
-}
-
 function BrandChip({ b }) {
-  return <span className="f2-brand"><BrandMark k={b.k} /><b>{b.name}</b></span>
+  return <span className="f2-brand"><img src={b.src} alt="" width="22" height="22" loading="lazy" /><b>{b.name}</b></span>
 }
 
 function AiTag({ children = 'AI' }) { return <span className="f2-aitag"><Icon name="sparkle" size={11} />{children}</span> }
@@ -589,8 +560,8 @@ export default function AiFoundryV2() {
         #aif2 .f2-logos-div { width: 1px; height: 34px; background: var(--line); }
         #aif2 .f2-brand { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px 8px 10px; }
         #aif2 .f2-brand b { font-size: 14.5px; font-weight: 600; letter-spacing: -.01em; color: var(--ink); white-space: nowrap; }
-        #aif2 .f2-brand svg { flex-shrink: 0; }
-        #aif2 .f2-from .f2-brand { padding: 5px 11px 5px 7px; gap: 6px; } #aif2 .f2-from .f2-brand b { font-size: 12.5px; } #aif2 .f2-from .f2-brand svg { width: 18px; height: 18px; }
+        #aif2 .f2-brand img { flex-shrink: 0; width: 22px; height: 22px; object-fit: contain; display: block; }
+        #aif2 .f2-from .f2-brand { padding: 5px 11px 5px 7px; gap: 6px; } #aif2 .f2-from .f2-brand b { font-size: 12.5px; } #aif2 .f2-from .f2-brand img { width: 18px; height: 18px; }
 
         /* seções */
         #aif2 .f2-sec { padding: 92px 0; }
