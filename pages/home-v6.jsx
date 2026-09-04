@@ -85,6 +85,18 @@ const SIZES = [
   { tint: 'mint', eye: 'INDÚSTRIAS', t: 'Crédito produtivo e canal D2C.', d: 'A indústria recebe à vista e a marca paga conforme vende. Mais uma loja D2C para vender direto ao consumidor.', href: '/industrias', l: 'Ver indústrias' },
 ]
 
+/* Comparativo. Legenda: 'y' nativo · 'p' via app/módulo/parceiro · 'n' não oferece.
+   Toda célula de concorrente precisa de validação do time antes de ir ao ar. */
+const CMP_COLS = ['Unbox', 'Shopify', 'Nuvemshop', 'Wake', 'VTEX']
+const CMP_ROWS = [
+  { t: 'Loja criada por AI', d: 'Do zero por briefing, importando do Figma ou migrando de outra plataforma.', v: ['y', 'n', 'n', 'n', 'n'] },
+  { t: 'Operar por texto na sua AI', d: 'Servidor MCP aberto: catálogo, pedidos e campanhas pelo Claude, ChatGPT ou Cursor.', v: ['y', 'p', 'n', 'n', 'n'], note: 'Shopify tem assistente próprio no admin' },
+  { t: 'Agentes de CRO, SEO e AEO', d: 'Embarcados no projeto da loja, rodam quando você quiser.', v: ['y', 'n', 'n', 'n', 'n'] },
+  { t: 'Assinatura e recorrência', d: 'Do produto ao checkout, sem depender de app de terceiro.', v: ['y', 'p', 'p', 'p', 'p'] },
+  { t: 'Checkout e gateway na mesma casa', d: 'Checkout de 3 etapas e pagamento próprio, sem integração externa.', v: ['y', 'y', 'y', 'p', 'p'] },
+  { t: 'Cobrança e suporte em real', d: 'Mensalidade em BRL e equipe brasileira acompanhando a migração.', v: ['y', 'n', 'y', 'y', 'y'], note: 'Shopify precifica em US$ no Brasil' },
+]
+
 const INTEGRATIONS = [
   { g: 'Canais', items: [
     { n: 'Instagram Shopping', k: 'instagram' }, { n: 'Facebook & Meta', k: 'meta' },
@@ -559,6 +571,43 @@ export default function HomeV6() {
           </div>
         </section>
 
+        {/* COMPARATIVO */}
+        <section className="h6-sec" id="comparativo">
+          <div className="h6-wrap">
+            <div className="h6-head h6-center" data-rv>
+              <span className="h6-eye"><i className="h6-dot" />COMPARATIVO</span>
+              <h2>O que muda quando a plataforma nasce com AI.</h2>
+              <p>Todas resolvem vitrine, catálogo e pedido. A diferença está em quanto da operação você consegue delegar — e quanto vira projeto à parte.</p>
+            </div>
+            <div className="h6-cmp-wrap" data-rv>
+              <table className="h6-cmp">
+                <thead>
+                  <tr><th /> {CMP_COLS.map((c, i) => <th key={c} className={i === 0 ? 'is-us' : ''}>{c}</th>)}</tr>
+                </thead>
+                <tbody>
+                  {CMP_ROWS.map((r) => (
+                    <tr key={r.t}>
+                      <th scope="row"><b>{r.t}</b><span>{r.d}</span>{r.note && <em>{r.note}</em>}</th>
+                      {r.v.map((v, i) => (
+                        <td key={i} className={(i === 0 ? 'is-us ' : '') + 'v-' + v}>
+                          <span className="h6-cmp-mark" aria-label={v === 'y' ? 'nativo' : v === 'p' ? 'via app ou módulo' : 'não oferece'}>
+                            {v === 'y' ? <Icon name="check" size={16} /> : v === 'p' ? '~' : '—'}
+                          </span>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="h6-cmp-legend">
+                <span><i className="l-y"><Icon name="check" size={12} /></i> nativo na plataforma</span>
+                <span><i className="l-p">~</i> via app, módulo ou parceiro</span>
+                <span><i className="l-n">—</i> não oferece</span>
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* NÚMEROS */}
         <section className="h6-sec" ref={metricsRef} id="numeros">
           <div className="h6-wrap">
@@ -814,6 +863,28 @@ export default function HomeV6() {
         #hv6 .h6-int-items { display: flex; flex-wrap: wrap; gap: 8px; }
         #hv6 .h6-int-item { display: inline-flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; font-size: 14px; font-weight: 500; color: var(--ink-2); }
         #hv6 .h6-int-item.is-ai { color: var(--ink); border-color: rgba(143,40,246,.35); background: #fff; }
+
+        /* comparativo */
+        #hv6 .h6-cmp-wrap { overflow-x: auto; }
+        #hv6 .h6-cmp { width: 100%; min-width: 760px; border-collapse: separate; border-spacing: 0; }
+        #hv6 .h6-cmp th, #hv6 .h6-cmp td { text-align: center; padding: 14px 10px; }
+        #hv6 .h6-cmp thead th { font-size: 14px; font-weight: 600; color: var(--ink-2); border-bottom: 1px solid var(--line); }
+        #hv6 .h6-cmp thead th.is-us { color: var(--ink); font-weight: 700; background: var(--lavender); border-radius: 14px 14px 0 0; }
+        #hv6 .h6-cmp tbody th { text-align: left; width: 38%; padding: 16px 18px 16px 0; border-bottom: 1px solid var(--line); font-weight: 400; }
+        #hv6 .h6-cmp tbody th b { display: block; font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+        #hv6 .h6-cmp tbody th span { display: block; font-size: 13.5px; color: var(--ink-2); line-height: 1.5; margin-top: 4px; }
+        #hv6 .h6-cmp tbody th em { display: block; font-style: normal; font-size: 12px; color: var(--mut); margin-top: 6px; }
+        #hv6 .h6-cmp tbody td { border-bottom: 1px solid var(--line); }
+        #hv6 .h6-cmp tbody td.is-us { background: var(--lavender); }
+        #hv6 .h6-cmp tbody tr:last-child td.is-us { border-radius: 0 0 14px 14px; }
+        #hv6 .h6-cmp-mark { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; font-weight: 700; font-size: 15px; }
+        #hv6 .h6-cmp .v-y .h6-cmp-mark { background: var(--verde); color: #fff; }
+        #hv6 .h6-cmp .v-p .h6-cmp-mark { background: rgba(22,22,28,.07); color: var(--ink-2); }
+        #hv6 .h6-cmp .v-n .h6-cmp-mark { color: var(--mut); }
+        #hv6 .h6-cmp-legend { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; margin: 22px 0 0; font-size: 13px; color: var(--ink-2); }
+        #hv6 .h6-cmp-legend span { display: inline-flex; align-items: center; gap: 7px; }
+        #hv6 .h6-cmp-legend i { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; font-style: normal; font-weight: 700; font-size: 12px; }
+        #hv6 .h6-cmp-legend .l-y { background: var(--verde); color: #fff; } #hv6 .h6-cmp-legend .l-p { background: rgba(22,22,28,.07); color: var(--ink-2); } #hv6 .h6-cmp-legend .l-n { color: var(--mut); }
 
         /* números, cases, faq, final, footer */
         #hv6 .h6-metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
