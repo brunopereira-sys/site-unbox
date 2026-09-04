@@ -88,7 +88,7 @@ const CMP_ROWS = [
   { t: 'Bundles e combos nativos', d: 'Kits com desconto progressivo montados no painel, sem instalar nada.', v: ['y', 'p', 'p', 'p', 'p'] },
   { t: 'Order Bump e Upsell no checkout', d: 'Oferta adicional dentro do próprio fluxo de pagamento.', v: ['y', 'p', 'p', 'p', 'p'] },
   { t: 'Assinatura e recorrência', d: 'Do produto ao checkout, sem depender de app de terceiro.', v: ['y', 'p', 'p', 'p', 'p'] },
-  { t: 'Checkout e gateway na mesma casa', d: 'Checkout de 3 etapas e pagamento próprio, sem integração externa.', v: ['y', 'y', 'y', 'p', 'p'] },
+  { t: 'Checkout e gateway na mesma casa', d: 'Checkout de 3 etapas e pagamento próprio, sem integração externa.', v: ['y', 'p', 'y', 'p', 'p'], note: 'Shopify Payments não opera no Brasil: gateway via parceiro' },
   { t: 'Cobrança e suporte em real', d: 'Mensalidade em BRL e equipe brasileira acompanhando a migração.', v: ['y', 'n', 'y', 'y', 'y'], note: 'Shopify precifica em US$ no Brasil' },
 ]
 
@@ -652,7 +652,7 @@ export default function HomeV6() {
         html, body { margin: 0; background: #FBFAF6; }
         #hv6 {
           --bg: #FBFAF6; --ink: #16161C; --ink-2: #4A4A55; --mut: #7A7A86; --line: rgba(22,22,28,.09);
-          --roxo: #8F28F6; --roxo-2: #5612AB; --verde: #1FBF5A; --neon: #39FF14;
+          --roxo: #8F28F6; --roxo-2: #5612AB; --verde: #1FBF5A; --neon: #39FF14; --ambar: #F5B33C;
           --sky: #E6F0FF; --sky-2: #C3DFFE; --lime: #F1FBDF; --lime-2: #DBEE9F; --lavender: #EEE6FF; --lavender-2: #D4C2FF; --mint: #E4FAF3; --mint-2: #BAF0EC;
           --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
           font-family: 'Sora', system-ui, -apple-system, sans-serif; color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; line-height: 1.5; overflow-x: clip;
@@ -874,12 +874,12 @@ export default function HomeV6() {
         #hv6 .h6-cmp tbody tr:last-child td.is-us { border-radius: 0 0 14px 14px; }
         #hv6 .h6-cmp-mark { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; font-weight: 700; font-size: 15px; }
         #hv6 .h6-cmp .v-y .h6-cmp-mark { background: var(--verde); color: #fff; }
-        #hv6 .h6-cmp .v-p .h6-cmp-mark { background: rgba(22,22,28,.07); color: var(--ink-2); }
+        #hv6 .h6-cmp .v-p .h6-cmp-mark { background: var(--ambar); color: #5C3D00; }
         #hv6 .h6-cmp .v-n .h6-cmp-mark { color: var(--mut); }
         #hv6 .h6-cmp-legend { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; margin: 22px 0 0; font-size: 13px; color: var(--ink-2); }
         #hv6 .h6-cmp-legend span { display: inline-flex; align-items: center; gap: 7px; }
         #hv6 .h6-cmp-legend i { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; font-style: normal; font-weight: 700; font-size: 12px; }
-        #hv6 .h6-cmp-legend .l-y { background: var(--verde); color: #fff; } #hv6 .h6-cmp-legend .l-p { background: rgba(22,22,28,.07); color: var(--ink-2); } #hv6 .h6-cmp-legend .l-n { color: var(--mut); }
+        #hv6 .h6-cmp-legend .l-y { background: var(--verde); color: #fff; } #hv6 .h6-cmp-legend .l-p { background: var(--ambar); color: #5C3D00; } #hv6 .h6-cmp-legend .l-n { color: var(--mut); }
 
         /* números, cases, faq, final, footer */
         #hv6 .h6-metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
