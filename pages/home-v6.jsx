@@ -91,7 +91,7 @@ const INTEGRATIONS = [
     { n: 'WhatsApp', k: 'whatsapp' }, { n: 'Google Shopping', k: 'google' }] },
   { g: 'Operação', items: [
     { n: 'Bling', k: 'bling' }, { n: 'Correios', k: 'correios' },
-    { n: 'Total Express', mono: 'T', bg: '#E30613' }, { n: 'Google Analytics', k: 'ga' },
+    { n: 'Total Express', k: 'totalexpress' }, { n: 'Google Analytics', k: 'ga' },
     { n: 'Tag Manager', k: 'gtm' }] },
   { g: 'AI (via MCP)', items: [
     { n: 'Claude', k: 'claude' }, { n: 'ChatGPT', k: 'openai' }, { n: 'Cursor', k: 'cursor' },
@@ -169,12 +169,14 @@ const LOGOS = {
   ga: { f: 'googleanalytics.svg' }, gtm: { f: 'googletagmanager.svg' },
   openai: { f: 'openai.svg' }, nuvemshop: { f: 'nuvemshop.svg', wm: 4 },
   bling: { f: 'bling.svg', wm: 2.06 }, correios: { f: 'correios.svg', wm: 4.88 },
+  totalexpress: { f: 'totalexpress.svg', wm: 2.5, hs: 1.45 },
 }
 
 function BrandMark({ k, size = 20 }) {
   const l = LOGOS[k]
   if (!l) return null
-  return <img className="h6-lg" src={'/img/brands/' + l.f} alt="" aria-hidden="true" style={{ height: size, width: l.wm ? size * l.wm : size }} />
+  const h = size * (l.hs || 1)
+  return <img className="h6-lg" src={'/img/brands/' + l.f} alt="" aria-hidden="true" style={{ height: h, width: l.wm ? h * l.wm : h }} />
 }
 
 function Mono({ t, bg, fg = '#fff', size = 20 }) {
