@@ -31,15 +31,17 @@ const SHOW = [
 ]
 
 const GROUPS = [
-  { id: 'loja', tint: 'sky', icon: 'layout', tab: 'Loja', eye: 'SUA LOJA',
-    title: 'Uma loja 100% sua. Gerada e revisada por AI.',
-    body: 'Layouts totalmente customizáveis, domínio e SSL grátis, SEO e performance de verdade. Crie do zero pelo CLI, importe do Figma ou migre de onde estiver — e mereça o clique com promoções que você monta em minutos.',
+  { id: 'loja', tint: 'sky', icon: 'layout', tab: 'Loja e operação', eye: 'SUA LOJA E SUA OPERAÇÃO',
+    title: 'A vitrine e o back-office no mesmo painel.',
+    body: 'Layouts totalmente customizáveis, promoções que você monta em minutos, frete calculado dentro do checkout e os números que importam. Sem app externo, sem planilha e sem BI à parte.',
     subs: [
       { icon: 'layout', t: 'Loja virtual', feats: ['Layouts 100% customizáveis', 'Domínio e SSL grátis', 'Produtos e visitas ilimitados'] },
-      { icon: 'tag', t: 'Promoções e campanhas', feats: ['Cupons e vouchers', 'Bundles & Combos', 'Frete grátis flexível'] },
+      { icon: 'tag', t: 'Promoções e bundles', feats: ['Bundles e combos nativos', 'Cupons e vouchers', 'Frete grátis flexível'] },
+      { icon: 'truck', t: 'Envios e ERP', feats: ['Frete integrado ao checkout', 'Etiquetas e rastreio', 'ERP Bling'] },
+      { icon: 'chart', t: 'Dados e insights', feats: ['Recompra e LTV', 'Carrinhos abandonados', 'Origem da receita'] },
     ],
-    ai: { h: 'Gerada pelo CLI, revisada por agentes', d: 'Branding, QA Visual, SEO e AEO rodam dentro do projeto antes de publicar. E a campanha da semana sai de uma frase: você pede, a AI prepara, você confirma.' },
-    link: { href: '/recursos', t: 'Ver recursos da loja' }, visual: 'store' },
+    ai: { h: 'Da vitrine ao estoque, por texto', d: 'Branding, QA Visual, SEO e AEO rodam no projeto antes de publicar. Depois, catálogo, preço, estoque e campanha saem de uma frase — a AI prepara, você confirma.' },
+    link: { href: '/recursos', t: 'Ver recursos da plataforma' }, visual: 'store' },
 
   { id: 'checkout', tint: 'lime', icon: 'bolt', tab: 'Conversão', eye: 'SUA CONVERSÃO',
     title: 'O checkout que mais converte no Brasil.',
@@ -61,15 +63,6 @@ const GROUPS = [
     ai: { h: 'Planos e resultados por texto', d: 'Crie regras de assinatura pela sua AI, via MCP — ela prepara, você confirma. E pergunte quem vendeu mais no mês: ela lê os pedidos e responde.' },
     link: { href: '/assinatura', t: 'Conhecer a Assinatura' }, visual: 'sub' },
 
-  { id: 'operacao', tint: 'mint', icon: 'truck', tab: 'Operação', eye: 'SUA OPERAÇÃO',
-    title: 'Pedidos, estoque, frete e dados no mesmo painel.',
-    body: 'Frete calculado dentro do checkout, etiquetas, rastreio e ERP integrado. E os números que importam — recompra, LTV, origem da receita — sem planilha e sem BI externo.',
-    subs: [
-      { icon: 'truck', t: 'Envios e ERP', feats: ['Frete integrado ao checkout', 'Etiquetas e rastreio', 'ERP Bling'] },
-      { icon: 'chart', t: 'Dados e insights', feats: ['Recompra e LTV', 'Carrinhos abandonados', 'Origem da receita'] },
-    ],
-    ai: { h: 'Operação e decisão por texto', d: 'Atualize catálogo, estoque e preços pela sua AI — toda escrita passa por preparar e confirmar. E pergunte o que caiu na semana: ela lê os dados e sugere o próximo passo.' },
-    link: { href: '/recursos', t: 'Ver operação e dados' }, visual: 'ops' },
 ]
 
 const AI_PILLARS = [
@@ -92,6 +85,8 @@ const CMP_ROWS = [
   { t: 'Loja criada por AI', d: 'Do zero por briefing, importando do Figma ou migrando de outra plataforma.', v: ['y', 'n', 'n', 'n', 'n'] },
   { t: 'Operar por texto na sua AI', d: 'Servidor MCP aberto: catálogo, pedidos e campanhas pelo Claude, ChatGPT ou Cursor.', v: ['y', 'p', 'n', 'n', 'n'], note: 'Shopify tem assistente próprio no admin' },
   { t: 'Agentes de CRO, SEO e AEO', d: 'Embarcados no projeto da loja, rodam quando você quiser.', v: ['y', 'n', 'n', 'n', 'n'] },
+  { t: 'Bundles e combos nativos', d: 'Kits com desconto progressivo montados no painel, sem instalar nada.', v: ['y', 'p', 'p', 'p', 'p'] },
+  { t: 'Order Bump e Upsell no checkout', d: 'Oferta adicional dentro do próprio fluxo de pagamento.', v: ['y', 'p', 'p', 'p', 'p'] },
   { t: 'Assinatura e recorrência', d: 'Do produto ao checkout, sem depender de app de terceiro.', v: ['y', 'p', 'p', 'p', 'p'] },
   { t: 'Checkout e gateway na mesma casa', d: 'Checkout de 3 etapas e pagamento próprio, sem integração externa.', v: ['y', 'y', 'y', 'p', 'p'] },
   { t: 'Cobrança e suporte em real', d: 'Mensalidade em BRL e equipe brasileira acompanhando a migração.', v: ['y', 'n', 'y', 'y', 'y'], note: 'Shopify precifica em US$ no Brasil' },
@@ -576,8 +571,8 @@ export default function HomeV6() {
           <div className="h6-wrap">
             <div className="h6-head h6-center" data-rv>
               <span className="h6-eye"><i className="h6-dot" />COMPARATIVO</span>
-              <h2>O que muda quando a plataforma nasce com AI.</h2>
-              <p>Todas resolvem vitrine, catálogo e pedido. A diferença está em quanto da operação você consegue delegar — e quanto vira projeto à parte.</p>
+              <h2>Tudo nativo. Inclusive a AI.</h2>
+              <p>Todas resolvem vitrine, catálogo e pedido. A diferença aparece no que já vem pronto na plataforma — e no que vira app, módulo ou projeto à parte.</p>
             </div>
             <div className="h6-cmp-wrap" data-rv>
               <table className="h6-cmp">
