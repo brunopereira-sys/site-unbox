@@ -90,12 +90,12 @@ const INTEGRATIONS = [
     { n: 'Instagram Shopping', k: 'instagram' }, { n: 'Facebook & Meta', k: 'meta' },
     { n: 'WhatsApp', k: 'whatsapp' }, { n: 'Google Shopping', k: 'google' }] },
   { g: 'Operação', items: [
-    { n: 'ERP Bling', mono: 'b', bg: '#F5821F' }, { n: 'Correios', mono: 'C', bg: '#FFCC29', fg: '#00427A' },
-    { n: 'Total Express', mono: 'T', bg: '#E30613' }, { n: 'Google Analytics', k: 'google' },
-    { n: 'Tag Manager', mono: 'G', bg: '#246FDB' }] },
+    { n: 'Bling', k: 'bling' }, { n: 'Correios', k: 'correios' },
+    { n: 'Total Express', mono: 'T', bg: '#E30613' }, { n: 'Google Analytics', k: 'ga' },
+    { n: 'Tag Manager', k: 'gtm' }] },
   { g: 'AI (via MCP)', items: [
     { n: 'Claude', k: 'claude' }, { n: 'ChatGPT', k: 'openai' }, { n: 'Cursor', k: 'cursor' },
-    { n: 'Claude Code', k: 'claudecode' }, { n: 'Figma MCP', k: 'figma' }] },
+    { n: 'Claude Code', k: 'claude' }, { n: 'Figma MCP', k: 'figma' }] },
 ]
 
 const CASES = [
@@ -158,38 +158,22 @@ function Logo() {
 const BRANDS_CREATE = [{ k: 'claude', name: 'Claude' }, { k: 'openai', name: 'OpenAI' }, { k: 'figma', name: 'Figma' }]
 const BRANDS_MIGRATE = [{ k: 'shopify', name: 'Shopify' }, { k: 'nuvemshop', name: 'Nuvemshop' }, { k: 'woo', name: 'WooCommerce' }]
 
+/* Logos oficiais em /public/img/brands. Símbolos (1:1) do Simple Icons na cor
+   de marca; wordmarks (openai, nuvemshop, bling, correios) do site da própria
+   marca. `wm` marca os que já contêm o nome — nesses o chip não repete o texto. */
+const LOGOS = {
+  claude: { f: 'claude.svg' }, figma: { f: 'figma.svg' }, shopify: { f: 'shopify.svg' },
+  woo: { f: 'woocommerce.svg' }, cursor: { f: 'cursor.svg' }, instagram: { f: 'instagram.svg' },
+  whatsapp: { f: 'whatsapp.svg' }, meta: { f: 'meta.svg' }, google: { f: 'google.svg' },
+  ga: { f: 'googleanalytics.svg' }, gtm: { f: 'googletagmanager.svg' },
+  openai: { f: 'openai.svg', wm: 3.74 }, nuvemshop: { f: 'nuvemshop.svg', wm: 4 },
+  bling: { f: 'bling.svg', wm: 2.06 }, correios: { f: 'correios.svg', wm: 4.88 },
+}
+
 function BrandMark({ k, size = 20 }) {
-  const p = { width: size, height: size, viewBox: '0 0 24 24', 'aria-hidden': true }
-  switch (k) {
-    case 'claude': case 'claudecode': return (
-      <svg {...p}><g fill="#D97757">{Array.from({ length: 10 }).map((_, i) => (
-        <rect key={i} x="11.25" y="2.6" width="1.5" height="7.2" rx=".75" transform={`rotate(${i * 36} 12 12)`} />))}</g></svg>)
-    case 'openai': return (
-      <svg {...p} fill="none" stroke="#0F0F14" strokeWidth="1.5">
-        {[0, 60, 120].map((a) => <ellipse key={a} cx="12" cy="12" rx="8.4" ry="3.6" transform={`rotate(${a} 12 12)`} />)}</svg>)
-    case 'figma': return (
-      <svg {...p} viewBox="0 0 16 24">
-        <path d="M4 0h4v8H4a4 4 0 0 1 0-8Z" fill="#F24E1E" /><path d="M8 0h4a4 4 0 0 1 0 8H8V0Z" fill="#FF7262" />
-        <path d="M4 8h4v8H4a4 4 0 0 1 0-8Z" fill="#A259FF" /><circle cx="12" cy="12" r="4" fill="#1ABCFE" />
-        <path d="M4 16h4v4a4 4 0 1 1-4-4Z" fill="#0ACF83" /></svg>)
-    case 'shopify': return (
-      <svg {...p}><path d="M15.4 4.2c-.1-.1-.3-.1-.4-.1l-1 .2c-.3-.9-.9-1.8-1.9-1.8h-.2c-.3-.4-.7-.6-1.1-.6-1.6 0-2.7 2-3.2 3.6l-1.4.4c-.5.1-.5.2-.6.6L4 19.6l8.3 1.6 4.5-1L15.4 4.2Z" fill="#95BF47" /><path d="M15 4.1l-1 .3c-.3-.9-.9-1.8-1.9-1.8l-.7 18.6 4.5-1L15.4 4.2c-.1-.1-.2-.1-.4-.1Z" fill="#5E8E3E" /><path d="M12.6 8.6l-.6 1.7s-.6-.3-1.3-.3c-1 0-1.1.6-1.1.8 0 1 2.6 1.4 2.6 3.8 0 1.8-1.2 3-2.7 3-1.9 0-2.8-1.2-2.8-1.2l.5-1.7s1 .8 1.8.8c.5 0 .7-.4.7-.7 0-1.3-2.1-1.4-2.1-3.6 0-1.8 1.3-3.5 3.9-3.5.9 0 1.1.2 1.1.2Z" fill="#fff" /></svg>)
-    case 'nuvemshop': return (
-      <svg {...p}><path d="M18.6 10.2A5.2 5.2 0 0 0 8.9 8.4a4.2 4.2 0 0 0-.6 8.4h9.9a3.6 3.6 0 0 0 .4-6.6Z" fill="#2C6DF6" /><path d="M10.6 12.6h3.6l-3.1 3.4h3.3" stroke="#fff" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg>)
-    case 'woo': return (
-      <svg {...p} viewBox="0 0 28 20"><rect y="1.5" width="28" height="15" rx="3.4" fill="#7F54B3" /><path d="M4.6 6.2l1.5 5 1.7-4.4.9 4.4 1.5-5M13.4 6c1.3 0 1.9 1 1.9 2.2 0 1.4-.8 2.6-2.1 2.6-1.2 0-1.9-1-1.9-2.2C11.3 7.2 12.1 6 13.4 6ZM19.4 6c1.3 0 1.9 1 1.9 2.2 0 1.4-.8 2.6-2.1 2.6-1.2 0-1.9-1-1.9-2.2C17.3 7.2 18.1 6 19.4 6Z" stroke="#fff" strokeWidth="1.15" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>)
-    case 'instagram': return (
-      <svg {...p}><defs><linearGradient id="ig6" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stopColor="#FEDA75" /><stop offset=".4" stopColor="#D62976" /><stop offset="1" stopColor="#962FBF" /></linearGradient></defs><rect x="2.5" y="2.5" width="19" height="19" rx="5.4" fill="url(#ig6)" /><circle cx="12" cy="12" r="4.3" fill="none" stroke="#fff" strokeWidth="1.7" /><circle cx="17.2" cy="6.9" r="1.15" fill="#fff" /></svg>)
-    case 'whatsapp': return (
-      <svg {...p}><circle cx="12" cy="12" r="10" fill="#25D366" /><path d="M8.4 8.6c.3 2.6 2.7 5 5.3 5.3l1.2-1.2-2-.8-.8.8c-1-.4-1.9-1.3-2.3-2.3l.8-.8-.8-2-1.4 1Z" fill="#fff" /></svg>)
-    case 'meta': return (
-      <svg {...p} fill="none" stroke="#0081FB" strokeWidth="2.1" strokeLinecap="round"><path d="M3.2 15c0-3.6 1.9-8 4.3-8s3.4 5.4 4.5 5.4S14.1 7 16.5 7s4.3 4.4 4.3 8c0 1.8-.9 2.8-2.3 2.8-2.1 0-3.1-2.9-4.9-5.6-.9-1.4-1.3 0-1.6 0s-.7-1.4-1.6 0C8.6 14.9 7.6 17.8 5.5 17.8 4.1 17.8 3.2 16.8 3.2 15Z" /></svg>)
-    case 'google': return (
-      <svg {...p} viewBox="0 0 24 24"><path d="M21.6 12.2c0-.7-.1-1.3-.2-1.9H12v3.6h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.2Z" fill="#4285F4" /><path d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22Z" fill="#34A853" /><path d="M6.4 14c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V7.4H3.1a10 10 0 0 0 0 9.2L6.4 14Z" fill="#FBBC05" /><path d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.8-2.8A10 10 0 0 0 3.1 7.4L6.4 10c.8-2.3 3-4.1 5.6-4.1Z" fill="#EA4335" /></svg>)
-    case 'cursor': return (
-      <svg {...p} viewBox="0 0 24 24"><path d="M12 2 21 7v10l-9 5-9-5V7l9-5Z" fill="#0F0F14" /><path d="M12 2v10l9-5M12 12v10M12 12 3 7" stroke="#fff" strokeWidth="1.1" fill="none" strokeLinejoin="round" /></svg>)
-    default: return null
-  }
+  const l = LOGOS[k]
+  if (!l) return null
+  return <img className="h6-lg" src={'/img/brands/' + l.f} alt="" aria-hidden="true" style={{ height: size, width: l.wm ? size * l.wm : size }} />
 }
 
 function Mono({ t, bg, fg = '#fff', size = 20 }) {
@@ -197,9 +181,12 @@ function Mono({ t, bg, fg = '#fff', size = 20 }) {
 }
 function IntMark({ m }) {
   if (m.mono) return <Mono t={m.mono} bg={m.bg} fg={m.fg} />
-  return <BrandMark k={m.k} size={18} />
+  return <BrandMark k={m.k} size={16} />
 }
-function BrandChip({ b }) { return <span className="h6-blogo"><BrandMark k={b.k} /><b>{b.name}</b></span> }
+function BrandChip({ b, size = 20 }) {
+  const wm = LOGOS[b.k] && LOGOS[b.k].wm
+  return <span className="h6-blogo"><BrandMark k={b.k} size={size} />{!wm && <b>{b.name}</b>}</span>
+}
 
 function AiTag({ children = 'AI' }) { return <span className="h6-aitag"><Icon name="sparkle" size={11} />{children}</span> }
 
@@ -565,7 +552,7 @@ export default function HomeV6() {
               <a href="/recursos" className="h6-textlink" data-rv>Ver todas as integrações <Icon name="arrow" size={15} /></a>
             </div>
             <div className="h6-int" data-rv>
-              {INTEGRATIONS.map((g) => <div className="h6-int-g" key={g.g}><span className="h6-int-l">{g.g}</span><div className="h6-int-items">{g.items.map((it) => <span className={'h6-int-item' + (g.g.startsWith('AI') ? ' is-ai' : '')} key={it.n}><IntMark m={it} />{it.n}</span>)}</div></div>)}
+              {INTEGRATIONS.map((g) => <div className="h6-int-g" key={g.g}><span className="h6-int-l">{g.g}</span><div className="h6-int-items">{g.items.map((it) => <span className={'h6-int-item' + (g.g.startsWith('AI') ? ' is-ai' : '')} key={it.n}><IntMark m={it} />{!(LOGOS[it.k] && LOGOS[it.k].wm) && it.n}</span>)}</div></div>)}
             </div>
           </div>
         </section>
@@ -706,6 +693,7 @@ export default function HomeV6() {
         #hv6 .h6-blogo { display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px 8px 10px; }
         #hv6 .h6-blogo b { font-size: 14.5px; font-weight: 600; letter-spacing: -.01em; color: var(--ink); white-space: nowrap; opacity: 1; }
         #hv6 .h6-blogo svg, #hv6 .h6-int-item svg { flex-shrink: 0; }
+        #hv6 .h6-lg { display: block; object-fit: contain; flex-shrink: 0; }
         #hv6 .h6-mono { display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 12px; font-weight: 800; line-height: 1; flex-shrink: 0; }
 
         /* brands */
