@@ -164,7 +164,7 @@ const BRANDS_MIGRATE = [{ k: 'shopify', name: 'Shopify' }, { k: 'nuvemshop', nam
    `wm` marca os que já contêm o nome — nesses o chip não repete o texto. */
 const LOGOS = {
   claude: { f: 'claude.svg' }, figma: { f: 'figma.svg' }, shopify: { f: 'shopify.svg' },
-  woo: { f: 'woocommerce.svg' }, cursor: { f: 'cursor.svg' }, instagram: { f: 'instagram.svg' },
+  woo: { f: 'woocommerce.png' }, cursor: { f: 'cursor.svg' }, instagram: { f: 'instagram.svg' },
   whatsapp: { f: 'whatsapp.svg' }, meta: { f: 'meta.svg' }, google: { f: 'google.svg' },
   ga: { f: 'googleanalytics.svg' }, gtm: { f: 'googletagmanager.svg' },
   openai: { f: 'openai.svg' }, nuvemshop: { f: 'nuvemshop.svg', wm: 4 },
@@ -411,7 +411,7 @@ export default function HomeV6() {
         <section className="h6-hero" id="hero">
           <div className="h6-wrap">
             <div className="h6-hero-copy" data-rv>
-              <h1><em>AI Commerce</em>: Seu ecommerce repensado</h1>
+              <h1><em>AI Commerce</em><br />Seu ecommerce no automático</h1>
               <p className="h6-lead">Crie, gerencie e escale sua marca com AI.</p>
               <div className="h6-cta-row">
                 <a href="/ai-unbox" className="h6-btn h6-btn-dark h6-btn-lg">Criar minha loja com AI</a>
