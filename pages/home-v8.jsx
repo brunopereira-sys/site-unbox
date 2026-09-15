@@ -18,12 +18,13 @@ import DemoModal from '../components/DemoModal'
    AÇÃO ÚNICA: diagnóstico gratuito (DemoModal → /api/demo-lead → Pipedrive).
 
    NARRATIVA DE TROCA, um trabalho por seção:
-   1 Hero ........ promessa + onde a receita cresce (as 4 alavancas)
+   1 Hero ........ promessa + painel de funcionalidades (decisão conquistada)
    2 Prova ....... quem vende com a Unbox e os números
    3 Custo ....... o que te empurra para fora da plataforma atual
-   4 Automático .. o trabalho que sai das suas mãos
-   5 Migração .... o medo de trocar, desmontado
-   6 Começar ..... um caminho por estágio da marca
+   4 Receita ..... as 4 alavancas: resultado → número → mecanismo
+   5 Automático .. o trabalho que sai das suas mãos
+   6 Migração .... o medo de trocar, desmontado
+   7 Começar ..... um caminho por estágio da marca
 
    Fontes, e só elas: Deck Set 26, site no ar, @unbox-plus/cli 0.21.6 e
    o Painel Unbox. Escopo #hv8 / h8-*.
@@ -33,7 +34,17 @@ const V = '?v=r26'
 const CLI_CMD = 'npx --package=@unbox-plus/cli create-unbox-store'
 const NPM_URL = 'https://www.npmjs.com/package/@unbox-plus/cli'
 
-/* 1 · As alavancas de receita. Cada aba: resultado → número → mecanismo. */
+/* 1 · Hero: o painel de funcionalidades (decisão conquistada na v6/v7).
+   "Saiba mais" abre a alavanca de receita correspondente na seção #receita. */
+const SHOW = [
+  { key: 'loja', label: 'Loja', icon: 'layout', tint: 'sky', title: 'Sua loja, do seu jeito. Sem template.', body: 'Layouts 100% customizáveis, mobile-first, com SEO e performance de ponta. Crie do zero pelo CLI, importe do Figma ou migre de onde estiver.', ai: 'Gerada pelo CLI e personalizada pelo agente de Branding', img: '/img/loja-olea.png', alt: 'Loja Olea rodando na Unbox', href: '#receita', lever: 0 },
+  { key: 'checkout', label: 'Checkout', icon: 'bolt', tint: 'lime', title: 'Checkout em modo TURBO.', body: '3 etapas, sem redirecionamento, sem fricção. Pix, cartão em até 12× e boleto no mesmo fluxo. 4× mais conversão e +98% de aprovação.', ai: 'Anti-Fraude IA+ analisando cada pedido em tempo real', img: '/img/checkout-dash.png', alt: 'Checkout TURBO da Unbox', href: '#receita', lever: 0 },
+  { key: 'assinatura', label: 'Assinatura', icon: 'repeat', tint: 'lavender', title: 'Recorrência que nasce no carrinho.', body: 'Assinatura 100% nativa, da página de produto ao checkout. Múltiplas frequências, gestão de falhas automática e cohort de LTV.', ai: 'Planos e regras de assinatura criados por texto, via MCP', img: '/img/assinatura2.png', alt: 'Assinatura nativa no carrinho', href: '#receita', lever: 2 },
+  { key: 'pay', label: 'Unbox Pay', icon: 'card', tint: 'mint', title: 'Pagamento nativo, com as melhores taxas.', body: 'Gateway próprio com 98% de aprovação, multi provedores e retentativa automática. 1% no Pix e cartão a partir de 2,99%, sem taxa de saque.', ai: 'Gateway turbinado por AI para aprovar mais e custar menos', mock: 'pay', href: '#receita', lever: 1 },
+  { key: 'ai', label: 'Unbox AI', icon: 'sparkle', tint: 'lavender', title: 'A loja começa com um comando.', body: 'O Unbox CLI gera o storefront com a sua marca aplicada. O MCP opera catálogo, pedidos e campanhas por texto. Agentes cuidam de branding, CRO, SEO e deploy.', ai: 'CLI público no npm · funciona com Claude, ChatGPT e Cursor', mock: 'ai', href: '#automatico' },
+]
+
+/* 4 · As alavancas de receita. Cada aba: resultado → número → mecanismo. */
 const LEVERS = [
   { key: 'converter', label: 'Converter mais', icon: 'bolt', tint: 'lime',
     title: 'Mais visitas viram pedido.',
@@ -241,8 +252,53 @@ function Metric({ m, run }) {
 }
 
 
-/* ── 1 · Hero: onde a receita cresce ────────────────────────── */
-function Levers() {
+/* ── Hero: painel com abas (conquistado na v6) ─────────────── */
+function Showcase() {
+  const [tab, setTab] = useState(0)
+  const [prog, setProg] = useState(0)
+  const paused = useRef(false); const pr = useRef(0)
+  useEffect(() => {
+    const id = setInterval(() => { if (paused.current) return; pr.current += 1 / 160; if (pr.current >= 1) { pr.current = 0; setTab((t) => (t + 1) % SHOW.length) } setProg(pr.current) }, 40)
+    return () => clearInterval(id)
+  }, [])
+  useEffect(() => { const q = new URLSearchParams(window.location.search).get('tab'); if (q !== null) { paused.current = true; setTab(Math.min(SHOW.length - 1, Math.max(0, Number(q) || 0))) } }, [])
+  const T = SHOW[tab]
+  return (
+    <div className={'h8-panel tint-' + T.tint} onMouseEnter={() => { paused.current = true }} onMouseLeave={() => { paused.current = false }}>
+      <div className="h8-ptabs" role="tablist">
+        {SHOW.map((t, i) => (
+          <button key={t.key} role="tab" aria-selected={i === tab} className={'h8-ptab' + (i === tab ? ' is-on' : '')} onClick={() => { pr.current = 0; setProg(0); setTab(i) }}>
+            <span className="h8-ptab-ico"><Icon name={t.icon} size={16} /></span><span className="h8-ptab-lbl">{t.label}</span>
+            {i === tab && <i className="h8-ptab-prog" style={{ transform: `scaleX(${prog})` }} />}
+          </button>
+        ))}
+      </div>
+      <div className="h8-showcase" key={T.key}>
+        <div className="h8-showcase-copy">
+          <span className="h8-chip"><Icon name={T.icon} size={14} /> {T.label}</span>
+          <h3>{T.title}</h3>
+          <p>{T.body}</p>
+          <div className="h8-showcase-ai"><AiTag /><span>{T.ai}</span></div>
+          <a href={T.href} className="h8-textlink" onClick={() => { if (T.lever !== undefined) window.dispatchEvent(new CustomEvent('unbox-lever', { detail: T.lever })) }}>Saiba mais <Icon name="arrow" size={16} /></a>
+        </div>
+        <div className={'h8-showcase-media' + (T.mock ? ' is-mock' : '')}>
+          {T.img ? <img src={T.img} alt={T.alt} /> : <Mock kind={T.mock} />}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function Chat({ who, lines }) {
+  return (
+    <div className="h8-chat">
+      <div className="h8-chat-h"><AiTag>Unbox MCP</AiTag><span>{who}</span></div>
+      {lines.map((l, i) => <div className={'h8-bub ' + l.r} key={i}>{l.r !== 'u' && <Icon name="check" size={13} />}{l.t}</div>)}
+    </div>
+  )
+}
+/* ── 4 · Onde a receita cresce: as alavancas ─────────────────── */
+function Levers({ eye = false }) {
   const [tab, setTab] = useState(0)
   const [prog, setProg] = useState(0)
   const paused = useRef(false); const pr = useRef(0)
@@ -250,11 +306,16 @@ function Levers() {
     const id = setInterval(() => { if (paused.current) return; pr.current += 1 / 170; if (pr.current >= 1) { pr.current = 0; setTab((t) => (t + 1) % LEVERS.length) } setProg(pr.current) }, 40)
     return () => clearInterval(id)
   }, [])
-  useEffect(() => { const q = new URLSearchParams(window.location.search).get('tab'); if (q !== null) { paused.current = true; setTab(Math.min(LEVERS.length - 1, Math.max(0, Number(q) || 0))) } }, [])
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get('lever'); if (q !== null) { paused.current = true; setTab(Math.min(LEVERS.length - 1, Math.max(0, Number(q) || 0))) }
+    const onLever = (e) => { paused.current = true; pr.current = 0; setProg(0); setTab(Math.min(LEVERS.length - 1, Math.max(0, Number(e.detail) || 0))) }
+    window.addEventListener('unbox-lever', onLever)
+    return () => window.removeEventListener('unbox-lever', onLever)
+  }, [])
   const T = LEVERS[tab]
   return (
     <div className={'h8-panel tint-' + T.tint} onMouseEnter={() => { paused.current = true }} onMouseLeave={() => { paused.current = false }}>
-      <p className="h8-panel-eye">Onde a sua receita cresce</p>
+      {eye && <p className="h8-panel-eye">Onde a sua receita cresce</p>}
       <div className="h8-ptabs" role="tablist">
         {LEVERS.map((t, i) => (
           <button key={t.key} role="tab" aria-selected={i === tab} className={'h8-ptab' + (i === tab ? ' is-on' : '')} onClick={() => { pr.current = 0; setProg(0); setTab(i) }}>
@@ -287,6 +348,16 @@ function Mock({ kind }) {
         <div className="h8-m-stat"><span>Pix</span><b>1%</b><em>cartão a partir de 2,99%</em></div>
         <div className="h8-m-stat"><span>Saque</span><b>R$ 0</b><em>sem taxa de saque</em></div>
         <div className="h8-m-strip"><AiTag /><b>Antifraude com análise ativa</b><span>cartão, boleto e Pix integrados</span></div>
+      </div>)
+    case 'ai': return (
+      <div className="h8-mock h8-m-ai">
+        <div className="h8-term">
+          <div className="h8-term-cmd"><span>$</span> {CLI_CMD}</div>
+          <div className="h8-term-line">? Estilo visual › Editorial</div>
+          <div className="h8-term-line">? Checkout › padrão hospedado da Unbox</div>
+          <div className="h8-term-line ok">✓ storefront gerado com a sua marca</div>
+        </div>
+        <Chat who="você · Claude" lines={[{ r: 'u', t: 'cria o cupom VOLTA10 com 10% e frete grátis acima de R$ 150' }, { r: 'a', t: 'Plano: VOLTA10 · 10% · frete grátis ≥ R$ 150. Confirmar?' }, { r: 'u', t: 'confirma' }, { r: 'a ok', t: 'Criado e publicado.' }]} />
       </div>)
     case 'creators': return (
       <div className="h8-mock h8-m-cr">
@@ -473,7 +544,7 @@ export default function HomeV8() {
               <p className="h8-lead">Crie, gerencie e escale sua marca com AI.</p>
               <div className="h8-cta-row">
                 <a href={URLS.demo} className="h8-btn h8-btn-dark h8-btn-lg">Agendar diagnóstico gratuito</a>
-                <a href="#receita" className="h8-btn h8-btn-white h8-btn-lg">Ver como a receita cresce</a>
+                <a href="#receita" className="h8-btn h8-btn-white h8-btn-lg">Ver onde a receita cresce</a>
               </div>
               <p className="h8-micro">Diagnóstico gratuito · Migração acompanhada · Suporte humano</p>
             </div>
@@ -487,7 +558,7 @@ export default function HomeV8() {
                 <div className="h8-logos-row">{BRANDS_MIGRATE.map((b) => <BrandChip b={b} key={b.k} />)}</div>
               </div>
             </div>
-            <div id="receita" className="h8-receita" data-rv><Levers /></div>
+            <div data-rv><Showcase /></div>
           </div>
         </section>
 
@@ -583,7 +654,19 @@ export default function HomeV8() {
           </div>
         </section>
 
-        {/* 4 · NO AUTOMÁTICO — o trabalho que sai das suas mãos */}
+        {/* 4 · ONDE A RECEITA CRESCE — as alavancas (A), com o mecanismo (B) em cada uma */}
+        <section className="h8-sec h8-sec-alt" id="receita">
+          <div className="h8-wrap">
+            <div className="h8-head h8-center" data-rv>
+              <span className="h8-eye"><i className="h8-dot" />ONDE A SUA RECEITA CRESCE</span>
+              <h2>Mais pedido, mais aprovação, mais recompra. E menos CAC.</h2>
+              <p>Cada alavanca tem um número e um mecanismo nativo por trás. Nenhuma depende de app de terceiro.</p>
+            </div>
+            <div data-rv><Levers /></div>
+          </div>
+        </section>
+
+        {/* 5 · NO AUTOMÁTICO — o trabalho que sai das suas mãos */}
         <section className="h8-sec h8-band" id="automatico">
           <div className="h8-wrap">
             <div className="h8-head h8-center" data-rv>
@@ -600,7 +683,7 @@ export default function HomeV8() {
           </div>
         </section>
 
-        {/* 5 · MIGRAÇÃO — o medo de trocar, desmontado */}
+        {/* 6 · MIGRAÇÃO — o medo de trocar, desmontado */}
         <section className="h8-sec h8-sec-alt" id="migrar">
           <div className="h8-wrap h8-split">
             <div className="h8-split-copy">
@@ -622,7 +705,7 @@ export default function HomeV8() {
           </div>
         </section>
 
-        {/* 6 · COMO COMEÇAR — um caminho por estágio */}
+        {/* 7 · COMO COMEÇAR — um caminho por estágio */}
         <section className="h8-sec" id="comecar">
           <div className="h8-wrap">
             <div className="h8-head h8-center" data-rv>
