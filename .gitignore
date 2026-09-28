@@ -5,3 +5,6 @@ Thumbs.db
 .next/
 node_modules/
 .vercel
+
+# typescript
+tsconfig.tsbuildinfo
