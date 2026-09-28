@@ -17,10 +17,10 @@ export default function GestoEditor() {
       <div className="mx-auto max-w-content px-5">
         <div className="max-w-[58ch]">
           <span className="ub-eyebrow">{GESTO.eyebrow}</span>
-          <h2 className="mt-3" style={{ fontSize: 'clamp(26px, 3.6vw, 40px)', lineHeight: 1.1, fontWeight: 800 }}>
+          <h2 className="mt-3" style={{ fontSize: 'clamp(30px, 4.4vw, 52px)', lineHeight: 1.05, fontWeight: 800 }}>
             {GESTO.h2}
           </h2>
-          <p className="mt-3" style={{ fontSize: 17, lineHeight: 1.55, color: 'var(--ink-soft)' }}>
+          <p className="mt-3" style={{ fontSize: 18.5, lineHeight: 1.55, color: 'var(--ub-texto-2)' }}>
             {GESTO.lead}
           </p>
         </div>
@@ -33,10 +33,10 @@ export default function GestoEditor() {
               <div
                 className="ml-auto max-w-[92%] px-4 py-3"
                 style={{
-                  background: 'var(--purple)',
+                  background: 'var(--ub-roxo)',
                   color: '#fff',
                   borderRadius: '16px 16px 4px 16px',
-                  fontSize: 14.5,
+                  fontSize: 15.5,
                   lineHeight: 1.45,
                 }}
               >
@@ -45,11 +45,11 @@ export default function GestoEditor() {
               <div
                 className="mt-2.5 max-w-[92%] px-4 py-3"
                 style={{
-                  background: 'rgba(26,21,32,.05)',
+                  background: 'rgba(34,36,42,.05)',
                   borderRadius: '16px 16px 16px 4px',
                   fontSize: 14.5,
                   lineHeight: 1.45,
-                  color: 'var(--ink-soft)',
+                  color: 'var(--ub-texto-2)',
                 }}
               >
                 Preparei a mudança. Quer ver antes de publicar?
@@ -66,7 +66,7 @@ export default function GestoEditor() {
                 <DiffRow kind="in" text="Banner: “Assinatura — 3 meses”" />
                 <DiffRow kind="in" text="Bloco combo destacado na home" />
               </div>
-              <p className="mt-3" style={{ fontSize: 13, color: 'var(--muted)' }}>
+              <p className="mt-3" style={{ fontSize: 14, color: 'var(--ub-texto-3)' }}>
                 2 alterações em rascunho · nada publicado ainda
               </p>
             </div>
@@ -78,15 +78,15 @@ export default function GestoEditor() {
             <div className="mt-4 flex flex-1 flex-col justify-between">
               <div
                 className="px-4 py-3"
-                style={{ background: 'var(--purple-soft)', borderRadius: 12, fontSize: 14.5, lineHeight: 1.45, color: 'var(--ink-soft)' }}
+                style={{ background: 'var(--ub-roxo-soft)', borderRadius: 12, fontSize: 14.5, lineHeight: 1.45, color: 'var(--ub-texto-2)' }}
               >
                 Revisado por você. A publicação só acontece no clique.
               </div>
               <div className="mt-4">
-                <span className="ub-btn ub-btn-lime w-full" aria-hidden="true">
+                <span className="ub-btn ub-btn-turbo w-full" aria-hidden="true">
                   Confirmar
                 </span>
-                <p className="mt-3 text-center" style={{ fontSize: 12.5, color: 'var(--muted)' }}>
+                <p className="mt-3 text-center" style={{ fontSize: 13.5, color: 'var(--ub-texto-3)' }}>
                   {GESTO.micro}
                 </p>
               </div>
@@ -103,11 +103,11 @@ function Step({ n, label }: { n: number; label: string }) {
     <div className="flex items-center gap-2.5">
       <span
         className="flex h-6 w-6 items-center justify-center rounded-full"
-        style={{ background: 'var(--purple-soft)', color: 'var(--purple-deep)', fontSize: 12.5, fontWeight: 700 }}
+        style={{ background: 'var(--ub-roxo-soft)', color: 'var(--ub-roxo-escuro)', fontSize: 12.5, fontWeight: 700 }}
       >
         {n}
       </span>
-      <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--muted)' }}>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 500, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--ub-texto-3)' }}>
         {label}
       </span>
     </div>
@@ -120,15 +120,15 @@ function DiffRow({ kind, text }: { kind: 'in' | 'out'; text: string }) {
     <div
       className="flex items-start gap-2 px-3 py-2.5"
       style={{
-        background: isIn ? 'rgba(200,245,74,.22)' : 'rgba(26,21,32,.035)',
+        background: isIn ? 'rgba(57,255,20,.16)' : 'rgba(34,36,42,.035)',
         borderBottom: '1px solid var(--line)',
-        fontSize: 13.5,
+        fontSize: 14.5,
         lineHeight: 1.4,
-        color: isIn ? 'var(--ink)' : 'var(--muted)',
+        color: isIn ? 'var(--ub-preto)' : 'var(--ub-texto-3)',
         textDecoration: isIn ? 'none' : 'line-through',
       }}
     >
-      <span aria-hidden="true" style={{ fontWeight: 700, color: isIn ? 'var(--lime-ink)' : 'var(--muted)' }}>
+      <span aria-hidden="true" style={{ fontWeight: 700, color: isIn ? 'var(--ub-preto)' : 'var(--ub-texto-3)' }}>
         {isIn ? '+' : '−'}
       </span>
       <span>{text}</span>

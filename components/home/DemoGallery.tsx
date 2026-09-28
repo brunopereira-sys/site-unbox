@@ -8,20 +8,22 @@ import StoreBrowserChrome from './StoreBrowserChrome';
  * "Demo · criado com Unbox AI" e não fingem URL de cliente.
  */
 export default function DemoGallery() {
+  // mesmo fundo do hero: topo curto pra não abrir faixa creme sobrando (playbook: seções emendadas)
   return (
-    <section id="galeria" className="ub-section" style={{ background: 'var(--cream)' }}>
+    <section id="galeria" className="ub-section !pt-10 md:!pt-12" style={{ background: 'var(--cream)' }}>
       <div className="mx-auto max-w-content px-5">
-        <div className="grid items-end gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,380px)]">
-          <div>
-            <span className="ub-eyebrow">{GALLERY.eyebrow}</span>
-            <h2 className="mt-3" style={{ fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.08, fontWeight: 800 }}>
-              {GALLERY.h2a}
-              <br />
-              <span style={{ color: 'var(--purple)' }}>{GALLERY.h2b}</span>
-            </h2>
-          </div>
-          <p style={{ fontSize: 15, lineHeight: 1.55, color: 'var(--ink-soft)' }}>
-            <strong style={{ fontWeight: 700, color: 'var(--ink)' }}>{GALLERY.noteStrong}</strong>
+        {/* H2 em largura total: a linha 1 do §4 ("Lojas reais. Universos diferentes.")
+            mede 834px a 52px e precisa caber inteira — quebra ditada é literal.
+            A nota lateral desce e alinha à direita. */}
+        <div>
+          <span className="ub-eyebrow">{GALLERY.eyebrow}</span>
+          <h2 className="mt-3" style={{ fontSize: 'clamp(30px, 4.4vw, 52px)', lineHeight: 1.05, fontWeight: 800 }}>
+            {GALLERY.h2a}
+            <br />
+            <span style={{ color: 'var(--ub-roxo)' }}>{GALLERY.h2b}</span>
+          </h2>
+          <p className="mt-5 md:ml-auto md:max-w-[440px]" style={{ fontSize: 16.5, lineHeight: 1.55, color: 'var(--ub-texto-2)' }}>
+            <strong style={{ fontWeight: 700, color: 'var(--ub-preto)' }}>{GALLERY.noteStrong}</strong>
             {GALLERY.noteRest}
           </p>
         </div>
@@ -40,7 +42,7 @@ export default function DemoGallery() {
                 <div className="mt-3.5 flex flex-wrap items-center gap-2">
                   <span className={`ub-tag ${c.kind === 'client' ? 'ub-tag-client' : 'ub-tag-demo'}`}>{c.tag}</span>
                 </div>
-                <p className="mt-2" style={{ fontSize: 15.5, fontWeight: 700 }}>
+                <p className="mt-2" style={{ fontSize: 17, fontWeight: 700 }}>
                   {c.name}
                 </p>
               </>

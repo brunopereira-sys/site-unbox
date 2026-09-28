@@ -2,25 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design tokens — BRIEFING-BUILD-CLAUDE-HOME-V1 §2 (não alterar valores) */
+/* ───────────────────────────────────────────────────────────────────────────
+   Marca Unbox — paleta oficial pelos nomes (fonte: styles/site.css do site).
+   O briefing §2 trazia tokens próprios (#6b3cff / #c8f54a / Inter) que NÃO são
+   a marca; aqui vale a identidade oficial. Do briefing ficam só as superfícies
+   claras (cream), que a marca não define.
+   ─────────────────────────────────────────────────────────────────────────── */
 :root {
+  --ub-roxo: #8F28F6;
+  --ub-roxo-escuro: #5612AB;
+  --ub-roxo-claro: #C99BFF;
+  --ub-preto: #22242A;          /* o escuro da marca substitui o preto */
+  --ub-verde-turbo: #39FF14;
+  --ub-surface-1: #2A2D34;
+  --ub-surface-2: #33363E;
+
+  /* tons derivados das cores oficiais (não são cores novas) */
+  --ub-roxo-soft: #F2E6FE;      /* roxo a 12% sobre branco */
+  --ub-texto-2: #4A4C55;        /* preto ~80% — texto de apoio */
+  --ub-texto-3: #62646D;        /* preto ~65% — micro (5,2:1 no cream, AA) */
+  --line: rgba(34, 36, 42, 0.11);
+  --line-dark: rgba(255, 255, 255, 0.10);
+
+  /* superfícies claras — briefing §2 */
   --cream: #f6f1e8;
   --cream-deep: #ebe4d6;
   --cream-card: #fffdf8;
-  --ink: #1a1520;
-  --ink-soft: #3d3548;
-  --muted: #6b6275;
-  --line: rgba(26, 21, 32, 0.10);
-  --purple: #6b3cff;
-  --purple-deep: #4f24d6;
-  --purple-soft: #ece6ff;
-  --lime: #c8f54a;
-  --lime-ink: #2a3a00;
-  --dark: #141018;
-  --dark-card: #1e1824;
+
   --radius: 20px;
   --nav-h: 68px;
-  --font: var(--font-inter), "Inter", "SF Pro Display", system-ui, -apple-system, sans-serif;
+  --font: var(--font-sora), "Sora", system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jbmono), "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 }
 
 @layer base {
@@ -31,7 +43,7 @@
 
   body {
     background: var(--cream);
-    color: var(--ink);
+    color: var(--ub-preto);
     font-family: var(--font);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -49,7 +61,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--purple);
+    outline: 2px solid var(--ub-roxo);
     outline-offset: 3px;
     border-radius: 4px;
   }
@@ -64,32 +76,36 @@
     line-height: 1.2;
     transition: background-color .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
   }
-  .ub-btn-primary { background: var(--ink); color: #fff; }
-  .ub-btn-primary:hover { background: var(--purple); }
-  .ub-btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
-  .ub-btn-secondary:hover { border-color: var(--purple); color: var(--purple); }
-  .ub-btn-lime { background: var(--lime); color: var(--lime-ink); }
-  .ub-btn-lime:hover { transform: translateY(-1px); }
+  .ub-btn-primary { background: var(--ub-preto); color: #fff; }
+  .ub-btn-primary:hover { background: var(--ub-roxo); }
+  .ub-btn-secondary { background: transparent; color: var(--ub-preto); border: 1px solid var(--ub-preto); }
+  .ub-btn-secondary:hover { border-color: var(--ub-roxo); color: var(--ub-roxo); }
+  .ub-btn-turbo { background: var(--ub-verde-turbo); color: var(--ub-preto); }
+  .ub-btn-turbo:hover { transform: translateY(-1px); }
   .ub-btn-ghost-dark { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.28); }
-  .ub-btn-ghost-dark:hover { border-color: var(--lime); color: var(--lime); }
+  .ub-btn-ghost-dark:hover { border-color: var(--ub-verde-turbo); color: var(--ub-verde-turbo); }
 
+  /* eyebrow no padrão `.meta` do site: JetBrains Mono, caixa alta, tracking largo */
   .ub-eyebrow {
-    @apply inline-block font-semibold uppercase;
-    font-size: 12px;
+    @apply inline-block uppercase;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 13px;
     letter-spacing: .14em;
-    color: var(--purple-deep);
+    color: var(--ub-roxo-escuro);
   }
+  .ub-eyebrow-dark { color: var(--ub-roxo-claro); }
 
   /* Tag cliente = lime · tag demo = purple-soft (§2) */
   .ub-tag {
     @apply inline-flex items-center gap-1.5 rounded-full font-semibold;
     padding: 5px 11px;
-    font-size: 11.5px;
+    font-size: 12.5px;
     letter-spacing: .01em;
     white-space: nowrap;
   }
-  .ub-tag-client { background: var(--lime); color: var(--lime-ink); }
-  .ub-tag-demo { background: var(--purple-soft); color: var(--purple-deep); }
+  .ub-tag-client { background: var(--ub-verde-turbo); color: var(--ub-preto); }
+  .ub-tag-demo { background: var(--ub-roxo-soft); color: var(--ub-roxo-escuro); }
 
   .ub-card {
     background: var(--cream-card);
@@ -98,6 +114,21 @@
   }
 
   .ub-section { padding-block: clamp(56px, 7vw, 104px); }
+
+  /* logo oficial: altura por breakpoint (placa encolhe no nav de 375px) */
+  .ub-logo-img { height: var(--lh-m); }
+  .ub-logo-ai { font-size: calc(var(--lh-m) * .44); }
+  @media (min-width: 768px) {
+    .ub-logo-img { height: var(--lh); }
+    .ub-logo-ai { font-size: calc(var(--lh) * .44); }
+  }
+  /* telas < 360px (iPhone SE 1ª geração): placa menor, sufixo AI some do nav,
+     CTA mais compacto — senão o nav estoura 30px de overflow horizontal */
+  @media (max-width: 359px) {
+    header .ub-logo-img { height: 24px; }
+    header .ub-logo-ai { display: none; }
+    header .ub-nav-cta { padding-inline: 12px; font-size: 12.5px; }
+  }
 }
 
 /* §6 a11y: respeitar prefers-reduced-motion */

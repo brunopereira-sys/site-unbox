@@ -1,13 +1,21 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { JetBrains_Mono, Sora } from 'next/font/google';
 import SiteAnalytics from '@/components/home/SiteAnalytics';
 import './globals.css';
 
-// Self-hosted via next/font: sem request bloqueante de fonte no critical path (§6 first-paint).
-const inter = Inter({
+// Tipografia da marca Unbox (a mesma do site: Sora + JetBrains Mono).
+// Self-hosted via next/font: sem request bloqueante no critical path (§6 first-paint).
+const sora = Sora({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-sora',
+});
+
+const jbMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  display: 'swap',
+  variable: '--font-jbmono',
 });
 
 // §6 SEO / meta
@@ -42,7 +50,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={inter.variable}>
+    <html lang="pt-BR" className={`${sora.variable} ${jbMono.variable}`}>
       <body>
         {children}
         <SiteAnalytics />

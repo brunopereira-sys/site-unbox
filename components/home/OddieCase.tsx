@@ -9,15 +9,15 @@ import StoreBrowserChrome from './StoreBrowserChrome';
  */
 export default function OddieCase() {
   return (
-    <section id="case-oddie" className="ub-section" style={{ background: 'var(--dark)', color: '#fff' }}>
+    <section id="case-oddie" className="ub-section" style={{ background: 'var(--ub-preto)', color: '#fff' }}>
       <div className="mx-auto max-w-content px-5">
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,.82fr)_minmax(0,1.18fr)] lg:gap-14">
           <div>
             <span className="ub-tag ub-tag-client">{ODDIE.badge}</span>
-            <h2 className="mt-5" style={{ fontSize: 'clamp(34px, 5vw, 56px)', lineHeight: 1, fontWeight: 800 }}>
+            <h2 className="mt-5" style={{ fontSize: 'clamp(38px, 5.6vw, 64px)', lineHeight: 1, fontWeight: 800 }}>
               {ODDIE.h2}
             </h2>
-            <p className="mt-4 max-w-[46ch]" style={{ fontSize: 17.5, lineHeight: 1.55, color: 'rgba(255,255,255,.74)' }}>
+            <p className="mt-4 max-w-[46ch]" style={{ fontSize: 19, lineHeight: 1.55, color: 'rgba(255,255,255,.78)' }}>
               {ODDIE.lead}
             </p>
 
@@ -27,17 +27,17 @@ export default function OddieCase() {
                   <span
                     aria-hidden="true"
                     className="mt-[3px] flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full"
-                    style={{ background: 'var(--lime)', color: 'var(--lime-ink)', fontSize: 10.5, fontWeight: 800 }}
+                    style={{ background: 'var(--ub-verde-turbo)', color: 'var(--ub-preto)', fontSize: 10.5, fontWeight: 800 }}
                   >
                     ✓
                   </span>
-                  <span style={{ fontSize: 15.5, lineHeight: 1.5, color: 'rgba(255,255,255,.86)' }}>{b}</span>
+                  <span style={{ fontSize: 16.5, lineHeight: 1.5, color: 'rgba(255,255,255,.88)' }}>{b}</span>
                 </li>
               ))}
             </ul>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link href={ROUTES.caseOddie} prefetch={false} className="ub-btn ub-btn-lime">
+              <Link href={ROUTES.caseOddie} prefetch={false} className="ub-btn ub-btn-turbo">
                 {ODDIE.ctaPrimary}
               </Link>
               <a

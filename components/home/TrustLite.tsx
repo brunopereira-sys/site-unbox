@@ -8,7 +8,7 @@ export default function TrustLite() {
   return (
     <section id="lastro" style={{ background: 'var(--cream-deep)', borderBlock: '1px solid var(--line)' }}>
       <div className="mx-auto max-w-content px-5 py-7">
-        <p className="max-w-[92ch]" style={{ fontSize: 14.5, lineHeight: 1.6, color: 'var(--muted)' }}>
+        <p className="max-w-[92ch]" style={{ fontSize: 16, lineHeight: 1.6, color: 'var(--ub-texto-2)' }}>
           {TRUST_LITE}
         </p>
       </div>

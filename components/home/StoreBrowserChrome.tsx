@@ -22,19 +22,17 @@ export default function StoreBrowserChrome({
       className={`overflow-hidden ${className}`}
       style={{
         borderRadius: 'var(--radius)',
-        background: isDark ? 'var(--dark-card)' : 'var(--cream-card)',
-        border: `1px solid ${isDark ? 'rgba(255,255,255,.12)' : 'var(--line)'}`,
-        boxShadow: isDark
-          ? '0 24px 60px -24px rgba(0,0,0,.6)'
-          : '0 18px 44px -20px rgba(26,21,32,.28)',
+        background: isDark ? 'var(--ub-surface-1)' : 'var(--cream-card)',
+        // playbook: flat e gráfico — filete de 1px, zero sombra
+        border: `1px solid ${isDark ? 'var(--line-dark)' : 'var(--line)'}`,
       }}
     >
       <div
         className="flex items-center gap-2.5 px-3.5"
         style={{
           height: 38,
-          borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,.10)' : 'var(--line)'}`,
-          background: isDark ? 'rgba(255,255,255,.03)' : 'rgba(26,21,32,.02)',
+          borderBottom: `1px solid ${isDark ? 'var(--line-dark)' : 'var(--line)'}`,
+          background: isDark ? 'rgba(255,255,255,.03)' : 'rgba(34,36,42,.02)',
         }}
       >
         <div className="flex shrink-0 gap-1.5" aria-hidden="true">
@@ -48,8 +46,8 @@ export default function StoreBrowserChrome({
             height: 22,
             borderRadius: 999,
             fontSize: 11.5,
-            color: isDark ? 'rgba(255,255,255,.62)' : 'var(--muted)',
-            background: isDark ? 'rgba(255,255,255,.07)' : 'rgba(26,21,32,.05)',
+            color: isDark ? 'rgba(255,255,255,.62)' : 'var(--ub-texto-3)',
+            background: isDark ? 'rgba(255,255,255,.07)' : 'rgba(34,36,42,.05)',
           }}
         >
           <span className="truncate">{url}</span>

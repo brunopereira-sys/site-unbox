@@ -11,40 +11,42 @@ import StoreBrowserChrome from './StoreBrowserChrome';
  */
 export default function Hero() {
   return (
-    <section id="hero" className="relative overflow-hidden">
-      {/* halo roxo sutil — sem full-bleed "AI purple SaaS" (§1 ban craft) */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[520px] w-[820px] -translate-x-1/2 rounded-full opacity-60"
-        style={{ background: 'radial-gradient(closest-side, rgba(107,60,255,.10), transparent)' }}
-      />
-
-      <div className="mx-auto grid max-w-content items-center gap-x-12 gap-y-10 px-5 pb-14 pt-12 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:pb-20 md:pt-16">
+    <section id="hero" className="relative">
+      <div className="mx-auto grid max-w-content items-center gap-x-10 gap-y-10 px-5 pb-10 pt-12 md:grid-cols-[minmax(0,1.24fr)_minmax(0,1fr)] md:pb-12 md:pt-16">
         <div>
           <span className="ub-eyebrow">{HERO.kicker}</span>
 
           <h1 className="mt-4" style={{ fontSize: 'clamp(40px, 6.2vw, 68px)', lineHeight: 1.02, fontWeight: 800 }}>
-            <span style={{ color: 'var(--purple)', display: 'block' }}>{HERO.h1Cat}</span>
+            <span style={{ color: 'var(--ub-roxo)', display: 'block' }}>{HERO.h1Cat}</span>
             <span style={{ display: 'block' }}>{HERO.h1Line}</span>
           </h1>
 
           <p
             className="mt-5 max-w-[46ch]"
-            style={{ fontSize: 'clamp(16px, 1.55vw, 18.5px)', lineHeight: 1.55, color: 'var(--ink-soft)' }}
+            style={{ fontSize: 'clamp(17px, 1.6vw, 20px)', lineHeight: 1.55, color: 'var(--ub-texto-2)' }}
           >
             {HERO.sub}
           </p>
 
+          {/* Sora é mais larga que Inter: coluna 1.24fr + px-5 mantêm os 2 CTAs lado a lado em 1440 */}
           <div className="mt-7 flex flex-wrap items-center gap-3">
-            <a href={CALENDLY} className="ub-btn ub-btn-primary">
+            <a href={CALENDLY} className="ub-btn ub-btn-primary px-5">
               {HERO.ctaPrimary}
             </a>
-            <a href={ROUTES.migrar} className="ub-btn ub-btn-secondary">
+            <a href={ROUTES.migrar} className="ub-btn ub-btn-secondary px-5">
               {HERO.ctaSecondary}
             </a>
           </div>
 
-          <p className="mt-4" style={{ fontSize: 13, color: 'var(--muted)' }}>
+          {/* playbook: itens de confiança em verde (verde turbo oficial, check na cor da marca) */}
+          <p className="mt-4 flex items-center gap-2" style={{ fontSize: 14, color: 'var(--ub-texto-2)' }}>
+            <span
+              aria-hidden="true"
+              className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full"
+              style={{ background: 'var(--ub-verde-turbo)', color: 'var(--ub-preto)', fontSize: 11, fontWeight: 800 }}
+            >
+              ✓
+            </span>
             {HERO.microTrust}
           </p>
 
@@ -53,8 +55,8 @@ export default function Hero() {
             style={{ borderTop: '1px solid var(--line)' }}
           >
             <span className="ub-tag ub-tag-client mt-0.5 shrink-0">{HERO.proofBadge}</span>
-            <p style={{ fontSize: 14.5, lineHeight: 1.5, color: 'var(--ink-soft)' }}>
-              <strong style={{ fontWeight: 700, color: 'var(--ink)' }}>{HERO.proofBrand}</strong>
+            <p style={{ fontSize: 15.5, lineHeight: 1.5, color: 'var(--ub-texto-2)' }}>
+              <strong style={{ fontWeight: 700, color: 'var(--ub-preto)' }}>{HERO.proofBrand}</strong>
               {HERO.proofRest}
             </p>
           </div>
@@ -71,7 +73,7 @@ export default function Hero() {
           </StoreBrowserChrome>
           <span
             className="ub-tag ub-tag-client absolute -bottom-3 left-4 md:left-6"
-            style={{ boxShadow: '0 6px 18px -8px rgba(26,21,32,.45)' }}
+            style={{ border: '1px solid var(--ub-preto)' }}
           >
             {HERO.frameLabel}
           </span>
