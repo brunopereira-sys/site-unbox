@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens — BRIEFING-BUILD-CLAUDE-HOME-V1 §2 (não alterar valores) */
+:root {
+  --cream: #f6f1e8;
+  --cream-deep: #ebe4d6;
+  --cream-card: #fffdf8;
+  --ink: #1a1520;
+  --ink-soft: #3d3548;
+  --muted: #6b6275;
+  --line: rgba(26, 21, 32, 0.10);
+  --purple: #6b3cff;
+  --purple-deep: #4f24d6;
+  --purple-soft: #ece6ff;
+  --lime: #c8f54a;
+  --lime-ink: #2a3a00;
+  --dark: #141018;
+  --dark-card: #1e1824;
+  --radius: 20px;
+  --nav-h: 68px;
+  --font: var(--font-inter), "Inter", "SF Pro Display", system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* §6 craft: sticky nav nunca cobre H2 de FAQ/CTA */
+  section[id],
+  div[id] {
+    scroll-margin-top: calc(var(--nav-h) + 16px);
+  }
+
+  h1, h2, h3 {
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--purple);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* Botões — primary ink→purple, secondary outline, lime para case/final */
+  .ub-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold;
+    padding: 14px 24px;
+    font-size: 15px;
+    line-height: 1.2;
+    transition: background-color .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
+  }
+  .ub-btn-primary { background: var(--ink); color: #fff; }
+  .ub-btn-primary:hover { background: var(--purple); }
+  .ub-btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  .ub-btn-secondary:hover { border-color: var(--purple); color: var(--purple); }
+  .ub-btn-lime { background: var(--lime); color: var(--lime-ink); }
+  .ub-btn-lime:hover { transform: translateY(-1px); }
+  .ub-btn-ghost-dark { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.28); }
+  .ub-btn-ghost-dark:hover { border-color: var(--lime); color: var(--lime); }
+
+  .ub-eyebrow {
+    @apply inline-block font-semibold uppercase;
+    font-size: 12px;
+    letter-spacing: .14em;
+    color: var(--purple-deep);
+  }
+
+  /* Tag cliente = lime · tag demo = purple-soft (§2) */
+  .ub-tag {
+    @apply inline-flex items-center gap-1.5 rounded-full font-semibold;
+    padding: 5px 11px;
+    font-size: 11.5px;
+    letter-spacing: .01em;
+    white-space: nowrap;
+  }
+  .ub-tag-client { background: var(--lime); color: var(--lime-ink); }
+  .ub-tag-demo { background: var(--purple-soft); color: var(--purple-deep); }
+
+  .ub-card {
+    background: var(--cream-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .ub-section { padding-block: clamp(56px, 7vw, 104px); }
+}
+
+/* §6 a11y: respeitar prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
