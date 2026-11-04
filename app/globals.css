@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Marca Unbox — paleta oficial pelos nomes (fonte: styles/site.css do site).
+   O briefing §2 trazia tokens próprios (#6b3cff / #c8f54a / Inter) que NÃO são
+   a marca; aqui vale a identidade oficial. Do briefing ficam só as superfícies
+   claras (cream), que a marca não define.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+  --ub-roxo: #8F28F6;
+  --ub-roxo-escuro: #5612AB;
+  --ub-roxo-claro: #C99BFF;
+  --ub-preto: #22242A;          /* o escuro da marca substitui o preto */
+  --ub-verde-turbo: #39FF14;
+  --ub-surface-1: #2A2D34;
+  --ub-surface-2: #33363E;
+
+  /* tons derivados das cores oficiais (não são cores novas) */
+  --ub-roxo-soft: #F2E6FE;      /* roxo a 12% sobre branco */
+  --ub-texto-2: #4A4C55;        /* preto ~80% — texto de apoio */
+  --ub-texto-3: #62646D;        /* preto ~65% — micro (5,2:1 no cream, AA) */
+  --line: rgba(34, 36, 42, 0.11);
+  --line-dark: rgba(255, 255, 255, 0.10);
+
+  /* superfícies claras — briefing §2 */
+  --cream: #f6f1e8;
+  --cream-deep: #ebe4d6;
+  --cream-card: #fffdf8;
+
+  --radius: 20px;
+  --nav-h: 68px;
+  --font: var(--font-sora), "Sora", system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jbmono), "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--ub-preto);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* §6 craft: sticky nav nunca cobre H2 de FAQ/CTA */
+  section[id],
+  div[id] {
+    scroll-margin-top: calc(var(--nav-h) + 16px);
+  }
+
+  h1, h2, h3 {
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ub-roxo);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* Botões — primary ink→purple, secondary outline, lime para case/final */
+  .ub-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold;
+    padding: 14px 24px;
+    font-size: 15px;
+    line-height: 1.2;
+    transition: background-color .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
+  }
+  .ub-btn-primary { background: var(--ub-preto); color: #fff; }
+  .ub-btn-primary:hover { background: var(--ub-roxo); }
+  .ub-btn-secondary { background: transparent; color: var(--ub-preto); border: 1px solid var(--ub-preto); }
+  .ub-btn-secondary:hover { border-color: var(--ub-roxo); color: var(--ub-roxo); }
+  .ub-btn-turbo { background: var(--ub-verde-turbo); color: var(--ub-preto); }
+  .ub-btn-turbo:hover { transform: translateY(-1px); }
+  .ub-btn-ghost-dark { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.28); }
+  .ub-btn-ghost-dark:hover { border-color: var(--ub-verde-turbo); color: var(--ub-verde-turbo); }
+
+  /* eyebrow no padrão `.meta` do site: JetBrains Mono, caixa alta, tracking largo */
+  .ub-eyebrow {
+    @apply inline-block uppercase;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: .14em;
+    color: var(--ub-roxo-escuro);
+  }
+  .ub-eyebrow-dark { color: var(--ub-roxo-claro); }
+
+  /* Tag cliente = lime · tag demo = purple-soft (§2) */
+  .ub-tag {
+    @apply inline-flex items-center gap-1.5 rounded-full font-semibold;
+    padding: 5px 11px;
+    font-size: 12.5px;
+    letter-spacing: .01em;
+    white-space: nowrap;
+  }
+  .ub-tag-client { background: var(--ub-verde-turbo); color: var(--ub-preto); }
+  .ub-tag-demo { background: var(--ub-roxo-soft); color: var(--ub-roxo-escuro); }
+
+  .ub-card {
+    background: var(--cream-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .ub-section { padding-block: clamp(56px, 7vw, 104px); }
+
+  /* logo oficial: altura por breakpoint (placa encolhe no nav de 375px) */
+  .ub-logo-img { height: var(--lh-m); }
+  .ub-logo-ai { font-size: calc(var(--lh-m) * .44); }
+  @media (min-width: 768px) {
+    .ub-logo-img { height: var(--lh); }
+    .ub-logo-ai { font-size: calc(var(--lh) * .44); }
+  }
+  /* telas < 360px (iPhone SE 1ª geração): placa menor, sufixo AI some do nav,
+     CTA mais compacto — senão o nav estoura 30px de overflow horizontal */
+  @media (max-width: 359px) {
+    header .ub-logo-img { height: 24px; }
+    header .ub-logo-ai { display: none; }
+    header .ub-nav-cta { padding-inline: 12px; font-size: 12.5px; }
+  }
+}
+
+/* §6 a11y: respeitar prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
