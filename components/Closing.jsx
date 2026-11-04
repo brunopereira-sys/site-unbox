@@ -4,7 +4,7 @@ import { URLS, R } from '../lib/config';
 const METRICS = [
   { num: "+15", unit: " mil", lbl: "lojas já cadastradas na Unbox" },
   { num: "+5,9", unit: "×", lbl: "crescimento médio de vendas" },
-  { num: "4", unit: "×", lbl: "mais conversão no seu site" },
+  { num: "4", unit: "×", lbl: "mais conversão com o Checkout TURBO" },
   { num: "98", unit: "%", lbl: "de aprovação UnboxPay" },
 ];
 
