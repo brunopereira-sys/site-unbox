@@ -1,5 +1,5 @@
 import { insertEntry, getWaitlistCount, incrementReferralCount, initDB } from '../../lib/db'
-import { createPipedrivePerson } from '../../lib/pipedrive'
+import { enviarACentral } from '../../lib/central'
 import { generateRefCode } from '../../lib/referral'
 
 let dbInitialized = false
@@ -33,9 +33,6 @@ export default async function handler(req, res) {
     const basePosition = count + 1
     const refCode = generateRefCode(brand)
 
-    // Create Pipedrive contact (non-blocking for user — errors are swallowed)
-    const pipedriveResult = await createPipedrivePerson({ brand, email, wpp, role, refCode })
-
     const entry = await insertEntry({
       email,
       brand,
@@ -44,7 +41,7 @@ export default async function handler(req, res) {
       refCode,
       referredBy: ref || null,
       basePosition,
-      pipedrivePersonId: pipedriveResult ? String(pipedriveResult.id) : null,
+      pipedrivePersonId: null,
     })
 
     if (!entry) {
@@ -56,6 +53,11 @@ export default async function handler(req, res) {
     if (ref) {
       await incrementReferralCount(ref)
     }
+
+    // O lead vai para a Central do Lead (lib/central.js), com a origem "Inbound · Lista de espera AI (site)". Só depois de entrar
+    // na lista: o e-mail repetido (409) não chega duas vezes. Nunca trava a pessoa.
+    await enviarACentral({ formulario: 'lista-de-espera-ai', empresa: brand, email, whatsapp: wpp, cargo: role,
+      pagina: req.headers.referer || 'https://unbox.com.br/ai', extra: { refCode: entry.ref_code, ...(ref ? { referredBy: ref } : {}) } })
 
     return res.status(200).json({
       position: basePosition,
