@@ -1,67 +1,34 @@
+// O "Agendar demonstração" vai para a Central do Lead (leads.myunbox.com.br), não mais para o Pipedrive. O contrato está em
+// central/INBOUND.md no repositório unbox-plus/unbox-esteira. A chave fica só aqui, no servidor (CENTRAL_API_CHAVE, sensível na
+// Vercel); nunca no navegador.
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { nome, email, whatsapp, loja, faturamento, origem } = req.body || {};
-  const apiToken = process.env.PIPEDRIVE_API_KEY;
-
-  if (!apiToken) {
-    console.warn('PIPEDRIVE_API_KEY not set — skipping Pipedrive');
+  const url = process.env.CENTRAL_API_URL;
+  const chave = process.env.CENTRAL_API_CHAVE;
+  if (!url || !chave) {
+    console.warn('CENTRAL_API_URL/CENTRAL_API_CHAVE ausentes: o lead não foi para a Central');
     return res.status(200).json({ ok: true, skipped: true });
   }
 
-  const base = 'https://api.pipedrive.com/v1';
-  const h = { 'Content-Type': 'application/json' };
-  const q = `api_token=${apiToken}`;
+  const { nome, email, whatsapp, loja, faturamento, origem, data, utm, referencia } = req.body || {};
+  const corpo = { formulario: 'agendar-demonstracao', nome, email, whatsapp, loja, faturamento,
+    pagina: origem, data, utm, referencia };
 
   try {
-    // 1. Find pipeline stage "Leads Site"
-    const stagesRes = await fetch(`${base}/stages?${q}`);
-    const stagesJson = await stagesRes.json();
-    const stage = stagesJson.data?.find(
-      (s) => s.name.toLowerCase().includes('leads site')
-    );
-
-    // 2. Create person
-    const personPayload = { name: nome };
-    if (whatsapp) personPayload.phone = [{ value: whatsapp, primary: true }];
-    if (email)    personPayload.email = [{ value: email,    primary: true }];
-
-    const personRes = await fetch(`${base}/persons?${q}`, {
-      method: 'POST', headers: h,
-      body: JSON.stringify(personPayload),
+    const r = await fetch(`${url}/api/v1/inbound`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${chave}` },
+      body: JSON.stringify(corpo),
+      signal: AbortSignal.timeout(8000),
     });
-    const personId = (await personRes.json()).data?.id;
-
-    // 3. Create deal in "Leads Site" stage
-    const dealPayload = {
-      title: `${nome} — Demo Unbox`,
-      ...(personId    ? { person_id:  personId         } : {}),
-      ...(stage?.id   ? { stage_id:   stage.id         } : {}),
-      ...(stage?.pipeline_id ? { pipeline_id: stage.pipeline_id } : {}),
-    };
-    const dealRes = await fetch(`${base}/deals?${q}`, {
-      method: 'POST', headers: h,
-      body: JSON.stringify(dealPayload),
-    });
-    const dealId = (await dealRes.json()).data?.id;
-
-    // 4. Add pinned note with full context
-    if (dealId) {
-      const lines = [
-        loja        && `🏪 Loja: ${loja}`,
-        faturamento && `💰 Faturamento: ${faturamento}`,
-        origem      && `🔗 Origem: ${origem}`,
-      ].filter(Boolean).join('<br>');
-
-      await fetch(`${base}/notes?${q}`, {
-        method: 'POST', headers: h,
-        body: JSON.stringify({ content: lines, deal_id: dealId, pinned_to_deal_flag: 1 }),
-      });
-    }
-
-    res.status(200).json({ ok: true, dealId });
+    const j = await r.json().catch(() => ({}));
+    // no log, só o status e o código da ficha: nome, e-mail e telefone são dado de pessoa
+    if (!r.ok) console.error('Central recusou o inbound', r.status, j.erro);
+    else console.log('Inbound na Central', j.resultado, j.id);
+    return res.status(200).json({ ok: true, id: j.id ?? null });
   } catch (err) {
-    console.error('Pipedrive error:', err);
-    res.status(200).json({ ok: true, warning: 'pipedrive_failed' });
+    console.error('Central não respondeu ao inbound', err?.name);
+    return res.status(200).json({ ok: true, warning: 'central_falhou' });
   }
 }
