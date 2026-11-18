@@ -33,6 +33,17 @@
   ],
   "redirects": [
     {
+      "source": "/((?!api/).*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "ai.unbox.com.br"
+        }
+      ],
+      "destination": "https://www.unbox.com.br/ai",
+      "permanent": false
+    },
+    {
       "source": "/Unbox - Home.html",
       "destination": "/",
       "permanent": true
